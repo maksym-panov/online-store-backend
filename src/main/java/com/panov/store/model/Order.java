@@ -14,7 +14,6 @@ public class Order {
     private Integer orderId;
     private User user;
     private UnregisteredCustomer unregisteredCustomer;
-    private DeliveryType deliveryType;
     private Timestamp postTime;
     private Timestamp completeTime;
     private Status status;

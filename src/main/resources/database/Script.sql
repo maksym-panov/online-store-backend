@@ -40,7 +40,8 @@ CREATE TABLE UnregisteredCustomer (
                                       city VARCHAR(30) NOT NULL,
                                       street VARCHAR(30) NOT NULL,
                                       building SMALLINT NOT NULL,
-                                      apartment SMALLINT
+                                      apartment SMALLINT,
+                                      postalCode INT
 );
 
 CREATE TABLE Product (

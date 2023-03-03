@@ -4,24 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="1. Created initial package structure.&#10;2. Added entity classes to the &#10;com.panov.store.model package.&#10;3. Created the DAO interface.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/DeliveryType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Access.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Status.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/database/ER-diagram.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/database/Script.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="1. Fully replaced previous database structure with much more normalized one.&#10;2. Added Lombok to the project.&#10;3. Added new SQL script.&#10;4. Basically filled entities with fields.&#10;&#10;-- Next step is to use Hibernate to connect all the entities">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/hibernate.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/DeliveryType.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/ProductType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/UnregisteredCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/UnregisteredCustomer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/database/SqlModel.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/database/TablesCreationScript.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Access.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Access.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Status.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,8 +23,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -80,7 +71,20 @@
       <recent name="com.panov.store.model" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.panov.store.model.Main" />
+      <module name="online-store-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.panov.store.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tomcat 10" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.0.27" ALTERNATIVE_JRE_ENABLED="false">
       <option name="OPEN_IN_BROWSER" value="false" />
       <option name="UPDATING_POLICY" value="restart-server" />
@@ -169,6 +173,11 @@
         </option>
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -183,7 +192,9 @@
       <workItem from="1677175426323" duration="872000" />
       <workItem from="1677247049395" duration="1093000" />
       <workItem from="1677688042109" duration="25000" />
-      <workItem from="1677776669507" duration="4243000" />
+      <workItem from="1677776669507" duration="5597000" />
+      <workItem from="1677867384966" duration="709000" />
+      <workItem from="1677868119802" duration="2077000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1676894430878</created>
@@ -213,7 +224,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676921367163</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="1. Fully replaced previous database structure with much more normalized one.&#10;2. Added Lombok to the project.&#10;3. Added new SQL script.&#10;4. Basically filled entities with fields.&#10;&#10;-- Next step is to use Hibernate to connect all the entities">
+      <created>1677781188272</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1677781188272</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,6 +253,7 @@
     <MESSAGE value="Added core dependencies to the pom.xml file" />
     <MESSAGE value="Created a model of an application database&#10;and wrote the table-creating script" />
     <MESSAGE value="1. Created initial package structure.&#10;2. Added entity classes to the &#10;com.panov.store.model package.&#10;3. Created the DAO interface." />
-    <option name="LAST_COMMIT_MESSAGE" value="1. Created initial package structure.&#10;2. Added entity classes to the &#10;com.panov.store.model package.&#10;3. Created the DAO interface." />
+    <MESSAGE value="1. Fully replaced previous database structure with much more normalized one.&#10;2. Added Lombok to the project.&#10;3. Added new SQL script.&#10;4. Basically filled entities with fields.&#10;&#10;-- Next step is to use Hibernate to connect all the entities" />
+    <option name="LAST_COMMIT_MESSAGE" value="1. Fully replaced previous database structure with much more normalized one.&#10;2. Added Lombok to the project.&#10;3. Added new SQL script.&#10;4. Basically filled entities with fields.&#10;&#10;-- Next step is to use Hibernate to connect all the entities" />
   </component>
 </project>
