@@ -4,15 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="1. Fully replaced previous database structure with much more normalized one.&#10;2. Added Lombok to the project.&#10;3. Added new SQL script.&#10;4. Basically filled entities with fields.&#10;&#10;-- Next step is to use Hibernate to connect all the entities">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/hibernate.properties" afterDir="false" />
+    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="This time I have done:&#10;1. Switched from hibernate.properties and SessionFactory to persistence.xml and EntityManager because JPA is more compatible than Hibernate.&#10;2. Refactored database, deleted Region table, deleted typeUnitId from TypeUnit table, worked with constraints.&#10;3. Completed implementing Domain Model classes, overrided essential methods from Object class and added JPA/Hibernate annotations.&#10;4. Have tested if everything works fine.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/DeliveryType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/OrderProducts.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/ProductType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml.template" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/DeliveryType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Address.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/UnregisteredCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/UnregisteredCustomer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Access.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Access.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Status.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/database/ER-diagram.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/database/ER-diagram.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/database/Script.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/database/Script.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +73,13 @@
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.panov.store.model" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/database" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/webapp" />
+      <recent name="$PROJECT_DIR$/src/main/resources/META-INF" />
+      <recent name="$PROJECT_DIR$/src/main/resources/config" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
@@ -194,7 +205,10 @@
       <workItem from="1677688042109" duration="25000" />
       <workItem from="1677776669507" duration="5597000" />
       <workItem from="1677867384966" duration="709000" />
-      <workItem from="1677868119802" duration="2077000" />
+      <workItem from="1677868119802" duration="2960000" />
+      <workItem from="1678097827719" duration="23604000" />
+      <workItem from="1678170562103" duration="1000" />
+      <workItem from="1678189321697" duration="3859000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1676894430878</created>
@@ -231,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677781188272</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="1. Started integration of Hibernate to the domain model classes such as User and Product.&#10;2. Upgraded enumerations Access and Status so they are now have AttributeConverters that convert enum values to database values 'U', 'M' etc. and back.">
+      <created>1677871081471</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1677871081471</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -254,6 +275,8 @@
     <MESSAGE value="Created a model of an application database&#10;and wrote the table-creating script" />
     <MESSAGE value="1. Created initial package structure.&#10;2. Added entity classes to the &#10;com.panov.store.model package.&#10;3. Created the DAO interface." />
     <MESSAGE value="1. Fully replaced previous database structure with much more normalized one.&#10;2. Added Lombok to the project.&#10;3. Added new SQL script.&#10;4. Basically filled entities with fields.&#10;&#10;-- Next step is to use Hibernate to connect all the entities" />
-    <option name="LAST_COMMIT_MESSAGE" value="1. Fully replaced previous database structure with much more normalized one.&#10;2. Added Lombok to the project.&#10;3. Added new SQL script.&#10;4. Basically filled entities with fields.&#10;&#10;-- Next step is to use Hibernate to connect all the entities" />
+    <MESSAGE value="1. Started integration of Hibernate to the domain model classes such as User and Product.&#10;2. Upgraded enumerations Access and Status so they are now have AttributeConverters that convert enum values to database values 'U', 'M' etc. and back." />
+    <MESSAGE value="This time I have done:&#10;1. Switched from hibernate.properties and SessionFactory to persistence.xml and EntityManager because JPA is more compatible than Hibernate.&#10;2. Refactored database, deleted Region table, deleted typeUnitId from TypeUnit table, worked with constraints.&#10;3. Completed implementing Domain Model classes, overrided essential methods from Object class and added JPA/Hibernate annotations.&#10;4. Have tested if everything works fine." />
+    <option name="LAST_COMMIT_MESSAGE" value="This time I have done:&#10;1. Switched from hibernate.properties and SessionFactory to persistence.xml and EntityManager because JPA is more compatible than Hibernate.&#10;2. Refactored database, deleted Region table, deleted typeUnitId from TypeUnit table, worked with constraints.&#10;3. Completed implementing Domain Model classes, overrided essential methods from Object class and added JPA/Hibernate annotations.&#10;4. Have tested if everything works fine." />
   </component>
 </project>

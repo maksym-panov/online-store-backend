@@ -3,14 +3,18 @@ package com.panov.store.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@Entity
+@NoArgsConstructor
+@Entity(name = "Product")
 @Table(name = "Product")
 public class Product {
     @Id
@@ -21,7 +25,24 @@ public class Product {
     private BigDecimal price;
     private Integer stock;
 
-    // Product types
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(name = "TypeUnit",
+        joinColumns = { @JoinColumn(name = "productId") },
+        inverseJoinColumns = { @JoinColumn(name = "productTypeId") })
+    private Set<ProductType> productTypes;
 
-    protected Product() {}
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<OrderProducts> orderProducts;
+
+    @Override
+    public String toString() {
+        return String.format("Product[id = %d, name = %s, description = %s, price = %s, stock = %d, productTypes = %s]",
+                productId,
+                name,
+                description,
+                price.toString(),
+                stock,
+                productTypes
+        );
+    }
 }
