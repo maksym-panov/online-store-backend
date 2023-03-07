@@ -11,11 +11,9 @@ public interface DAO<E> {
 
     List<E> getAll();
 
-    List<E> getWithEqualsFilter(String columnName, String value);
+    Integer insert(E entity);
 
-    void set(E entity);
+    Integer update(E entity);
 
-    void update(E entity);
-
-    void delete(int id);
+    void delete(E entity);
 }

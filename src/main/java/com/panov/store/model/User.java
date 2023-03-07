@@ -50,8 +50,8 @@ public class User {
     public String toString() {
         return String.format("User[Id = %d %s %s]",
                 userId,
-                personalInfo.toString(),
-                address.toString()
+                personalInfo,
+                address
         );
     }
 

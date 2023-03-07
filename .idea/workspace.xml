@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="online-store-project:war exploded" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="This time I have done:&#10;1. Switched from hibernate.properties and SessionFactory to persistence.xml and EntityManager because JPA is more compatible than Hibernate.&#10;2. Refactored database, deleted Region table, deleted typeUnitId from TypeUnit table, worked with constraints.&#10;3. Completed implementing Domain Model classes, overrided essential methods from Object class and added JPA/Hibernate annotations.&#10;4. Have tested if everything works fine.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/DeliveryType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/OrderProducts.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/ProductType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml.template" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/DispatcherServletConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/WebConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UnregisteredCustomerDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UserDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exception/BadRequestException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Address.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/UnregisteredCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/UnregisteredCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/database/ER-diagram.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/database/ER-diagram.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/database/Script.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/database/Script.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +34,13 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -47,29 +57,32 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;database.query.execution&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;eca60a85c5426f4586497142760dc9c6&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "spring.configuration.checksum": "eca60a85c5426f4586497142760dc9c6",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ],
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "HTTP Request"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.panov.store.model" />
@@ -82,7 +95,7 @@
       <recent name="$PROJECT_DIR$/src/main/resources/config" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.Test">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.panov.store.model.Main" />
       <module name="online-store-project" />
@@ -95,6 +108,22 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.panov.store.model.Test" />
+      <module name="online-store-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.panov.store.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="scratch_3 | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/scratch_3.http" requestIdentifier="#1" runType="Run single request">
+      <method v="2" />
     </configuration>
     <configuration name="Tomcat 10" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.0.27" ALTERNATIVE_JRE_ENABLED="false">
       <option name="OPEN_IN_BROWSER" value="false" />
@@ -186,7 +215,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Test" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="HTTP Request.scratch_3 | #1" />
       </list>
     </recent_temporary>
   </component>
@@ -208,7 +239,7 @@
       <workItem from="1677868119802" duration="2960000" />
       <workItem from="1678097827719" duration="23604000" />
       <workItem from="1678170562103" duration="1000" />
-      <workItem from="1678189321697" duration="3859000" />
+      <workItem from="1678189321697" duration="11156000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1676894430878</created>
@@ -252,7 +283,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677871081471</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="This time I have done:&#10;1. Switched from hibernate.properties and SessionFactory to persistence.xml and EntityManager because JPA is more compatible than Hibernate.&#10;2. Refactored database, deleted Region table, deleted typeUnitId from TypeUnit table, worked with constraints.&#10;3. Completed implementing Domain Model classes, overrided essential methods from Object class and added JPA/Hibernate annotations.&#10;4. Have tested if everything works fine.">
+      <created>1678193287724</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1678193287724</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
