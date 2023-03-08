@@ -1,21 +1,20 @@
 package com.panov.store.dao;
 
-import com.panov.store.exception.BadRequestException;
 import com.panov.store.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class UserDAO implements DAO<User> {
+@Repository
+public class UserRepository implements DAO<User> {
     private final EntityManagerFactory entityManagerFactory;
 
     @Autowired
-    public UserDAO(EntityManagerFactory entityManagerFactory) {
+    public UserRepository(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
     }
 
@@ -30,17 +29,12 @@ public class UserDAO implements DAO<User> {
     @Override
     public Optional<User> getByColumn(String naturalId, String value) {
         var entityManager = getManager();
-        Optional<User> user;
-        try {
-            user = Optional.ofNullable((User) entityManager
-                    .createQuery("select u from User u where :col = :val")
-                    .setParameter("col", naturalId)
-                    .setParameter("val", value)
-                    .getSingleResult()
-            );
-        } catch (Exception exception) {
-            throw new BadRequestException("Incorrect query", exception);
-        }
+        Optional<User> user = Optional.ofNullable((User) entityManager
+                .createQuery("select u from User u where :col = :val")
+                .setParameter("col", naturalId)
+                .setParameter("val", value)
+                .getSingleResult()
+        );
         entityManager.close();
         return user;
     }
@@ -59,25 +53,17 @@ public class UserDAO implements DAO<User> {
     @Override
     public Integer insert(User user) {
         var entityManager = getManager();
-        try {
-            entityManager.persist(user);
-            entityManager.close();
-            return user.getUserId();
-        } catch(Exception exception) {
-            throw new BadRequestException("Impossible to add new user", exception);
-        }
+        entityManager.persist(user);
+        entityManager.close();
+        return user.getUserId();
     }
 
     @Override
     public Integer update(User user) {
         var entityManager = getManager();
-        try {
-            entityManager.merge(user);
-            entityManager.close();
-            return user.getUserId();
-        } catch(Exception exception) {
-            throw new BadRequestException("Impossible to update user", exception);
-        }
+        entityManager.merge(user);
+        entityManager.close();
+        return user.getUserId();
     }
 
     @Override

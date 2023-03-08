@@ -1,21 +1,22 @@
 package com.panov.store.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "ProductType")
 @Table(name = "ProductType")
+@JsonIgnoreProperties({ "products" })
 public class ProductType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +24,8 @@ public class ProductType {
     @NaturalId
     private String name;
 
-    @ManyToMany(mappedBy = "productTypes")
-    private Set<Product> products;
+    @ManyToMany
+    private Set<Product> products = new HashSet<>();
 
     @Override
     public int hashCode() {

@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "com.panov.store.controllers" })
+@ComponentScan(basePackages = { "com.panov.store" })
 public class WebConfiguration implements WebMvcConfigurer {
     private final ApplicationContext context;
     private final String UNIT_NAME = "com.panov.store";

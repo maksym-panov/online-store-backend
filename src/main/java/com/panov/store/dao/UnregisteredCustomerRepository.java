@@ -1,21 +1,20 @@
 package com.panov.store.dao;
 
-import com.panov.store.exception.BadRequestException;
 import com.panov.store.model.UnregisteredCustomer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class UnregisteredCustomerDAO implements DAO<UnregisteredCustomer> {
+@Repository
+public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer> {
     private final EntityManagerFactory entityManagerFactory;
 
     @Autowired
-    public UnregisteredCustomerDAO(EntityManagerFactory entityManagerFactory) {
+    public UnregisteredCustomerRepository(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
     }
 
@@ -30,17 +29,13 @@ public class UnregisteredCustomerDAO implements DAO<UnregisteredCustomer> {
     @Override
     public Optional<UnregisteredCustomer> getByColumn(String naturalId, String value) {
         var entityManager = getManager();
-        Optional<UnregisteredCustomer> unregisteredCustomer;
-        try {
-            unregisteredCustomer = Optional.ofNullable((UnregisteredCustomer) entityManager
+        Optional<UnregisteredCustomer> unregisteredCustomer =
+                Optional.ofNullable((UnregisteredCustomer) entityManager
                     .createQuery("select uc from UnregisteredCustomer uc where :col = :val")
                     .setParameter("col", naturalId)
                     .setParameter("val", value)
                     .getSingleResult()
-            );
-        } catch (Exception exception) {
-            throw new BadRequestException("Incorrect query", exception);
-        }
+                );
         entityManager.close();
         return unregisteredCustomer;
     }
@@ -60,25 +55,17 @@ public class UnregisteredCustomerDAO implements DAO<UnregisteredCustomer> {
     @Override
     public Integer insert(UnregisteredCustomer unregisteredCustomer) {
         var entityManager = getManager();
-        try {
-            entityManager.persist(unregisteredCustomer);
-            entityManager.close();
-            return unregisteredCustomer.getUnregisteredCustomerId();
-        } catch(Exception exception) {
-            throw new BadRequestException("Impossible to add new unregistered customer", exception);
-        }
+        entityManager.persist(unregisteredCustomer);
+        entityManager.close();
+        return unregisteredCustomer.getUnregisteredCustomerId();
     }
 
     @Override
     public Integer update(UnregisteredCustomer unregisteredCustomer) {
         var entityManager = getManager();
-        try {
-            entityManager.merge(unregisteredCustomer);
-            entityManager.close();
-            return unregisteredCustomer.getUnregisteredCustomerId();
-        } catch(Exception exception) {
-            throw new BadRequestException("Impossible to update unregistered customer", exception);
-        }
+        entityManager.merge(unregisteredCustomer);
+        entityManager.close();
+        return unregisteredCustomer.getUnregisteredCustomerId();
     }
 
     @Override

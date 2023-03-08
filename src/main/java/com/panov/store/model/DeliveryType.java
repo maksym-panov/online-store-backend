@@ -1,5 +1,6 @@
 package com.panov.store.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity(name = "DeliveryType")
 @Table(name = "DeliveryType")
+@JsonIgnoreProperties({ "orders" })
 public class DeliveryType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +24,7 @@ public class DeliveryType {
     private String name;
 
     @OneToMany(mappedBy = "deliveryType")
-    private List<Order> order;
+    private List<Order> orders;
 
     @Override
     public int hashCode() {

@@ -1,21 +1,22 @@
 package com.panov.store.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "UnregisteredCustomer")
 @Table(name = "UnregisteredCustomer")
+@JsonIgnoreProperties({ "orders" })
 public class UnregisteredCustomer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +30,8 @@ public class UnregisteredCustomer {
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "unregisteredCustomer")
-    private Set<Order> orders;
+    @OneToMany(mappedBy = "unregisteredCustomer", fetch = FetchType.EAGER)
+    private Set<Order> orders = new HashSet<>();
 
     @Override
     public int hashCode() {
