@@ -28,4 +28,11 @@ public class UnregisteredCustomerService {
     public UnregisteredCustomer getById(Integer id) {
         return repository.get(id).orElseThrow(UnregisteredCustomerNotFoundException::new);
     }
+
+    public List<UnregisteredCustomer> getByPhoneNumber(String phoneNumber) {
+        var customers = repository.getByColumn(phoneNumber);
+        if (customers == null)
+            return Collections.emptyList();
+        return customers;
+    }
 }

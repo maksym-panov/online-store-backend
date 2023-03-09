@@ -27,25 +27,27 @@ public class UserRepository implements DAO<User> {
     }
 
     @Override
-    public Optional<User> getByColumn(String naturalId, String value) {
-        var entityManager = getManager();
-        Optional<User> user = Optional.ofNullable((User) entityManager
-                .createQuery("select u from User u where :col = :val")
-                .setParameter("col", naturalId)
-                .setParameter("val", value)
-                .getSingleResult()
-        );
-        entityManager.close();
-        return user;
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public List<User> getAll() {
         var entityManager = getManager();
         List<User> users = (List<User>) entityManager
                 .createQuery("select u from User u")
                 .getResultList();
+        entityManager.close();
+        return users;
+    }
+
+    @Override
+    public List<User> getByColumn(Object value) {
+        var entityManager = getManager();
+        List<User> users = entityManager.createQuery("select u from User u where u.personalInfo.phoneNumber = :pn", User.class)
+                .setParameter("pn", value)
+                .getResultList();
+        if (users == null || users.isEmpty()) {
+            users = entityManager.createQuery("select u from User u where u.personalInfo.email = :email", User.class)
+                    .setParameter("email", value)
+                    .getResultList();
+        }
         entityManager.close();
         return users;
     }

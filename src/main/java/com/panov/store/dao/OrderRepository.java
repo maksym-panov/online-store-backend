@@ -27,19 +27,6 @@ public class OrderRepository implements DAO<Order> {
     }
 
     @Override
-    public Optional<Order> getByColumn(String naturalId, String value) {
-        var entityManager = getManager();
-        Optional<Order> order = Optional.ofNullable((Order) entityManager
-                .createQuery("select o from Order o where :col = :val")
-                .setParameter("col", naturalId)
-                .setParameter("val", value)
-                .getSingleResult()
-        );
-        entityManager.close();
-        return order;
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public List<Order> getAll() {
         var entityManager = getManager();
@@ -48,6 +35,11 @@ public class OrderRepository implements DAO<Order> {
                 .getResultList();
         entityManager.close();
         return orders;
+    }
+
+    @Override
+    public List<Order> getByColumn(Object value) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

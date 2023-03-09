@@ -27,20 +27,6 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
     }
 
     @Override
-    public Optional<UnregisteredCustomer> getByColumn(String naturalId, String value) {
-        var entityManager = getManager();
-        Optional<UnregisteredCustomer> unregisteredCustomer =
-                Optional.ofNullable((UnregisteredCustomer) entityManager
-                    .createQuery("select uc from UnregisteredCustomer uc where :col = :val")
-                    .setParameter("col", naturalId)
-                    .setParameter("val", value)
-                    .getSingleResult()
-                );
-        entityManager.close();
-        return unregisteredCustomer;
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public List<UnregisteredCustomer> getAll() {
         var entityManager = getManager();
@@ -50,6 +36,16 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
                         .getResultList();
         entityManager.close();
         return unregisteredCustomers;
+    }
+
+    @Override
+    public List<UnregisteredCustomer> getByColumn(Object value) {
+        var entityManager = getManager();
+        var customers = entityManager.createQuery("select uc from UnregisteredCustomer uc where uc.phoneNumber = :pn", UnregisteredCustomer.class)
+                .setParameter("pn", value)
+                .getResultList();
+        entityManager.close();
+        return customers;
     }
 
     @Override

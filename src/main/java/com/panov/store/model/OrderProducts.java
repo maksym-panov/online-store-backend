@@ -17,7 +17,7 @@ public class OrderProducts {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderProductsId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "productId")
     private Product product;
 

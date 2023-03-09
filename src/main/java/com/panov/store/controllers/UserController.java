@@ -2,11 +2,9 @@ package com.panov.store.controllers;
 
 import com.panov.store.model.User;
 import com.panov.store.services.UserService;
+import com.panov.store.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,8 +19,12 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> userRange() {
-        return service.getAllUserList();
+    public List<User> userRange(@RequestBody(required = false) String naturalId,
+                                @RequestParam(name = "quantity", required = false) Integer quantity,
+                                @RequestParam(name = "offset", required = false) Integer offset) {
+        if (naturalId == null)
+            return ListUtils.makeCut(service.getAllUserList(), quantity, offset);
+        return service.getByNaturalId(naturalId);
     }
 
     @GetMapping("/{id}")

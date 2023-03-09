@@ -29,7 +29,7 @@ public class Order {
     @JoinColumn(name = "unregisteredCustomerId")
     private UnregisteredCustomer unregisteredCustomer;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OrderProducts> orderProducts;
 
     @ManyToOne

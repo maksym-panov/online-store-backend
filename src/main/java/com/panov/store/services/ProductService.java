@@ -30,4 +30,11 @@ public class ProductService {
         return repository.get(id)
                 .orElseThrow(ProductNotFoundException::new);
     }
+
+    public List<Product> getByNamePattern(String namePattern) {
+        var products = repository.getByColumn(namePattern);
+        if (products == null)
+            return Collections.emptyList();
+        return products;
+    }
 }

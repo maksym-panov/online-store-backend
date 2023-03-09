@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -22,7 +20,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
-    /// DELETE!!!!!!!!!!!
+
     private String hashPassword;
     @Embedded
     private PersonalInfo personalInfo;
@@ -30,8 +28,8 @@ public class User {
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Order> orders = new HashSet<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
 
     @Override
     public int hashCode() {
@@ -62,7 +60,11 @@ public class User {
     @Embeddable
     public static class PersonalInfo {
         @NaturalId
+        @Column(name = "phoneNumber")
         private String phoneNumber;
+
+        @NaturalId
+        @Column(name = "email")
         private String email;
         private String firstname;
         private String lastname;

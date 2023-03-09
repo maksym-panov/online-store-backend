@@ -27,24 +27,25 @@ public class ProductRepository implements DAO<Product> {
     }
 
     @Override
-    public Optional<Product> getByColumn(String naturalId, String value) {
-        var entityManager = getManager();
-        Optional<Product> product = Optional.ofNullable((Product) entityManager
-                .createQuery("select p from Product p where :col = :val")
-                .setParameter("col", naturalId)
-                .setParameter("val", value)
-                .getSingleResult()
-        );
-        entityManager.close();
-        return product;
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public List<Product> getAll() {
         var entityManager = getManager();
         List<Product> products = (List<Product>) entityManager
                 .createQuery("select p from Product p")
+                .getResultList();
+        entityManager.close();
+        return products;
+    }
+
+    @Override
+    public List<Product> getByColumn(Object value) {
+        var entityManager = getManager();
+        if (value == null)
+            return null;
+        String probablyName = value.toString();
+        probablyName = "%" + probablyName + "%";
+        var products = entityManager.createQuery("select p from Product p where lower(p.name) LIKE lower(:name)", Product.class)
+                .setParameter("name", probablyName)
                 .getResultList();
         entityManager.close();
         return products;

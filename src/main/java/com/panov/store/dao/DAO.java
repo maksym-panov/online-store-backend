@@ -7,9 +7,9 @@ public interface DAO<E> {
 
     Optional<E> get(int id);
 
-    Optional<E> getByColumn(String columnName, String value);
-
     List<E> getAll();
+
+    List<E> getByColumn(Object value);
 
     Integer insert(E entity);
 

@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -30,8 +28,8 @@ public class UnregisteredCustomer {
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "unregisteredCustomer", fetch = FetchType.EAGER)
-    private Set<Order> orders = new HashSet<>();
+    @OneToMany(mappedBy = "unregisteredCustomer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
 
     @Override
     public int hashCode() {

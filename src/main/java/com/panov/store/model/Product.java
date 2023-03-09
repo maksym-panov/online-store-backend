@@ -23,7 +23,7 @@ public class Product {
     private BigDecimal price;
     private Integer stock;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "TypeUnit",
         joinColumns = { @JoinColumn(name = "productId") },
         inverseJoinColumns = { @JoinColumn(name = "productTypeId") })
