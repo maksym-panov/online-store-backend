@@ -63,10 +63,10 @@ public class OrderRepository implements DAO<Order> {
     }
 
     @Override
-    public void delete(Order order) {
+    public void delete(Integer id) {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
-        entityManager.remove(order);
+        entityManager.remove(entityManager.find(Order.class, id));
         entityManager.getTransaction().commit();
         entityManager.close();
     }

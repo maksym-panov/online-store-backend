@@ -69,10 +69,10 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
     }
 
     @Override
-    public void delete(UnregisteredCustomer unregisteredCustomer) {
+    public void delete(Integer id) {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
-        entityManager.remove(unregisteredCustomer);
+        entityManager.remove(entityManager.find(UnregisteredCustomer.class, id));
         entityManager.getTransaction().commit();
         entityManager.close();
     }

@@ -4,7 +4,7 @@ import com.panov.store.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.panov.store.dao.DAO;
-import com.panov.store.exceptions.UserNotFoundException;
+import com.panov.store.exceptions.users.UserNotFoundException;
 
 import java.util.Collections;
 import java.util.List;

@@ -73,10 +73,10 @@ public class UserRepository implements DAO<User> {
     }
 
     @Override
-    public void delete(User user) {
+    public void delete(Integer id) {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
-        entityManager.remove(user);
+        entityManager.remove(entityManager.find(User.class, id));
         entityManager.getTransaction().commit();
         entityManager.close();
     }

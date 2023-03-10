@@ -1,14 +1,13 @@
 package com.panov.store.dao;
 
 import com.panov.store.model.Product;
+import com.panov.store.model.ProductType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class ProductRepository implements DAO<Product> {
@@ -56,7 +55,17 @@ public class ProductRepository implements DAO<Product> {
     public Integer insert(Product product) {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
+
+        var types = product.getProductTypes();
+        Set<ProductType> productTypes = new HashSet<>();
+        for (var t : types) {
+            try {
+                productTypes.add(entityManager.find(ProductType.class, t.getProductTypeId()));
+            } catch(Exception ignored) {}
+        }
+        product.setProductTypes(productTypes);
         entityManager.persist(product);
+
         entityManager.getTransaction().commit();
         entityManager.close();
         return product.getProductId();
@@ -66,17 +75,29 @@ public class ProductRepository implements DAO<Product> {
     public Integer update(Product product) {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
+
+        var types = product.getProductTypes();
+        if (types == null)
+            types = new HashSet<>();
+        Set<ProductType> productTypes = new HashSet<>();
+        for (var t : types) {
+            try {
+                productTypes.add(entityManager.find(ProductType.class, t.getProductTypeId()));
+            } catch(Exception ignored) {}
+        }
+        product.setProductTypes(productTypes);
         entityManager.merge(product);
+
         entityManager.getTransaction().commit();
         entityManager.close();
         return product.getProductId();
     }
 
     @Override
-    public void delete(Product product) {
+    public void delete(Integer id) {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
-        entityManager.remove(product);
+        entityManager.remove(entityManager.find(Product.class, id));
         entityManager.getTransaction().commit();
         entityManager.close();
     }

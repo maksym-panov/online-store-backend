@@ -4,7 +4,7 @@ import com.panov.store.dao.DAO;
 import com.panov.store.model.UnregisteredCustomer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.panov.store.exceptions.UnregisteredCustomerNotFoundException;
+import com.panov.store.exceptions.unregcustomers.UnregisteredCustomerNotFoundException;
 
 import java.util.Collections;
 import java.util.List;

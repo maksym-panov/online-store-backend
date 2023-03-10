@@ -70,10 +70,10 @@ public class ProductTypeRepository implements DAO<ProductType> {
     }
 
     @Override
-    public void delete(ProductType productType) {
+    public void delete(Integer id) {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
-        entityManager.remove(productType);
+        entityManager.remove(entityManager.find(ProductType.class, id));
         entityManager.getTransaction().commit();
         entityManager.close();
     }

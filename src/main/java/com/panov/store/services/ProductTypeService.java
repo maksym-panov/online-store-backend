@@ -4,7 +4,7 @@ import com.panov.store.dao.DAO;
 import com.panov.store.model.ProductType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.panov.store.exceptions.ProductTypeNotFoundException;
+import com.panov.store.exceptions.producttypes.ProductTypeNotFoundException;
 
 import java.util.Collections;
 import java.util.List;

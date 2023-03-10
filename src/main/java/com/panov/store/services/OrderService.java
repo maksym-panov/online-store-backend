@@ -6,7 +6,7 @@ import com.panov.store.model.UnregisteredCustomer;
 import com.panov.store.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.panov.store.exceptions.OrderNotFoundException;
+import com.panov.store.exceptions.orders.OrderNotFoundException;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,5 +1,6 @@
 package com.panov.store.exceptions;
 
+import com.panov.store.exceptions.unregcustomers.UnregisteredCustomerNotFoundException;
 import com.panov.store.utils.ExceptionBody;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
