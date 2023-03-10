@@ -10,10 +10,10 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class OrderAdvisor extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(OrderNotFoundException.class)
-    public ResponseEntity<Object> orderNotFoundAdvice(OrderNotFoundException e, WebRequest request) {
-        return handleExceptionInternal(e, new ExceptionBody("This order does not exist"),
-                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+public class ProductTypeAdvisor extends ResponseEntityExceptionHandler {
+    @ExceptionHandler(ProductTypeNotFoundException.class)
+    public ResponseEntity<Object> productTypeNotFoundAdvice(ProductTypeNotFoundException e, WebRequest request) {
+        return handleExceptionInternal(e, new ExceptionBody("This product type does not exist"), new HttpHeaders(),
+                HttpStatus.NOT_FOUND, request);
     }
 }

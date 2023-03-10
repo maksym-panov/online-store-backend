@@ -1,82 +1,79 @@
 package com.panov.store.dao;
 
-import com.panov.store.model.User;
+import com.panov.store.model.ProductType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
-public class UserRepository implements DAO<User> {
+public class ProductTypeRepository implements DAO<ProductType> {
     private final EntityManagerFactory entityManagerFactory;
 
     @Autowired
-    public UserRepository(EntityManagerFactory entityManagerFactory) {
+    public ProductTypeRepository(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
     }
 
     @Override
-    public Optional<User> get(int id) {
+    public Optional<ProductType> get(int id) {
         var entityManager = getManager();
-        var user = Optional.ofNullable(entityManager.find(User.class, id));
+        var productType = Optional.ofNullable(entityManager.find(ProductType.class, id));
         entityManager.close();
-        return user;
+        return productType;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public List<User> getAll() {
+    public List<ProductType> getAll() {
         var entityManager = getManager();
-        List<User> users = (List<User>) entityManager
-                .createQuery("select u from User u")
+        var productTypes = entityManager.createQuery("select pt from ProductType pt", ProductType.class)
                 .getResultList();
         entityManager.close();
-        return users;
+        return productTypes;
     }
 
     @Override
-    public List<User> getByColumn(Object value) {
+    public List<ProductType> getByColumn(Object value) {
         var entityManager = getManager();
-        List<User> users = entityManager.createQuery("select u from User u where u.personalInfo.phoneNumber = :pn", User.class)
-                .setParameter("pn", value)
+        String probablyName = Objects.toString(value);
+        probablyName = "%" + probablyName + "%";
+        var productTypes = entityManager
+                .createQuery("select pt from ProductType pt where lower(pt.name) like lower(:pattern)", ProductType.class)
+                .setParameter("pattern", probablyName)
                 .getResultList();
-        if (users == null || users.isEmpty()) {
-            users = entityManager.createQuery("select u from User u where u.personalInfo.email = :email", User.class)
-                    .setParameter("email", value)
-                    .getResultList();
-        }
         entityManager.close();
-        return users;
+        return productTypes;
     }
 
     @Override
-    public Integer insert(User user) {
+    public Integer insert(ProductType productType) {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
-        entityManager.persist(user);
+        entityManager.persist(productType);
         entityManager.getTransaction().commit();
         entityManager.close();
-        return user.getUserId();
+        return productType.getProductTypeId();
     }
 
     @Override
-    public Integer update(User user) {
+    public Integer update(ProductType productType) {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
-        entityManager.merge(user);
+        entityManager.merge(productType);
         entityManager.getTransaction().commit();
         entityManager.close();
-        return user.getUserId();
+        return productType.getProductTypeId();
     }
 
     @Override
-    public void delete(User user) {
+    public void delete(ProductType productType) {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
-        entityManager.remove(user);
+        entityManager.remove(productType);
         entityManager.getTransaction().commit();
         entityManager.close();
     }

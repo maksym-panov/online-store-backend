@@ -1,5 +1,6 @@
 package com.panov.store.exceptions;
 
+import com.panov.store.utils.ExceptionBody;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class UserAdvisor extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Object> userNotFoundAdvice(UserNotFoundException e, WebRequest request) {
-        return handleExceptionInternal(e, "This user does not exist", new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+        return handleExceptionInternal(e, new ExceptionBody("This user does not exist"),
+                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 }

@@ -3,6 +3,8 @@ package com.panov.store.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.panov.store.utils.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,9 +38,13 @@ public class Order {
     @JoinColumn(name = "deliveryTypeId")
     private DeliveryType deliveryType;
 
+    @NotNull
+    @PastOrPresent
     private Timestamp postTime;
+    @PastOrPresent
     private Timestamp completeTime;
 
+    @NotNull
     @Convert(converter = Status.StatusConverter.class)
     private Status status;
 

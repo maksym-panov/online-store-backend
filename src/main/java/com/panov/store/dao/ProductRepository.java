@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -42,10 +43,10 @@ public class ProductRepository implements DAO<Product> {
         var entityManager = getManager();
         if (value == null)
             return null;
-        String probablyName = value.toString();
+        String probablyName = Objects.toString(value);
         probablyName = "%" + probablyName + "%";
-        var products = entityManager.createQuery("select p from Product p where lower(p.name) LIKE lower(:name)", Product.class)
-                .setParameter("name", probablyName)
+        var products = entityManager.createQuery("select p from Product p where lower(p.name) LIKE lower(:pattern)", Product.class)
+                .setParameter("pattern", probablyName)
                 .getResultList();
         entityManager.close();
         return products;
@@ -54,7 +55,9 @@ public class ProductRepository implements DAO<Product> {
     @Override
     public Integer insert(Product product) {
         var entityManager = getManager();
+        entityManager.getTransaction().begin();
         entityManager.persist(product);
+        entityManager.getTransaction().commit();
         entityManager.close();
         return product.getProductId();
     }
@@ -62,7 +65,9 @@ public class ProductRepository implements DAO<Product> {
     @Override
     public Integer update(Product product) {
         var entityManager = getManager();
+        entityManager.getTransaction().begin();
         entityManager.merge(product);
+        entityManager.getTransaction().commit();
         entityManager.close();
         return product.getProductId();
     }
@@ -70,7 +75,9 @@ public class ProductRepository implements DAO<Product> {
     @Override
     public void delete(Product product) {
         var entityManager = getManager();
+        entityManager.getTransaction().begin();
         entityManager.remove(product);
+        entityManager.getTransaction().commit();
         entityManager.close();
     }
 

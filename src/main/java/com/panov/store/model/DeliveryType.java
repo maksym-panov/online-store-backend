@@ -2,6 +2,8 @@ package com.panov.store.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +22,9 @@ public class DeliveryType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer deliveryTypeId;
+    @NotNull(message = "Delivery type name cannot be null")
+    @Size(min = 2, message = "Delivery type name must be meaningful")
+    @Size(max = 50, message = "Delivery type name is too long")
     @NaturalId
     private String name;
 

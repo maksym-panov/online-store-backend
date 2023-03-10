@@ -51,7 +51,9 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
     @Override
     public Integer insert(UnregisteredCustomer unregisteredCustomer) {
         var entityManager = getManager();
+        entityManager.getTransaction().begin();
         entityManager.persist(unregisteredCustomer);
+        entityManager.getTransaction().commit();
         entityManager.close();
         return unregisteredCustomer.getUnregisteredCustomerId();
     }
@@ -59,7 +61,9 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
     @Override
     public Integer update(UnregisteredCustomer unregisteredCustomer) {
         var entityManager = getManager();
+        entityManager.getTransaction().begin();
         entityManager.merge(unregisteredCustomer);
+        entityManager.getTransaction().commit();
         entityManager.close();
         return unregisteredCustomer.getUnregisteredCustomerId();
     }
@@ -67,7 +71,9 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
     @Override
     public void delete(UnregisteredCustomer unregisteredCustomer) {
         var entityManager = getManager();
+        entityManager.getTransaction().begin();
         entityManager.remove(unregisteredCustomer);
+        entityManager.getTransaction().commit();
         entityManager.close();
     }
 

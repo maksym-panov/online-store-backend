@@ -3,6 +3,10 @@ package com.panov.store.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.panov.store.utils.Access;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +26,7 @@ public class User {
     private Integer userId;
 
     private String hashPassword;
+
     @Embedded
     private PersonalInfo personalInfo;
 
@@ -59,16 +64,24 @@ public class User {
     @NoArgsConstructor
     @Embeddable
     public static class PersonalInfo {
+        @NotNull(message = "Phone number must be present")
+        @Pattern(regexp = "0\\d{9}", message = "Phone number must match the format '0XXXXXXXXX'")
         @NaturalId
-        @Column(name = "phoneNumber")
         private String phoneNumber;
 
+        @Email
+        @Size(max = 80, message = "Email is too long")
         @NaturalId
-        @Column(name = "email")
         private String email;
+
+        @NotNull(message = "FirstName must be present")
+        @Size(min = 1, message = "Firstname cannot be empty")
+        @Size(max = 30, message = "Firstname is too long")
         private String firstname;
+        @Size(max = 30, message = "Firstname is too long")
         private String lastname;
 
+        @NotNull
         @Convert(converter = Access.AccessConverter.class)
         private Access access;
 

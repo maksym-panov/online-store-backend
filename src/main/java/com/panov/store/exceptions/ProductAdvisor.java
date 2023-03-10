@@ -1,5 +1,6 @@
 package com.panov.store.exceptions;
 
+import com.panov.store.utils.ExceptionBody;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ public class ProductAdvisor extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<Object> productNotFoundAdvice(
             ProductNotFoundException e, WebRequest request) {
-        return handleExceptionInternal(e, "This product does not exist",
+        return handleExceptionInternal(e, new ExceptionBody("This product does not exist"),
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 }

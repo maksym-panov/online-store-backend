@@ -45,7 +45,9 @@ public class OrderRepository implements DAO<Order> {
     @Override
     public Integer insert(Order order) {
         var entityManager = getManager();
+        entityManager.getTransaction().begin();
         entityManager.persist(order);
+        entityManager.getTransaction().commit();
         entityManager.close();
         return order.getOrderId();
     }
@@ -53,7 +55,9 @@ public class OrderRepository implements DAO<Order> {
     @Override
     public Integer update(Order order) {
         var entityManager = getManager();
+        entityManager.getTransaction().begin();
         entityManager.merge(order);
+        entityManager.getTransaction().commit();
         entityManager.close();
         return order.getOrderId();
     }
@@ -61,7 +65,9 @@ public class OrderRepository implements DAO<Order> {
     @Override
     public void delete(Order order) {
         var entityManager = getManager();
+        entityManager.getTransaction().begin();
         entityManager.remove(order);
+        entityManager.getTransaction().commit();
         entityManager.close();
     }
 
