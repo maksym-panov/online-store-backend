@@ -1,12 +1,12 @@
 package com.panov.store.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.panov.store.utils.Access;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +19,6 @@ import java.util.*;
 @NoArgsConstructor
 @Entity(name = "User")
 @Table(name = "\"User\"")
-@JsonIgnoreProperties({ "hashPassword", "orders" })
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +32,11 @@ public class User {
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @NotNull
+    @Convert(converter = Access.AccessConverter.class)
+    private Access access;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Order> orders = new ArrayList<>();
 
     @Override
@@ -62,6 +65,7 @@ public class User {
     @Getter
     @Setter
     @NoArgsConstructor
+    @AllArgsConstructor
     @Embeddable
     public static class PersonalInfo {
         @NotNull(message = "Phone number must be present")
@@ -78,12 +82,9 @@ public class User {
         @Size(min = 1, message = "Firstname cannot be empty")
         @Size(max = 30, message = "Firstname is too long")
         private String firstname;
+
         @Size(max = 30, message = "Firstname is too long")
         private String lastname;
-
-        @NotNull
-        @Convert(converter = Access.AccessConverter.class)
-        private Access access;
 
         @Override
         public int hashCode() {
@@ -100,12 +101,11 @@ public class User {
 
         @Override
         public String toString() {
-            return String.format("PersonalInfo[%s %s Tel.: %s Email: %s Role: %s]",
+            return String.format("PersonalInfo[%s %s Tel.: %s Email: %s]",
                     firstname,
                     lastname,
                     phoneNumber,
-                    email,
-                    access
+                    email
             );
         }
     }

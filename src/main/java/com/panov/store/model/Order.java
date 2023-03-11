@@ -1,6 +1,5 @@
 package com.panov.store.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.panov.store.utils.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity(name = "Order")
 @Table(name = "\"Order\"")
-@JsonIgnoreProperties({ "user", "unregisteredCustomer" })
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

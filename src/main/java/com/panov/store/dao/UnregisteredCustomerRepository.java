@@ -40,12 +40,7 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
 
     @Override
     public List<UnregisteredCustomer> getByColumn(Object value) {
-        var entityManager = getManager();
-        var customers = entityManager.createQuery("select uc from UnregisteredCustomer uc where uc.phoneNumber = :pn", UnregisteredCustomer.class)
-                .setParameter("pn", value)
-                .getResultList();
-        entityManager.close();
-        return customers;
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -9,30 +9,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="1. Validation annotations for model classes. &#10;2. ProductType objects access via api. &#10;3. Wrapped in transactions create, update and delete operations in the DAO layer. &#10;4. Created ExceptionBody class for wrapping custom exceptions and send to user in JSON-format.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/ProductDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/products/ProductNotCreatedException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/products/ProductNotDeletedException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/products/ProductNotUpdatedException.java" afterDir="false" />
+    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Full CRUD, Exception optimisation, Password encoder, Check the uniqueness of parameters.&#10;&#10;1. Completed implementing CRUD for each model entity.&#10;2. Added check for parameter uniqueness to the ProductService, UserService, ProductTypeService classes.&#10;3. Created DTO classes to communicate with clients. DTO classes are used only in @Controller classes and are not being used deeply (in service or dao).&#10;4. Optimized all the model exceptions into 4 classes that extend ResourceException class - ResourceNotFoundException, ResourceNotCreatedException, ResourceNotUpdatedException, ResourceNotDeletedException classes.&#10;5. NotCreated and NotUpdated have fields Map&lt;String, String&gt; and BindingResult to store exception situations causes which the application sends to the client using ControllerAdvisor class' methods (all the advisors are now concentrated in one ControllerAdvisor class because of changes described in paragraph #4).&#10;6. Added password encoder and used it in the UserController#createUser method.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/DeliveryTypeDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/OrderDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/OrderProductsDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/ProductTypeDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/RegistrationForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/UnregisteredCustomerDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/UserDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ResourceException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/PasswordEncoder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/OrderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UnregisteredCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UnregisteredCustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductTypeRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UnregisteredCustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UnregisteredCustomerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/OrderAdvisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/OrderAdvisor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/OrderNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/orders/OrderNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ProductAdvisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ProductAdvisor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ProductNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/products/ProductNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ProductTypeAdvisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ProductTypeAdvisor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ProductTypeNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/producttypes/ProductTypeNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/UnregisteredCustomerAdvisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/UnregisteredCustomerAdvisor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/UnregisteredCustomerNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/unregcustomers/UnregisteredCustomerNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/UserAdvisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/UserAdvisor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/UserNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/users/UserNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/ProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/OrderAdvisor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ProductAdvisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ControllerAdvisor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ProductTypeAdvisor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/UnregisteredCustomerAdvisor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/UserAdvisor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/orders/OrderNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/products/ProductNotCreatedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ResourceNotCreatedException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/products/ProductNotDeletedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ResourceNotDeletedException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/products/ProductNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ResourceNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/products/ProductNotUpdatedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ResourceNotUpdatedException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/producttypes/ProductTypeNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/unregcustomers/UnregisteredCustomerNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/users/UserNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/DeliveryType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/DeliveryType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/OrderProducts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/OrderProducts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/ProductType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/ProductType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/UnregisteredCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/UnregisteredCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/OrderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductTypeService.java" afterDir="false" />
@@ -108,6 +123,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.panov.store.dto" />
       <recent name="com.panov.store.exceptions" />
       <recent name="com.panov.store.model" />
     </key>
@@ -253,7 +269,7 @@
       <workItem from="1678097827719" duration="23604000" />
       <workItem from="1678170562103" duration="1000" />
       <workItem from="1678189321697" duration="57795000" />
-      <workItem from="1678438815180" duration="23018000" />
+      <workItem from="1678438815180" duration="43016000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1676894430878</created>
@@ -332,7 +348,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678450586403</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="1. Fully implemented CRUD for Product class.&#10;2. Provided validation of fields for ALL model classes.&#10;3. Provided sending validation verdicts to the client.&#10;4. Provided exception handling for Product and sending error message objects to the Client via @ExceptionHandler.&#10;5. In DAO changed delete method so now we should provide only the ID of the entity to delete it.&#10;6. Started implementing DTO classes. Fully integrated ProductDTO class into the Product API so that in the ProductController Product objects are being mapped to ProductDTO objects and vice versa.&#10;7. Also changed package structure so now 'exceptions' package contains 'products', 'orders' et cetera sub-packages and also Advisor classes.">
+      <created>1678474011830</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1678474011830</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -362,7 +385,20 @@
     <MESSAGE value="Basic controllers, services and exception handlers.&#10;1. Created a skeleton of the service layer (UserService, ProductService etc.)&#10;2. Created a skeleton of the controller layer (UserController etc.)&#10;3. Created &quot;NotFound&quot; exception classes for all entities (maybe in future I will make only one &quot;NotFoundException&quot; class).&#10;4. Basically implemented advisor classes for all the entities.&#10;5. Created REST API endpoints for all the entities, such as &quot;/users&quot;, &quot;/users/{id}&quot;, &quot;product&quot; etc and tested them working.&#10;6. Used @JsonIgnoreProperties to control Hibernate relations view in ResponseEntities&#10;7. Removed @AllArgsConstructor annotations from model classes." />
     <MESSAGE value="GET method endpoints provided. Search by product name, phone number of user and unregistered user, email of user implemented.&#10;1. Made changes in DAO interface and now we left with only one method that can find entities by column (or even columns).&#10;2. Service classes now have methods to find list of all entities and list of entities with some constraint (product by product name, user by phone etc.)&#10;3. Created class ListUtils with static method '''Java makeCut(List&lt;T&gt; list, Integer quantity, Integer offset)''' to handle pagination type requests.&#10;&#10;4. Provided endpoints:&#10;/users&#10;/users?quantity={integer}&amp;offset={integer}&#10;/users (+ phone number or email in the request body)&#10;/users/{id}&#10;&#10;/unregistered_customers&#10;/unregistered_customers?quantity={integer}&amp;offset={integer}&#10;/unregistered_customers (+ phone number in the request body)&#10;/unregistered_customers/{id}&#10;&#10;/products&#10;/products?quantity={integer}&amp;offset={integer}&#10;/products (+ part of product name)&#10;/products/{id}&#10;&#10;/orders&#10;/orders?quantity={integer}&amp;offset={integer}&amp;user={userId}&amp;uc={unregisteredCustomerId}&#10;/orders/{id}" />
     <MESSAGE value="1. Validation annotations for model classes. &#10;2. ProductType objects access via api. &#10;3. Wrapped in transactions create, update and delete operations in the DAO layer. &#10;4. Created ExceptionBody class for wrapping custom exceptions and send to user in JSON-format." />
-    <option name="LAST_COMMIT_MESSAGE" value="1. Validation annotations for model classes. &#10;2. ProductType objects access via api. &#10;3. Wrapped in transactions create, update and delete operations in the DAO layer. &#10;4. Created ExceptionBody class for wrapping custom exceptions and send to user in JSON-format." />
+    <MESSAGE value="1. Fully implemented CRUD for Product class.&#10;2. Provided validation of fields for ALL model classes.&#10;3. Provided sending validation verdicts to the client.&#10;4. Provided exception handling for Product and sending error message objects to the Client via @ExceptionHandler.&#10;5. In DAO changed delete method so now we should provide only the ID of the entity to delete it.&#10;6. Started implementing DTO classes. Fully integrated ProductDTO class into the Product API so that in the ProductController Product objects are being mapped to ProductDTO objects and vice versa.&#10;7. Also changed package structure so now 'exceptions' package contains 'products', 'orders' et cetera sub-packages and also Advisor classes." />
+    <MESSAGE value="Full CRUD, Exception optimisation, Password encoder, Check the uniqueness of parameters.&#10;&#10;1. Completed implementing CRUD for each model entity.&#10;2. Added check for parameter uniqueness to the ProductService, UserService, ProductTypeService classes.&#10;3. Created DTO classes to communicate with clients. DTO classes are used only in @Controller classes and are not being used deeply (in service or dao).&#10;4. Optimized all the model exceptions into 4 classes that extend ResourceException class - ResourceNotFoundException, ResourceNotCreatedException, ResourceNotUpdatedException, ResourceNotDeletedException classes.&#10;5. NotCreated and NotUpdated have fields Map&lt;String, String&gt; and BindingResult to store exception situations causes which the application sends to the client using ControllerAdvisor class' methods (all the advisors are now concentrated in one ControllerAdvisor class because of changes described in paragraph #4).&#10;6. Added password encoder and used it in the UserController#createUser method." />
+    <option name="LAST_COMMIT_MESSAGE" value="Full CRUD, Exception optimisation, Password encoder, Check the uniqueness of parameters.&#10;&#10;1. Completed implementing CRUD for each model entity.&#10;2. Added check for parameter uniqueness to the ProductService, UserService, ProductTypeService classes.&#10;3. Created DTO classes to communicate with clients. DTO classes are used only in @Controller classes and are not being used deeply (in service or dao).&#10;4. Optimized all the model exceptions into 4 classes that extend ResourceException class - ResourceNotFoundException, ResourceNotCreatedException, ResourceNotUpdatedException, ResourceNotDeletedException classes.&#10;5. NotCreated and NotUpdated have fields Map&lt;String, String&gt; and BindingResult to store exception situations causes which the application sends to the client using ControllerAdvisor class' methods (all the advisors are now concentrated in one ControllerAdvisor class because of changes described in paragraph #4).&#10;6. Added password encoder and used it in the UserController#createUser method." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/6.0.3/spring-context-6.0.3-sources.jar!/org/springframework/validation/BindingResult.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

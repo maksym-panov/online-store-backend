@@ -1,6 +1,5 @@
 package com.panov.store.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -18,7 +17,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity(name = "ProductType")
 @Table(name = "ProductType")
-@JsonIgnoreProperties({ "products" })
 public class ProductType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

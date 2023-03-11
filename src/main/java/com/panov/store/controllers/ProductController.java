@@ -1,8 +1,8 @@
 package com.panov.store.controllers;
 
 import com.panov.store.dto.ProductDTO;
-import com.panov.store.exceptions.products.ProductNotCreatedException;
-import com.panov.store.exceptions.products.ProductNotUpdatedException;
+import com.panov.store.exceptions.ResourceNotCreatedException;
+import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.Product;
 import com.panov.store.services.ProductService;
 import com.panov.store.utils.ListUtils;
@@ -28,19 +28,19 @@ public class ProductController {
     @GetMapping
     public List<ProductDTO> productsRange(
             @RequestBody(required = false) String pattern,
+            @RequestParam(name = "category", required = false) Integer typeId,
             @RequestParam(name = "quantity", required = false) Integer quantity,
             @RequestParam(name = "offset", required = false) Integer offset) {
-        List<ProductDTO> range;
-        if (pattern == null)
-            range = service.getRangeOfProducts()
-                    .stream()
-                    .map(ProductDTO::of)
-                    .toList();
-        else
-            range = service.getByNamePattern(pattern)
-                    .stream()
-                    .map(ProductDTO::of)
-                    .toList();
+        List<Product> products;
+        if (pattern == null) products = service.getRangeOfProducts();
+        else products = service.getByNamePattern(pattern);
+
+        var range = products
+                .stream()
+                .map(ProductDTO::of)
+                .filter(p -> typeId == null || p.inCategory(typeId))
+                .toList();
+
         return ListUtils.makeCut(range, quantity, offset);
     }
 
@@ -53,11 +53,9 @@ public class ProductController {
     public Integer createProduct(@RequestBody @Valid ProductDTO productDTO,
                                          BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            throw new ProductNotCreatedException(bindingResult);
-        Integer id = service.createProduct(productDTO.toModel());
-        if (id == null)
-            throw new ProductNotCreatedException();
-        return id;
+            throw new ResourceNotCreatedException(bindingResult);
+
+        return service.createProduct(productDTO.toModel());
     }
 
     @PatchMapping("/{id}")
@@ -65,13 +63,11 @@ public class ProductController {
                                  @PathVariable("id") Integer id,
                                  BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            throw new ProductNotUpdatedException(bindingResult);
-        Product product = null;
-        if (productDTO != null) {
-            productDTO.setProductId(id);
-            product = productDTO.toModel();
-        }
-        return service.changeProduct(product);
+            throw new ResourceNotUpdatedException(bindingResult);
+
+        productDTO.setProductId(id);
+
+        return service.changeProduct(productDTO.toModel());
     }
 
     @DeleteMapping("/{id}")

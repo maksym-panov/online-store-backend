@@ -1,9 +1,16 @@
 package com.panov.store.controllers;
 
+import com.panov.store.dto.OrderDTO;
+import com.panov.store.exceptions.ResourceNotCreatedException;
+import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.Order;
 import com.panov.store.services.OrderService;
 import com.panov.store.utils.ListUtils;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,5 +43,32 @@ public class OrderController {
     @GetMapping("/{id}")
     public Order specificOrder(@PathVariable("id") Integer id) {
         return service.getById(id);
+    }
+
+    @PostMapping
+    public Integer postOrder(@RequestBody @Valid OrderDTO orderDTO,
+                             BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            throw new ResourceNotCreatedException(bindingResult);
+
+        return service.createOrder(orderDTO.toModel());
+    }
+
+    @PatchMapping("/{id}")
+    public Integer changeOrder(@RequestBody @Valid OrderDTO orderDTO,
+                               @PathVariable("id") Integer id,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            throw new ResourceNotUpdatedException(bindingResult);
+
+        orderDTO.setOrderId(id);
+
+        return service.changeOrder(orderDTO.toModel());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteOrder(@PathVariable("id") Integer id) {
+        service.deleteOrder(id);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 }

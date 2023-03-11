@@ -1,6 +1,5 @@
 package com.panov.store.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity(name = "OrderProducts")
 @Table(name = "OrderProducts")
-@JsonIgnoreProperties({ "order" })
 public class OrderProducts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +22,6 @@ public class OrderProducts {
     @JoinColumn(name = "productId")
     private Product product;
 
-    @NotNull(message = "There must be order reference in the order line")
     @ManyToOne
     @JoinColumn(name = "orderId")
     private Order order;

@@ -1,6 +1,5 @@
 package com.panov.store.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -8,7 +7,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.NaturalId;
 
 import java.util.*;
 
@@ -17,7 +15,6 @@ import java.util.*;
 @NoArgsConstructor
 @Entity(name = "UnregisteredCustomer")
 @Table(name = "UnregisteredCustomer")
-@JsonIgnoreProperties({ "orders" })
 public class UnregisteredCustomer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +22,13 @@ public class UnregisteredCustomer {
 
     @NotNull(message = "Phone number must be present")
     @Pattern(regexp = "0\\d{9}", message = "Phone number must match the format '0XXXXXXXXX'")
-    @NaturalId
     private String phoneNumber;
+
     @NotNull(message = "Firstname must be present")
     @Size(min = 1, message = "Firstname cannot be null")
     @Size(max = 30, message = "Firstname is too long")
     private String firstname;
+
     @Size(max = 30, message = "Lastname is too long")
     private String lastname;
 

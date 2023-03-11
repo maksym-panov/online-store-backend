@@ -1,7 +1,6 @@
 package com.panov.store.dto;
 
 import com.panov.store.model.Product;
-import com.panov.store.model.ProductType;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +12,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -36,9 +37,20 @@ public class ProductDTO {
     @NotNull(message = "Stock of product must be present")
     @Min(value = 0, message = "Stock must be greater than 0")
     private Integer stock;
-    private Set<ProductType> productTypes = new HashSet<>();
+
+    private Set<ProductTypeDTO> productTypes = new HashSet<>();
+
+    public boolean inCategory(Integer productTypeId) {
+        for (var pt : productTypes)
+            if (Objects.equals(productTypeId, pt.getProductTypeId()))
+                return true;
+        return false;
+    }
 
     public static ProductDTO of(Product p) {
+        if (p == null)
+            return null;
+
         return new ProductDTO(
                 p.getProductId(),
                 p.getName(),
@@ -46,6 +58,10 @@ public class ProductDTO {
                 p.getPrice(),
                 p.getStock(),
                 p.getProductTypes()
+                        .stream()
+                        .filter(Objects::nonNull)
+                        .map(ProductTypeDTO::of)
+                        .collect(Collectors.toSet())
         );
     }
 
@@ -56,7 +72,13 @@ public class ProductDTO {
         p.setDescription(description);
         p.setPrice(price);
         p.setStock(stock);
-        p.setProductTypes(productTypes);
+        p.setProductTypes(
+                productTypes == null ? new HashSet<>() :
+                        productTypes.stream()
+                                .filter(Objects::nonNull)
+                                .map(ProductTypeDTO::toModel)
+                                .collect(Collectors.toSet())
+        );
         return p;
     }
 }

@@ -1,6 +1,5 @@
 package com.panov.store.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +17,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity(name = "DeliveryType")
 @Table(name = "DeliveryType")
-@JsonIgnoreProperties({ "orders" })
 public class DeliveryType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +28,7 @@ public class DeliveryType {
     private String name;
 
     @OneToMany(mappedBy = "deliveryType")
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
 
     @Override
     public int hashCode() {
