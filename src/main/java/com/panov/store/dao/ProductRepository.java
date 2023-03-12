@@ -59,9 +59,11 @@ public class ProductRepository implements DAO<Product> {
         var types = product.getProductTypes();
         Set<ProductType> productTypes = new HashSet<>();
         for (var t : types) {
-            try {
-                productTypes.add(entityManager.find(ProductType.class, t.getProductTypeId()));
-            } catch(Exception ignored) {}
+            if (t == null || t.getProductTypeId() == null)
+                continue;
+            if (entityManager.find(ProductType.class, t.getProductTypeId()) == null)
+                continue;
+            productTypes.add(entityManager.find(ProductType.class, t.getProductTypeId()));
         }
         product.setProductTypes(productTypes);
         entityManager.persist(product);

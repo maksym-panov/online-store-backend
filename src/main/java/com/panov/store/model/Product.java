@@ -8,15 +8,16 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-@Entity(name = "Product")
+@Entity
 @Table(name = "Product")
 public class Product {
     @Id
@@ -26,9 +27,11 @@ public class Product {
     @NotNull(message = "Product name must be present")
     @Size(min = 2, message = "Product name must be meaningful")
     @Size(max = 128, message = "Product name is too long")
+    @Column(unique = true)
     private String name;
 
     private String description;
+
     @NotNull(message = "Product price must be present")
     @Min(value = 0L, message = "Price cannot be a negative number")
     @Max(value = 99999999L, message = "Price is too big")
@@ -39,20 +42,20 @@ public class Product {
     private Integer stock;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "TypeUnit",
-        joinColumns = { @JoinColumn(name = "productId") },
-        inverseJoinColumns = { @JoinColumn(name = "productTypeId") })
     private Set<ProductType> productTypes = new HashSet<>();
 
+    @ToString.Exclude
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private List<OrderProducts> orderProducts = new ArrayList<>();
+
     @Override
-    public String toString() {
-        return String.format("Product[id = %d, name = %s, description = %s, price = %s, stock = %d, productTypes = %s]",
-                productId,
-                name,
-                description,
-                price.toString(),
-                stock,
-                productTypes
-        );
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null)
+            return false;
+        if (!(o instanceof Product other))
+            return false;
+        return Objects.equals(this.name, other.name);
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+
+    <persistence-unit name="test-db-context">
+        <description>Hibernate EntityManager</description>
+        <class>com.panov.store.model.Order</class>
+        <class>com.panov.store.model.Product</class>
+        <class>com.panov.store.model.UnregisteredCustomer</class>
+        <class>com.panov.store.model.User</class>
+        <class>com.panov.store.model.ProductType</class>
+        <class>com.panov.store.model.OrderProducts</class>
+        <class>com.panov.store.model.DeliveryType</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.ddl-auto" value="create-drop" />
+            <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:test_db;DB_CLOSE_DELAY=1"/>
+            <property name="jakarta.persistence.jdbc.user" value="sa"/>
+            <property name="jakarta.persistence.jdbc.password" value="sa"/>
+<!--            <property name="hibernate.show_sql" value="true" />-->
+<!--            <property name="hibernate.format_sql" value="true" />-->
+        </properties>
+    </persistence-unit>
+</persistence>

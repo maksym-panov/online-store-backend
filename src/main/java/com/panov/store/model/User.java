@@ -6,18 +6,15 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.NaturalId;
+import lombok.*;
 
 import java.util.*;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-@Entity(name = "User")
+@Entity
 @Table(name = "\"User\"")
 public class User {
     @Id
@@ -53,29 +50,21 @@ public class User {
         return Objects.equals(this.personalInfo, other.personalInfo);
     }
 
-    @Override
-    public String toString() {
-        return String.format("User[Id = %d %s %s]",
-                userId,
-                personalInfo,
-                address
-        );
-    }
-
     @Getter
     @Setter
+    @ToString
     @NoArgsConstructor
     @AllArgsConstructor
     @Embeddable
     public static class PersonalInfo {
         @NotNull(message = "Phone number must be present")
         @Pattern(regexp = "0\\d{9}", message = "Phone number must match the format '0XXXXXXXXX'")
-        @NaturalId
+        @Column(unique = true)
         private String phoneNumber;
 
         @Email
         @Size(max = 80, message = "Email is too long")
-        @NaturalId
+        @Column(unique = true)
         private String email;
 
         @NotNull(message = "FirstName must be present")
@@ -96,17 +85,10 @@ public class User {
             if (this == o) return true;
             if (o == null) return false;
             if (!(o instanceof PersonalInfo other)) return false;
-            return Objects.equals(this.phoneNumber, other.phoneNumber);
-        }
-
-        @Override
-        public String toString() {
-            return String.format("PersonalInfo[%s %s Tel.: %s Email: %s]",
-                    firstname,
-                    lastname,
-                    phoneNumber,
-                    email
-            );
+            return Objects.equals(phoneNumber, other.phoneNumber) &&
+                    Objects.equals(email, other.email) &&
+                    Objects.equals(firstname, other.firstname) &&
+                    Objects.equals(lastname, other.lastname);
         }
     }
 }

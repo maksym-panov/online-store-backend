@@ -4,13 +4,13 @@ import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.Objects;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
@@ -34,13 +34,30 @@ public class Address {
     private Integer postalCode;
 
     @Override
-    public String toString() {
-        return String.format("Address[%s dst., village %s, %s st., building %d Postal code: %d]",
-                district,
-                city,
-                street,
-                building,
-                postalCode
-        );
+    public int hashCode() {
+        return Objects.hash(region) * 1000000
+                + Objects.hash(district) * 100000
+                + Objects.hash(city) * 10000
+                + Objects.hash(street) * 1000
+                + Objects.hash(building) * 100
+                + Objects.hash(apartment) * 10
+                + Objects.hash(postalCode);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null)
+            return false;
+        if (!(o instanceof Address other))
+            return false;
+        return Objects.equals(region, other.region) &&
+                Objects.equals(district, other.district) &&
+                Objects.equals(city, other.city) &&
+                Objects.equals(street, other.street) &&
+                Objects.equals(building, other.building) &&
+                Objects.equals(apartment, other.apartment) &&
+                Objects.equals(postalCode, other.postalCode);
     }
 }

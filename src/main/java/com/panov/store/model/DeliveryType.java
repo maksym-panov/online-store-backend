@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.NaturalId;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +14,22 @@ import java.util.Objects;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-@Entity(name = "DeliveryType")
+@Entity
 @Table(name = "DeliveryType")
 public class DeliveryType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer deliveryTypeId;
+
     @NotNull(message = "Delivery type name cannot be null")
     @Size(min = 2, message = "Delivery type name must be meaningful")
     @Size(max = 50, message = "Delivery type name is too long")
-    @NaturalId
+    @Column(unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "deliveryType")
+    @OneToMany(mappedBy = "deliveryType", fetch = FetchType.EAGER)
     private List<Order> orders = new ArrayList<>();
 
     @Override
@@ -41,13 +43,5 @@ public class DeliveryType {
         if (o == null) return false;
         if (!(o instanceof DeliveryType other)) return false;
         return Objects.equals(this.name, other.name);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("DeliveryType[id = %d, name = %s]",
-                deliveryTypeId,
-                name
-        );
     }
 }

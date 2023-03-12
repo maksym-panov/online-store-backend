@@ -7,13 +7,15 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.*;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-@Entity(name = "UnregisteredCustomer")
+@Entity
 @Table(name = "UnregisteredCustomer")
 public class UnregisteredCustomer {
     @Id
@@ -22,6 +24,7 @@ public class UnregisteredCustomer {
 
     @NotNull(message = "Phone number must be present")
     @Pattern(regexp = "0\\d{9}", message = "Phone number must match the format '0XXXXXXXXX'")
+    @Column(unique = true)
     private String phoneNumber;
 
     @NotNull(message = "Firstname must be present")
@@ -36,12 +39,15 @@ public class UnregisteredCustomer {
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "unregisteredCustomer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "unregisteredCustomer", fetch = FetchType.EAGER)
     private List<Order> orders = new ArrayList<>();
 
     @Override
     public int hashCode() {
-        return Objects.hash(phoneNumber);
+        return Objects.hash(phoneNumber) * 1000
+                + Objects.hash(firstname) * 100
+                + Objects.hash(lastname) * 10
+                + Objects.hash(address);
     }
 
     @Override
@@ -49,18 +55,9 @@ public class UnregisteredCustomer {
         if (this == o) return true;
         if (o == null) return false;
         if (!(o instanceof UnregisteredCustomer other)) return false;
-        return Objects.equals(this.phoneNumber, other.phoneNumber);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("UnregisteredCustomer[Id = %d, phoneNumber = %s, " +
-                        "firstname = %s, lastname = %s, address = %s]",
-                unregisteredCustomerId,
-                phoneNumber,
-                firstname,
-                lastname,
-                address
-        );
+        return Objects.equals(phoneNumber, other.phoneNumber) &&
+                Objects.equals(firstname, other.firstname) &&
+                Objects.equals(lastname, other.lastname) &&
+                Objects.equals(address, other.address);
     }
 }

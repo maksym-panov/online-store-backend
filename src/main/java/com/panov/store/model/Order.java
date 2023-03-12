@@ -7,32 +7,35 @@ import jakarta.validation.constraints.PastOrPresent;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-@Entity(name = "Order")
+@Entity
 @Table(name = "\"Order\"")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "unregisteredCustomerId")
     private UnregisteredCustomer unregisteredCustomer;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<OrderProducts> orderProducts;
+    private List<OrderProducts> orderProducts = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST })
     @JoinColumn(name = "deliveryTypeId")
     private DeliveryType deliveryType;
 
@@ -45,20 +48,4 @@ public class Order {
     @NotNull
     @Convert(converter = Status.StatusConverter.class)
     private Status status;
-
-    @Override
-    public String toString() {
-        return String.format("Order[id = %d, user = %s, unregisteredCustomer = %s, " +
-                        "postTime = %s, completeTime = %s, status = %s, " +
-                        "orderProducts = %s, deliveryType = %s]",
-                orderId,
-                user,
-                unregisteredCustomer,
-                postTime,
-                completeTime,
-                status,
-                orderProducts,
-                deliveryType
-        );
-    }
 }

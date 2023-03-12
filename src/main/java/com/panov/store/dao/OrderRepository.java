@@ -48,7 +48,7 @@ public class OrderRepository implements DAO<Order> {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
 
-        attach(entityManager, order);
+        attach(entityManager, order, false);
         entityManager.persist(order);
 
         entityManager.getTransaction().commit();
@@ -62,7 +62,7 @@ public class OrderRepository implements DAO<Order> {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
 
-        attach(entityManager, order);
+        attach(entityManager, order, true);
         entityManager.merge(order);
 
         entityManager.getTransaction().commit();
@@ -76,7 +76,7 @@ public class OrderRepository implements DAO<Order> {
         entityManager.getTransaction().begin();
 
         var order = entityManager.find(Order.class, id);
-        attach(entityManager, order);
+        attach(entityManager, order, true);
         entityManager.remove(order);
 
         entityManager.getTransaction().commit();
@@ -87,36 +87,37 @@ public class OrderRepository implements DAO<Order> {
         return entityManagerFactory.createEntityManager();
     }
 
-    private void attach(EntityManager entityManager, Order order) {
+    private void attach(EntityManager entityManager, Order order, boolean orderProds) {
         // Order products
-        var detOrdProd = order.getOrderProducts();
-        if (detOrdProd == null)
-            detOrdProd = new ArrayList<>();
-        List<OrderProducts> orderProducts = new ArrayList<>();
-        for (var d : detOrdProd) {
-            try {
+        if (orderProds) {
+            var detOrdProd = order.getOrderProducts();
+            if (detOrdProd == null)
+                detOrdProd = new ArrayList<>();
+            List<OrderProducts> orderProducts = new ArrayList<>();
+            for (var d : detOrdProd) {
+                if (d == null || d.getOrderProductsId() == null)
+                    continue;
+                if (entityManager.find(OrderProducts.class, d.getOrderProductsId()) == null)
+                    continue;
                 orderProducts.add(entityManager.find(OrderProducts.class, d.getOrderProductsId()));
-            } catch(Exception ignored) {}
+            }
+            order.setOrderProducts(orderProducts);
         }
-        order.setOrderProducts(orderProducts);
 
         // Delivery type
         var detDelType = order.getDeliveryType();
-        try {
+        if (detDelType != null && detDelType.getDeliveryTypeId() != null)
             order.setDeliveryType(entityManager.find(DeliveryType.class, detDelType.getDeliveryTypeId()));
-        } catch(Exception ignored) {}
 
         // User
         var detUser = order.getUser();
-        try {
+        if (detUser != null && detUser.getUserId() != null)
             order.setUser(entityManager.find(User.class, detUser.getUserId()));
-        } catch(Exception ignored) {}
 
         // Unregistered customer
         var detUnregCust = order.getUnregisteredCustomer();
-        try {
+        if (detUnregCust != null && detUnregCust.getUnregisteredCustomerId() != null)
             order.setUnregisteredCustomer(entityManager
                     .find(UnregisteredCustomer.class, detUnregCust.getUnregisteredCustomerId()));
-        } catch(Exception ignored) {}
     }
 }

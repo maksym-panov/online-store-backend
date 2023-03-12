@@ -1,5 +1,6 @@
 package com.panov.store.dao;
 
+import com.panov.store.model.Address;
 import com.panov.store.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -22,6 +23,8 @@ public class UserRepository implements DAO<User> {
     public Optional<User> get(int id) {
         var entityManager = getManager();
         var user = Optional.ofNullable(entityManager.find(User.class, id));
+        if (user.isPresent() && user.get().getAddress() == null)
+            user.get().setAddress(new Address());
         entityManager.close();
         return user;
     }
@@ -33,6 +36,9 @@ public class UserRepository implements DAO<User> {
         List<User> users = (List<User>) entityManager
                 .createQuery("select u from User u")
                 .getResultList();
+        for (var u : users)
+            if (u != null && u.getAddress() == null)
+                u.setAddress(new Address());
         entityManager.close();
         return users;
     }
@@ -48,6 +54,8 @@ public class UserRepository implements DAO<User> {
                     .setParameter("email", value)
                     .getResultList();
         }
+        if (users != null && !users.isEmpty() && users.get(0).getAddress() == null)
+            users.get(0).setAddress(new Address());
         entityManager.close();
         return users;
     }

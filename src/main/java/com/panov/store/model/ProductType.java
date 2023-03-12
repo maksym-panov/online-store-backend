@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.NaturalId;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -14,8 +14,9 @@ import java.util.Set;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-@Entity(name = "ProductType")
+@Entity
 @Table(name = "ProductType")
 public class ProductType {
     @Id
@@ -24,10 +25,15 @@ public class ProductType {
     @NotNull(message = "Category name must be present")
     @Size(min = 2, message = "Category name must be meaningful")
     @Size(max = 30, message = "Category name is too long")
-    @NaturalId
+    @Column(unique = true)
     private String name;
 
-    @ManyToMany
+    @ToString.Exclude
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            joinColumns = { @JoinColumn(name = "productTypeId") },
+            inverseJoinColumns = { @JoinColumn(name = "product Id") }
+    )
     private Set<Product> products = new HashSet<>();
 
     @Override
@@ -41,13 +47,5 @@ public class ProductType {
         if (o == null) return false;
         if (!(o instanceof ProductType other)) return false;
         return Objects.equals(this.name, other.name);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("ProductType[id = %d, name = %s]",
-                productTypeId,
-                name
-        );
     }
 }

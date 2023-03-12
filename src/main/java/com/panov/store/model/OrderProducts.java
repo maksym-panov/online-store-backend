@@ -6,11 +6,15 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
+import java.util.Objects;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-@Entity(name = "OrderProducts")
+@Entity
 @Table(name = "OrderProducts")
 public class OrderProducts {
     @Id
@@ -18,11 +22,12 @@ public class OrderProducts {
     private Integer orderProductsId;
 
     @NotNull(message = "There must be product in the order line")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productId")
     private Product product;
 
-    @ManyToOne
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "orderId")
     private Order order;
 
@@ -31,12 +36,17 @@ public class OrderProducts {
     private Integer quantity;
 
     @Override
-    public String toString() {
-        return String.format("OrderProduct[id = %d, product = %s, quantity = %d, order = %d]",
-                orderProductsId,
-                product,
-                quantity,
-                order.getOrderId()
-        );
+    public int hashCode() {
+        return Objects.hash(product, quantity);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderProducts that = (OrderProducts) o;
+        return Objects.equals(orderProductsId, that.orderProductsId) &&
+                Objects.equals(product, that.product)
+                && Objects.equals(quantity, that.quantity);
     }
 }
