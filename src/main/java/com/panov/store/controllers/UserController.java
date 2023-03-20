@@ -33,7 +33,7 @@ public class UserController {
                                 @RequestParam(name = "offset", required = false) Integer offset) {
         if (naturalId == null)
             return ListUtils.makeCut(service.getAllUserList(), quantity, offset);
-        return service.getByNaturalId(naturalId);
+        return service.getByNaturalId(naturalId, true);
     }
 
     @GetMapping("/{id}")

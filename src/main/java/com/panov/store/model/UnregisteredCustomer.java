@@ -24,7 +24,6 @@ public class UnregisteredCustomer {
 
     @NotNull(message = "Phone number must be present")
     @Pattern(regexp = "0\\d{9}", message = "Phone number must match the format '0XXXXXXXXX'")
-    @Column(unique = true)
     private String phoneNumber;
 
     @NotNull(message = "Firstname must be present")
@@ -39,6 +38,7 @@ public class UnregisteredCustomer {
     @Embedded
     private Address address;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "unregisteredCustomer", fetch = FetchType.EAGER)
     private List<Order> orders = new ArrayList<>();
 

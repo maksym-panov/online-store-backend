@@ -1,9 +1,9 @@
 package com.panov.store.controllers;
 
-import com.panov.store.dto.ProductTypeDTO;
+import com.panov.store.dto.DeliveryTypeDTO;
 import com.panov.store.exceptions.ResourceNotCreatedException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
-import com.panov.store.services.ProductTypeService;
+import com.panov.store.services.DeliveryTypeService;
 import com.panov.store.utils.ListUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,68 +11,68 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import com.panov.store.model.ProductType;
+import com.panov.store.model.DeliveryType;
 
 import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/product_types")
-public class ProductTypeController {
-    private final ProductTypeService service;
+@RequestMapping("/delivery_types")
+public class DeliveryTypeController {
+    private final DeliveryTypeService service;
 
     @Autowired
-    public ProductTypeController(ProductTypeService service) {
+    public DeliveryTypeController(DeliveryTypeService service) {
         this.service = service;
     }
 
     @GetMapping
-    public List<ProductTypeDTO> productTypesRange(
+    public List<DeliveryTypeDTO> productTypesRange(
             @RequestBody(required = false) String pattern,
             @RequestParam(name = "quantity", required = false) Integer quantity,
             @RequestParam(name = "offset", required = false) Integer offset) {
-        List<ProductType> types;
-        if (pattern == null) types = service.getProductTypeList();
+        List<DeliveryType> types;
+        if (pattern == null) types = service.getDeliveryTypeList();
         else types = service.getByNamePattern(pattern, false);
 
         var productTypes = types
                 .stream()
                 .filter(Objects::nonNull)
-                .map(ProductTypeDTO::of)
+                .map(DeliveryTypeDTO::of)
                 .toList();
 
         return ListUtils.makeCut(productTypes, quantity, offset);
     }
 
     @GetMapping("/{id}")
-    public ProductTypeDTO specificProductType(@PathVariable("id") Integer id) {
-        return ProductTypeDTO.of(service.getById(id));
+    public DeliveryTypeDTO specificProductType(@PathVariable("id") Integer id) {
+        return DeliveryTypeDTO.of(service.getById(id));
     }
 
     @PostMapping
-    public Integer createProductType(@RequestBody @Valid ProductTypeDTO productTypeDTO,
+    public Integer createProductType(@RequestBody @Valid DeliveryTypeDTO deliveryTypeDTO,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new ResourceNotCreatedException(bindingResult);
 
-        return service.createProductType(productTypeDTO.toModel());
+        return service.createDeliveryType(deliveryTypeDTO.toModel());
     }
 
     @PatchMapping("/{id}")
-    public Integer changeProductType(@RequestBody @Valid ProductTypeDTO productTypeDTO,
+    public Integer changeProductType(@RequestBody @Valid DeliveryTypeDTO deliveryTypeDTO,
                                      @PathVariable("id") Integer id,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new ResourceNotUpdatedException(bindingResult);
 
-        productTypeDTO.setProductTypeId(id);
+        deliveryTypeDTO.setDeliveryTypeId(id);
 
-        return service.changeProductType(productTypeDTO.toModel());
+        return service.changeDeliveryType(deliveryTypeDTO.toModel());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteProductType(@PathVariable("id") Integer id) {
-        service.deleteProductType(id);
+        service.deleteDeliveryType(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }

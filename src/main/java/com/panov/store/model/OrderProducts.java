@@ -42,11 +42,14 @@ public class OrderProducts {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderProducts that = (OrderProducts) o;
-        return Objects.equals(orderProductsId, that.orderProductsId) &&
-                Objects.equals(product, that.product)
-                && Objects.equals(quantity, that.quantity);
+        if (this == o)
+            return true;
+        if (o == null)
+            return false;
+        if (!(o instanceof OrderProducts other))
+            return false;
+        return Objects.equals(product, other.product)
+                && Objects.equals(quantity, other.quantity)
+                && Objects.equals(order.getOrderId(), other.order.getOrderId());
     }
 }

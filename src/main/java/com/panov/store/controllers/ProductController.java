@@ -33,7 +33,7 @@ public class ProductController {
             @RequestParam(name = "offset", required = false) Integer offset) {
         List<Product> products;
         if (pattern == null) products = service.getRangeOfProducts();
-        else products = service.getByNamePattern(pattern);
+        else products = service.getByNamePattern(pattern, false);
 
         var range = products
                 .stream()

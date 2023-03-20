@@ -29,6 +29,7 @@ public class DeliveryType {
     @Column(unique = true)
     private String name;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "deliveryType", fetch = FetchType.EAGER)
     private List<Order> orders = new ArrayList<>();
 

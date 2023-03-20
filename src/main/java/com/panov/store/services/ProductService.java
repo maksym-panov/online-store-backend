@@ -32,8 +32,8 @@ public class ProductService {
             return productRange;
         } catch(Exception e) {
             e.printStackTrace();
+            throw new ResourceNotFoundException("Could not find products");
         }
-        return Collections.emptyList();
     }
 
     public Product getById(Integer id) {
@@ -41,16 +41,16 @@ public class ProductService {
                 .orElseThrow(() -> new ResourceNotFoundException("Could not find this product"));
     }
 
-    public List<Product> getByNamePattern(String namePattern) {
+    public List<Product> getByNamePattern(String namePattern, boolean strict) {
         try {
-            var products = repository.getByColumn(namePattern);
+            var products = repository.getByColumn(namePattern, strict);
             if (products == null)
                 return Collections.emptyList();
             return products;
         } catch(Exception e) {
             e.printStackTrace();
+            throw new ResourceNotFoundException("Could not find products");
         }
-        return Collections.emptyList();
     }
 
     public Integer createProduct(Product product) {
@@ -104,7 +104,7 @@ public class ProductService {
         Map<String, String> matches = new HashMap<>();
 
         try {
-            var nameMatch = getByNamePattern(product.getName());
+            var nameMatch = getByNamePattern(product.getName(), true);
             if (nameMatch.size() != 0)
                 matches.put("name", "Product with this name already exists");
         } catch(Exception ignored) {}

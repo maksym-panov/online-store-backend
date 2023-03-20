@@ -23,18 +23,31 @@ public class UserService {
     }
 
     public List<User> getAllUserList() {
-        return repository.getAll();
+        try {
+            var list = repository.getAll();
+            if (list == null)
+                return Collections.emptyList();
+            return list;
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw new ResourceNotFoundException("Could not find users");
+        }
     }
 
     public User getById(Integer id) {
         return repository.get(id).orElseThrow(() -> new ResourceNotFoundException("Could not find this user"));
     }
 
-    public List<User> getByNaturalId(String naturalId) {
-        var users = repository.getByColumn(naturalId);
-        if (users == null)
-            return Collections.emptyList();
-        return users;
+    public List<User> getByNaturalId(String naturalId, boolean strict) {
+        try {
+            var users = repository.getByColumn(naturalId, strict);
+            if (users == null)
+                return Collections.emptyList();
+            return users;
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw new ResourceNotFoundException("Could not find users");
+        }
     }
 
     public Integer createUser(User user) {
@@ -88,13 +101,13 @@ public class UserService {
         Map<String, String> matches = new HashMap<>();
 
         try {
-            var phoneNumberMatch = getByNaturalId(user.getPersonalInfo().getPhoneNumber());
+            var phoneNumberMatch = getByNaturalId(user.getPersonalInfo().getPhoneNumber(), true);
             if (phoneNumberMatch.size() != 0)
                 matches.put("phoneNumber", "User with this phone number already exists");
         } catch(Exception ignored) {}
 
         try {
-            var emailMatch = getByNaturalId(user.getPersonalInfo().getEmail());
+            var emailMatch = getByNaturalId(user.getPersonalInfo().getEmail(), true);
             if (emailMatch.size() != 0)
                 matches.put("email", "User with this phone number already exists");
         } catch(Exception ignored) {}

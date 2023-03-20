@@ -152,21 +152,23 @@ public class ProductRepositoryTest {
         assertThat(actual1).isNotNull();
         assertThat(actual1.isPresent()).isTrue();
         assertThat(actual1.get()).isEqualTo(product1);
-        assertThat(actual1.get().getProductTypes()).isEqualTo(product1.getProductTypes());
+        assertThat(actual1.get().getProductTypes().get(0)).isEqualTo(product1.getProductTypes().get(0));
+        assertThat(actual1.get().getProductTypes().get(1)).isEqualTo(product1.getProductTypes().get(1));
 
         assertThat(id2).isNotNull();
         var actual2 = repositoryUnderTest.get(id2);
         assertThat(actual2).isNotNull();
         assertThat(actual2.isPresent()).isTrue();
         assertThat(actual2.get()).isEqualTo(product2);
-        assertThat(actual2.get().getProductTypes()).isEqualTo(product2.getProductTypes());
+        assertThat(actual2.get().getProductTypes().get(0)).isEqualTo(product2.getProductTypes().get(0));
+        assertThat(actual2.get().getProductTypes().get(1)).isEqualTo(product2.getProductTypes().get(1));
 
         assertThat(id3).isNotNull();
         var actual3 = repositoryUnderTest.get(id3);
         assertThat(actual3).isNotNull();
         assertThat(actual3.isPresent()).isTrue();
         assertThat(actual3.get()).isEqualTo(product3);
-        assertThat(actual3.get().getProductTypes()).isEqualTo(product3.getProductTypes());
+        assertThat(actual3.get().getProductTypes().get(0)).isEqualTo(product3.getProductTypes().get(0));
     }
 
     @Test
@@ -363,18 +365,18 @@ public class ProductRepositoryTest {
         repositoryUnderTest.insert(product5);
 
         var expectedBy_o = List.of(product3, product4, product5);
-        var actualBy_o = repositoryUnderTest.getByColumn("o");
+        var actualBy_o = repositoryUnderTest.getByColumn("o", false);
 
         var expectedBy_O = List.of(product3, product4, product5);
-        var actualBy_O = repositoryUnderTest.getByColumn("O");
+        var actualBy_O = repositoryUnderTest.getByColumn("O", false);
 
         var expectedBy_aaaaaaaaa = Collections.emptyList();
-        var actualBy_aaaaaaaaa = repositoryUnderTest.getByColumn("aaaaaaaaa");
+        var actualBy_aaaaaaaaa = repositoryUnderTest.getByColumn("aaaaaaaaa", false);
 
         var expectedBy_Ea = List.of(product1, product2);
-        var actualBy_Ea = repositoryUnderTest.getByColumn("Ea");
+        var actualBy_Ea = repositoryUnderTest.getByColumn("Ea", false);
 
-        var actualBy_null = repositoryUnderTest.getByColumn(null);
+        var actualBy_null = repositoryUnderTest.getByColumn(null, false);
 
         // then
         assertThat(actualBy_o).isEqualTo(expectedBy_o);
@@ -476,21 +478,22 @@ public class ProductRepositoryTest {
         assertThat(update1).isNotNull();
         assertThat(update1.isPresent()).isTrue();
         assertThat(update1.get()).isEqualTo(product1);
-        assertThat(update1.get().getProductTypes()).isEqualTo(product1.getProductTypes());
+        assertThat(update1.get().getProductTypes().get(0)).isEqualTo(product1.getProductTypes().get(0));
+        assertThat(update1.get().getProductTypes().get(1)).isEqualTo(product1.getProductTypes().get(1));
 
         assertThat(id2).isNotNull();
         assertThat(id2).isEqualTo(product2.getProductId());
         assertThat(update2).isNotNull();
         assertThat(update2.isPresent()).isTrue();
         assertThat(update2.get()).isEqualTo(product2);
-        assertThat(update2.get().getProductTypes()).isEqualTo(product2.getProductTypes());
+        assertThat(update2.get().getProductTypes().get(0)).isEqualTo(product2.getProductTypes().get(0));
 
         assertThat(id3).isNotNull();
         assertThat(id3).isEqualTo(product3.getProductId());
         assertThat(update3).isNotNull();
         assertThat(update3.isPresent()).isTrue();
         assertThat(update3.get()).isEqualTo(product3);
-        assertThat(update3.get().getProductTypes()).isEqualTo(product3.getProductTypes());
+        assertThat(update3.get().getProductTypes().isEmpty()).isEqualTo(product3.getProductTypes().isEmpty());
     }
 
     @Test

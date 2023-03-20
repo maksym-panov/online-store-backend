@@ -22,10 +22,15 @@ public class UnregisteredCustomerService {
     }
 
     public List<UnregisteredCustomer> getUnregCustomerList() {
-        var list = repository.getAll();
-        if (list == null)
-            return Collections.emptyList();
-        return list;
+        try {
+            var list = repository.getAll();
+            if (list == null)
+                return Collections.emptyList();
+            return list;
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw new ResourceNotFoundException("Could not find unregistered customers");
+        }
     }
 
     public UnregisteredCustomer getById(Integer id) {
@@ -33,10 +38,15 @@ public class UnregisteredCustomerService {
     }
 
     public List<UnregisteredCustomer> getByPhoneNumber(String phoneNumber) {
-        var customers = repository.getByColumn(phoneNumber);
-        if (customers == null)
-            return Collections.emptyList();
-        return customers;
+        try {
+            var customers = repository.getByColumn(phoneNumber, true);
+            if (customers == null)
+                return Collections.emptyList();
+            return customers;
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw new ResourceNotFoundException("Could not find unregistered customers");
+        }
     }
 
     public Integer createUnregisteredCustomer(UnregisteredCustomer unregCust) {

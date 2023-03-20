@@ -33,6 +33,7 @@ public class User {
     @Convert(converter = Access.AccessConverter.class)
     private Access access;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Order> orders = new ArrayList<>();
 
@@ -86,9 +87,7 @@ public class User {
             if (o == null) return false;
             if (!(o instanceof PersonalInfo other)) return false;
             return Objects.equals(phoneNumber, other.phoneNumber) &&
-                    Objects.equals(email, other.email) &&
-                    Objects.equals(firstname, other.firstname) &&
-                    Objects.equals(lastname, other.lastname);
+                    Objects.equals(email, other.email);
         }
     }
 }

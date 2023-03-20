@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -31,10 +29,10 @@ public class ProductType {
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            joinColumns = { @JoinColumn(name = "productTypeId") },
-            inverseJoinColumns = { @JoinColumn(name = "product Id") }
+            joinColumns = { @JoinColumn(name = "typeunit.productId") },
+            inverseJoinColumns = { @JoinColumn(name = "typeunit.productTypeId") }
     )
-    private Set<Product> products = new HashSet<>();
+    private List<Product> products = new ArrayList<>();
 
     @Override
     public int hashCode() {
@@ -46,6 +44,6 @@ public class ProductType {
         if (this == o) return true;
         if (o == null) return false;
         if (!(o instanceof ProductType other)) return false;
-        return Objects.equals(this.name, other.name);
+        return Objects.equals(name, other.name);
     }
 }

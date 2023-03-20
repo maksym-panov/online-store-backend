@@ -38,12 +38,15 @@ public class ProductRepository implements DAO<Product> {
     }
 
     @Override
-    public List<Product> getByColumn(Object value) {
+    public List<Product> getByColumn(Object value, boolean strict) {
         var entityManager = getManager();
         if (value == null)
             return null;
+
         String probablyName = Objects.toString(value);
-        probablyName = "%" + probablyName + "%";
+        if (!strict)
+            probablyName = "%" + probablyName + "%";
+
         var products = entityManager.createQuery("select p from Product p where lower(p.name) LIKE lower(:pattern)", Product.class)
                 .setParameter("pattern", probablyName)
                 .getResultList();
@@ -57,7 +60,7 @@ public class ProductRepository implements DAO<Product> {
         entityManager.getTransaction().begin();
 
         var types = product.getProductTypes();
-        Set<ProductType> productTypes = new HashSet<>();
+        List<ProductType> productTypes = new ArrayList<>();
         for (var t : types) {
             if (t == null || t.getProductTypeId() == null)
                 continue;
@@ -80,8 +83,8 @@ public class ProductRepository implements DAO<Product> {
 
         var types = product.getProductTypes();
         if (types == null)
-            types = new HashSet<>();
-        Set<ProductType> productTypes = new HashSet<>();
+            types = new ArrayList<>();
+        List<ProductType> productTypes = new ArrayList<>();
         for (var t : types) {
             try {
                 productTypes.add(entityManager.find(ProductType.class, t.getProductTypeId()));

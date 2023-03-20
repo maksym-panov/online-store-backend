@@ -1,82 +1,81 @@
 package com.panov.store.dao;
 
-import com.panov.store.model.ProductType;
+import com.panov.store.model.DeliveryType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Repository
-public class ProductTypeRepository implements DAO<ProductType> {
+public class DeliveryTypeRepository implements DAO<DeliveryType> {
     private final EntityManagerFactory entityManagerFactory;
 
     @Autowired
-    public ProductTypeRepository(EntityManagerFactory entityManagerFactory) {
+    public DeliveryTypeRepository(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
     }
 
     @Override
-    public Optional<ProductType> get(int id) {
+    public Optional<DeliveryType> get(int id) {
         var entityManager = getManager();
-        var productType = Optional.ofNullable(entityManager.find(ProductType.class, id));
+        var deliveryType =  Optional.ofNullable(entityManager.find(DeliveryType.class, id));
         entityManager.close();
-        return productType;
+        return deliveryType;
     }
 
     @Override
-    public List<ProductType> getAll() {
+    public List<DeliveryType> getAll() {
         var entityManager = getManager();
-        var productTypes = entityManager.createQuery("select pt from ProductType pt", ProductType.class)
+        var list = entityManager.createQuery("select dt from DeliveryType dt", DeliveryType.class)
                 .getResultList();
         entityManager.close();
-        return productTypes;
+        return list;
     }
 
     @Override
-    public List<ProductType> getByColumn(Object value, boolean strict) {
+    public List<DeliveryType> getByColumn(Object value, boolean strict) {
         var entityManager = getManager();
+        String probablyName = value.toString();
 
-        String probablyName = Objects.toString(value);
         if (!strict)
             probablyName = "%" + probablyName + "%";
 
-        var productTypes = entityManager
-                .createQuery("select pt from ProductType pt where lower(pt.name) like lower(:pattern)", ProductType.class)
-                .setParameter("pattern", probablyName)
+        var deliveryTypes =
+                entityManager.createQuery("select dt from DeliveryType dt where lower(name) like lower(:name)", DeliveryType.class)
+                .setParameter("name", probablyName)
                 .getResultList();
         entityManager.close();
-        return productTypes;
+        return deliveryTypes;
     }
 
     @Override
-    public Integer insert(ProductType productType) {
+    public Integer insert(DeliveryType deliveryType) {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
-        entityManager.persist(productType);
+        entityManager.persist(deliveryType);
         entityManager.getTransaction().commit();
         entityManager.close();
-        return productType.getProductTypeId();
+        return deliveryType.getDeliveryTypeId();
     }
 
     @Override
-    public Integer update(ProductType productType) {
+    public Integer update(DeliveryType deliveryType) {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
-        entityManager.merge(productType);
+        entityManager.merge(deliveryType);
         entityManager.getTransaction().commit();
         entityManager.close();
-        return productType.getProductTypeId();
+        return deliveryType.getDeliveryTypeId();
     }
 
     @Override
     public void delete(Integer id) {
         var entityManager = getManager();
         entityManager.getTransaction().begin();
-        entityManager.remove(entityManager.find(ProductType.class, id));
+        entityManager.remove(entityManager.find(DeliveryType.class, id));
         entityManager.getTransaction().commit();
         entityManager.close();
     }

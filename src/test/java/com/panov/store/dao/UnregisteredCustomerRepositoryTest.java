@@ -98,7 +98,7 @@ public class UnregisteredCustomerRepositoryTest {
 
         // then
         assertThatExceptionOfType(UnsupportedOperationException.class)
-                .isThrownBy(() -> repoTest.getByColumn(new Object()));
+                .isThrownBy(() -> repoTest.getByColumn(new Object(), false));
     }
 
     @Test

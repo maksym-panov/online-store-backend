@@ -44,14 +44,19 @@ public class UserRepository implements DAO<User> {
     }
 
     @Override
-    public List<User> getByColumn(Object value) {
+    public List<User> getByColumn(Object value, boolean strict) {
         var entityManager = getManager();
-        List<User> users = entityManager.createQuery("select u from User u where u.personalInfo.phoneNumber = :pn", User.class)
-                .setParameter("pn", value)
+
+        String probable = value.toString();
+        if (!strict)
+            probable = "%" + probable + "%";
+
+        List<User> users = entityManager.createQuery("select u from User u where u.personalInfo.phoneNumber like :pn", User.class)
+                .setParameter("pn", probable)
                 .getResultList();
         if (users == null || users.isEmpty()) {
-            users = entityManager.createQuery("select u from User u where u.personalInfo.email = :email", User.class)
-                    .setParameter("email", value)
+            users = entityManager.createQuery("select u from User u where u.personalInfo.email like :email", User.class)
+                    .setParameter("email", probable)
                     .getResultList();
         }
         if (users != null && !users.isEmpty() && users.get(0).getAddress() == null)

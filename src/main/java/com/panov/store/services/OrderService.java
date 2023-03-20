@@ -29,10 +29,15 @@ public class OrderService {
     }
 
     public List<Order> getAllOrdersList() {
-        var list = repository.getAll();
-        if (list == null)
-            return Collections.emptyList();
-        return list;
+        try {
+            var list = repository.getAll();
+            if (list == null)
+                return Collections.emptyList();
+            return list;
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw new ResourceNotFoundException("Could not find products");
+        }
     }
 
     public Order getById(Integer id) {

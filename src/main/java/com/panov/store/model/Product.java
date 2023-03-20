@@ -42,10 +42,10 @@ public class Product {
     private Integer stock;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<ProductType> productTypes = new HashSet<>();
+    private List<ProductType> productTypes = new ArrayList<>();
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OrderProducts> orderProducts = new ArrayList<>();
 
     @Override

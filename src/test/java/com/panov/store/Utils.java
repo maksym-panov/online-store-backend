@@ -9,7 +9,7 @@ public final class Utils {
         em.createNativeQuery("DELETE FROM \"Order\"").executeUpdate();
         em.createNativeQuery("DELETE FROM DeliveryType").executeUpdate();
         em.createNativeQuery("DELETE FROM ProductType_Product").executeUpdate();
-        //em.createNativeQuery("DELETE FROM Product_ProductType").executeUpdate();
+        em.createNativeQuery("DELETE FROM Product_ProductType").executeUpdate();
         em.createNativeQuery("DELETE FROM ProductType").executeUpdate();
         em.createNativeQuery("DELETE FROM Product").executeUpdate();
         em.createNativeQuery("DELETE FROM \"User\"").executeUpdate();

@@ -9,12 +9,12 @@ public interface DAO<E> {
 
     List<E> getAll();
 
-    List<E> getByColumn(Object value);
+    List<E> getByColumn(Object value, boolean strict);
 
     Integer insert(E entity);
 
     Integer update(E entity);
 
-    void delete(Integer entity);
+    void delete(Integer id);
 
 }

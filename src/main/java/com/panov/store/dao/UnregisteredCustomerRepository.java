@@ -39,7 +39,7 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
     }
 
     @Override
-    public List<UnregisteredCustomer> getByColumn(Object value) {
+    public List<UnregisteredCustomer> getByColumn(Object value, boolean strict) {
         throw new UnsupportedOperationException();
     }
 

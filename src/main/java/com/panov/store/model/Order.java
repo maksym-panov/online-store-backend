@@ -32,7 +32,7 @@ public class Order {
     @JoinColumn(name = "unregisteredCustomerId")
     private UnregisteredCustomer unregisteredCustomer;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderProducts> orderProducts = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST })

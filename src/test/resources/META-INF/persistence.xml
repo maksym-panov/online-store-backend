@@ -17,6 +17,7 @@
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.ddl-auto" value="create-drop" />
+<!--            <property name="hibernate.jdbc.batch_size" value="5"/>-->
             <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:test_db;DB_CLOSE_DELAY=1"/>
             <property name="jakarta.persistence.jdbc.user" value="sa"/>

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -73,11 +74,11 @@ public class ProductDTO {
         p.setPrice(price);
         p.setStock(stock);
         p.setProductTypes(
-                productTypes == null ? new HashSet<>() :
+                productTypes == null ? new ArrayList<>() :
                         productTypes.stream()
                                 .filter(Objects::nonNull)
                                 .map(ProductTypeDTO::toModel)
-                                .collect(Collectors.toSet())
+                                .toList()
         );
         return p;
     }

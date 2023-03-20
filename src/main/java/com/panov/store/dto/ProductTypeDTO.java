@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -36,7 +36,7 @@ public class ProductTypeDTO {
         var pt = new ProductType();
         pt.setProductTypeId(productTypeId);
         pt.setName(name);
-        pt.setProducts(new HashSet<>());
+        pt.setProducts(new ArrayList<>());
         return pt;
     }
 }
