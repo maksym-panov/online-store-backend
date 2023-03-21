@@ -10,7 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -177,60 +176,5 @@ public class UnregisteredCustomerRepositoryTest {
         assertThat(up2).isNotNull();
         assertThat(up2.isPresent()).isTrue();
         assertThat(up2.get()).isEqualTo(uc2);
-    }
-
-    @Test
-    void shouldDeleteFromDatabase() {
-        // given
-        var repoTest = new UnregisteredCustomerRepository(entityManagerFactory);
-
-        var uc1 = new UnregisteredCustomer();
-        var uc2 = new UnregisteredCustomer();
-
-        var a1 = new Address();
-        var a2 = new Address();
-
-        a1.setRegion("Kharkiv");
-        a1.setDistrict("Chuguiv");
-        a1.setCity("Chuguiv");
-        a1.setStreet("Shevchenka");
-        a1.setBuilding(100);
-        a1.setApartment(32);
-        a1.setPostalCode(63531);
-
-        uc1.setPhoneNumber("0964264321");
-        uc1.setFirstname("Maksym");
-        uc1.setLastname("Panov");
-        uc1.setAddress(a1);
-
-        a2.setRegion("Kyiv");
-        a2.setCity("Kyiv");
-        a2.setStreet("Franka");
-        a2.setBuilding(32);
-        a2.setPostalCode(1001);
-
-        uc2.setPhoneNumber("0994824641");
-        uc2.setFirstname("Angelo");
-        uc2.setAddress(a2);
-
-        // when
-        var id1 = repoTest.insert(uc1);
-        var id2 = repoTest.insert(uc2);
-
-        var expectedBeforeDeletion = List.of(uc1, uc2);
-        var actualBeforeDeletion = repoTest.getAll();
-
-        repoTest.delete(id2);
-        var expectedAfterFirstDeletion = List.of(uc1);
-        var actualAfterFirstDeletion = repoTest.getAll();
-
-        repoTest.delete(id1);
-        var expectedAfterSecondDeletion = Collections.emptyList();
-        var actualAfterSecondDeletion = repoTest.getAll();
-
-        // then
-        assertThat(actualBeforeDeletion).isEqualTo(expectedBeforeDeletion);
-        assertThat(actualAfterFirstDeletion).isEqualTo(expectedAfterFirstDeletion);
-        assertThat(actualAfterSecondDeletion).isEqualTo(expectedAfterSecondDeletion);
     }
 }

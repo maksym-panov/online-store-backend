@@ -14,11 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import static junit.framework.Assert.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
@@ -46,8 +42,7 @@ public class OrderRepositoryTest {
         var userRepository = new UserRepository(entityManagerFactory);
         var productTypeRepository = new ProductTypeRepository(entityManagerFactory);
         var productRepository = new ProductRepository(entityManagerFactory);
-        var repoTest = new OrderRepository(entityManagerFactory,
-                new UnregisteredCustomerRepository(entityManagerFactory));
+        var repoTest = new OrderRepository(entityManagerFactory);
         var deliveryTypeRepository = new DeliveryTypeRepository(entityManagerFactory);
 
         var dt = new DeliveryType();
@@ -190,8 +185,7 @@ public class OrderRepositoryTest {
         var userRepository = new UserRepository(entityManagerFactory);
         var productTypeRepository = new ProductTypeRepository(entityManagerFactory);
         var productRepository = new ProductRepository(entityManagerFactory);
-        var repoTest = new OrderRepository(entityManagerFactory,
-                new UnregisteredCustomerRepository(entityManagerFactory));
+        var repoTest = new OrderRepository(entityManagerFactory);
         var deliveryTypeRepository = new DeliveryTypeRepository(entityManagerFactory);
         var unregisteredCustomerRepository = new UnregisteredCustomerRepository(entityManagerFactory);
 
@@ -328,8 +322,7 @@ public class OrderRepositoryTest {
     @Test
     void shouldThrowIfUsingFindByColumn() {
         // given
-        var repoTest = new OrderRepository(entityManagerFactory,
-                new UnregisteredCustomerRepository(entityManagerFactory));
+        var repoTest = new OrderRepository(entityManagerFactory);
 
         // then
         assertThatExceptionOfType(UnsupportedOperationException.class)
@@ -342,8 +335,7 @@ public class OrderRepositoryTest {
         var userRepository = new UserRepository(entityManagerFactory);
         var productTypeRepository = new ProductTypeRepository(entityManagerFactory);
         var productRepository = new ProductRepository(entityManagerFactory);
-        var repoTest = new OrderRepository(entityManagerFactory,
-                new UnregisteredCustomerRepository(entityManagerFactory));
+        var repoTest = new OrderRepository(entityManagerFactory);
         var deliveryTypeRepository = new DeliveryTypeRepository(entityManagerFactory);
         var unregisteredCustomerRepository = new UnregisteredCustomerRepository(entityManagerFactory);
 
@@ -543,160 +535,5 @@ public class OrderRepositoryTest {
         assertThat(updated2.getDeliveryType()).isEqualTo(inserted2.getDeliveryType());
         assertThat(updated2.getStatus()).isEqualTo((inserted2.getStatus()));
         assertThat(updated2.getCompleteTime()).isEqualTo(inserted2.getCompleteTime());
-    }
-
-    @Test
-    void shouldDeleteOrdersAndOrderProducts() {
-        // given
-        var userRepository = new UserRepository(entityManagerFactory);
-        var productTypeRepository = new ProductTypeRepository(entityManagerFactory);
-        var productRepository = new ProductRepository(entityManagerFactory);
-        var repoTest = new OrderRepository(entityManagerFactory,
-                new UnregisteredCustomerRepository(entityManagerFactory));
-        var deliveryTypeRepository = new DeliveryTypeRepository(entityManagerFactory);
-        var unregisteredCustomerRepository = new UnregisteredCustomerRepository(entityManagerFactory);
-
-        var dt = new DeliveryType();
-
-        var productType1 = new ProductType();
-        var productType2 = new ProductType();
-        var productType3 = new ProductType();
-        var productType4 = new ProductType();
-
-        var product1 = new Product();
-        var product2 = new Product();
-        var product3 = new Product();
-        var product4 = new Product();
-
-        var u = new User();
-        var pi = new User.PersonalInfo();
-        var a1 = new Address();
-
-        var uc = new UnregisteredCustomer();
-        var a2 = new Address();
-
-        var o1 = new Order();
-        var o2 = new Order();
-
-        var op1 = new OrderProducts();
-        var op2 = new OrderProducts();
-        var op3 = new OrderProducts();
-
-        dt.setName("Nova Poshta");
-        deliveryTypeRepository.insert(dt);
-
-        productType1.setName("Grocery");
-        productType2.setName("Bread");
-        productType3.setName("Meat");
-        productType4.setName("Toy");
-
-        productTypeRepository.insert(productType1);
-        productTypeRepository.insert(productType2);
-        productTypeRepository.insert(productType3);
-        productTypeRepository.insert(productType4);
-
-        product1.setName("Bread bar");
-        product1.setDescription("Just a bread");
-        product1.setPrice(new BigDecimal("10.20"));
-        product1.setStock(10);
-        product1.getProductTypes().add(productType1);
-        product1.getProductTypes().add(productType2);
-
-        product2.setName("Steak");
-        product2.setDescription("Beautiful rib roast");
-        product2.setPrice(new BigDecimal("550.00"));
-        product2.setStock(5);
-        product2.getProductTypes().add(productType1);
-        product2.getProductTypes().add(productType3);
-
-        product3.setName("Hot Wheels!");
-        product3.setDescription("Make your little boy happy with this new Hot Wheels kit");
-        product3.setPrice(new BigDecimal("1500.00"));
-        product3.setStock(20);
-        product3.getProductTypes().add(productType4);
-
-        product4.setName("Super universal product");
-        product4.setDescription("This product contains all the product types");
-        product4.setPrice(new BigDecimal("777.77"));
-        product4.setStock(777);
-        product4.getProductTypes().add(productType1);
-        product4.getProductTypes().add(productType2);
-        product4.getProductTypes().add(productType3);
-        product4.getProductTypes().add(productType4);
-
-        productRepository.insert(product1);
-        productRepository.insert(product2);
-        productRepository.insert(product3);
-        productRepository.insert(product4);
-
-        pi.setPhoneNumber("0994824689");
-        pi.setFirstname("Dmytro");
-        u.setPersonalInfo(pi);
-        u.setAddress(a1);
-        u.setAccess(Access.ADMINISTRATOR);
-        userRepository.insert(u);
-
-        uc.setPhoneNumber("0964267234");
-        uc.setFirstname("Maksym");
-        a2.setRegion("reg");
-        a2.setDistrict("dist");
-        a2.setCity("city");
-        a2.setStreet("st");
-        a2.setBuilding(1);
-        a2.setPostalCode(54123);
-        uc.setAddress(a2);
-        unregisteredCustomerRepository.insert(uc);
-
-        o1.setUser(u);
-        o1.setDeliveryType(dt);
-        o1.setPostTime(new Timestamp(System.currentTimeMillis() - 10000));
-        o1.setStatus(Status.POSTED);
-
-        op1.setProduct(product1);
-        op1.setQuantity(10);
-        op1.setOrder(o1);
-
-        op2.setProduct(product2);
-        op2.setQuantity(5);
-        op2.setOrder(o1);
-
-        op3.setProduct(product3);
-        op3.setQuantity(1);
-        op3.setOrder(o1);
-
-        o1.getOrderProducts().add(op1);
-        o1.getOrderProducts().add(op2);
-        o1.getOrderProducts().add(op3);
-
-        o2.setUnregisteredCustomer(uc);
-        o2.setDeliveryType(dt);
-        o2.setPostTime(new Timestamp(System.currentTimeMillis() - 10000));
-        o2.setStatus(Status.POSTED);
-
-        // when
-        var id1 = repoTest.insert(o1);
-        var id2 = repoTest.insert(o2);
-
-        var inserted1 = repoTest.get(id1);
-        var inserted2 = repoTest.get(id2);
-
-        repoTest.delete(inserted1.get().getOrderId());
-        repoTest.delete(inserted2.get().getOrderId());
-
-        var em = entityManagerFactory.createEntityManager();
-        var orderProducts = em.createQuery("select op from OrderProducts op", OrderProducts.class).getResultList();
-        var orders = em.createQuery("select o from Order o", Order.class).getResultList();
-        var deliveryType = deliveryTypeRepository.get(dt.getDeliveryTypeId());
-        var products = em.createQuery("select p from Product p", Product.class).getResultList();
-        var expectedProducts = List.of(product1, product2, product3, product4);
-
-        em.close();
-
-        // then
-        assertThat(orderProducts.size()).isEqualTo(0);
-        assertThat(orders.size()).isEqualTo(0);
-        assertThat(deliveryType).isPresent();
-        assertThat(deliveryType.get()).isEqualTo(dt);
-        assertThat(new ArrayList<>(products)).isEqualTo(expectedProducts);
     }
 }

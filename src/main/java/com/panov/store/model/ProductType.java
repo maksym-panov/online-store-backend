@@ -29,8 +29,8 @@ public class ProductType {
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            joinColumns = { @JoinColumn(name = "typeunit.productId") },
-            inverseJoinColumns = { @JoinColumn(name = "typeunit.productTypeId") }
+            joinColumns = { @JoinColumn(name = "productId") },
+            inverseJoinColumns = { @JoinColumn(name = "productTypeId") }
     )
     private List<Product> products = new ArrayList<>();
 

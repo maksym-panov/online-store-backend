@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 public class ProductRepositoryTest {
     static EntityManagerFactory entityManagerFactory;
@@ -171,49 +170,6 @@ public class ProductRepositoryTest {
         assertThat(actual3.get().getProductTypes().get(0)).isEqualTo(product3.getProductTypes().get(0));
     }
 
-    @Test
-    void shouldNotAddNewProductTypesIfTheyDontExist() {
-        // given
-        var productTypeRepository = new ProductTypeRepository(entityManagerFactory);
-        var repositoryUnderTest = new ProductRepository(entityManagerFactory);
-
-        var productType1 = new ProductType();
-        var productType2 = new ProductType();
-        var productType3 = new ProductType();
-
-        productType1.setName("Grocery");
-        productType2.setName("Bread");
-
-        productType3.setProductTypeId(10000000);
-        productType3.setName("Some type");
-
-        var product = new Product();
-
-        product.setName("Bread bar");
-        product.setDescription("Just a bread");
-        product.setPrice(new BigDecimal("10.20"));
-        product.setStock(10);
-        product.getProductTypes().add(productType1);
-        product.getProductTypes().add(productType2);
-        product.getProductTypes().add(productType3);
-
-        // when
-
-        productTypeRepository.insert(productType2);
-
-        var id = repositoryUnderTest.insert(product);
-
-        var actual = repositoryUnderTest.get(id);
-        var notExpected = Set.of(productType1, productType2, productType3);
-
-        // then
-
-        assertThat(id).isNotNull();
-        assertThat(actual).isNotNull();
-        assertThat(actual.isPresent()).isTrue();
-
-        assertThat(actual.get().getProductTypes()).isNotEqualTo(notExpected);
-    }
 
     @Test
     void productsThatWeGetShouldNotBeEqualToDifferentOnes() {
@@ -494,90 +450,5 @@ public class ProductRepositoryTest {
         assertThat(update3.isPresent()).isTrue();
         assertThat(update3.get()).isEqualTo(product3);
         assertThat(update3.get().getProductTypes().isEmpty()).isEqualTo(product3.getProductTypes().isEmpty());
-    }
-
-    @Test
-    void shouldDeleteProductsAndShouldNotDeleteProductTypes() {
-        // given
-        var productTypeRepository = new ProductTypeRepository(entityManagerFactory);
-        var repositoryUnderTest = new ProductRepository(entityManagerFactory);
-
-        var productType1 = new ProductType();
-        var productType2 = new ProductType();
-        var productType3 = new ProductType();
-        var productType4 = new ProductType();
-
-        productType1.setName("Grocery");
-        productType2.setName("Bread");
-        productType3.setName("Meat");
-        productType4.setName("Toy");
-
-        var product1 = new Product();
-        var product2 = new Product();
-        var product3 = new Product();
-
-        product1.setName("Bread bar");
-        product1.setDescription("Just a bread");
-        product1.setPrice(new BigDecimal("10.20"));
-        product1.setStock(10);
-        product1.getProductTypes().add(productType1);
-        product1.getProductTypes().add(productType2);
-
-        product2.setName("Steak");
-        product2.setDescription("Beautiful rib roast");
-        product2.setPrice(new BigDecimal("550.00"));
-        product2.setStock(5);
-        product2.getProductTypes().add(productType1);
-        product2.getProductTypes().add(productType3);
-
-        product3.setName("Hot Wheels!");
-        product3.setDescription("Make your little boy happy with this new Hot Wheels kit");
-        product3.setPrice(new BigDecimal("1500.00"));
-        product3.setStock(20);
-        product3.getProductTypes().add(productType4);
-
-        // when
-
-        productTypeRepository.insert(productType1);
-        productTypeRepository.insert(productType2);
-        productTypeRepository.insert(productType3);
-        productTypeRepository.insert(productType4);
-
-        repositoryUnderTest.insert(product1);
-        repositoryUnderTest.insert(product2);
-        repositoryUnderTest.insert(product3);
-
-        var productTypesExpectedInvariant = productTypeRepository.getAll();
-
-        var beforeDeletingExpected = List.of(product1, product2, product3);
-        var beforeDeletingActual = repositoryUnderTest.getAll();
-
-        repositoryUnderTest.delete(product1.getProductId());
-        var afterFirstDeletionExpected = List.of(product2, product3);
-        var afterFirstDeletionActual = repositoryUnderTest.getAll();
-        var productTypesAfterFirstDeletion = productTypeRepository.getAll();
-
-        repositoryUnderTest.delete(product3.getProductId());
-        var afterSecondDeletionExpected = List.of(product2);
-        var afterSecondDeletionActual = repositoryUnderTest.getAll();
-        var productTypesAfterSecondDeletion = productTypeRepository.getAll();
-
-        repositoryUnderTest.delete(product2.getProductId());
-        var afterThirdDeletionExpected = Collections.emptyList();
-        var afterThirdDeletionActual = repositoryUnderTest.getAll();
-        var productTypesAfterThirdDeletion = productTypeRepository.getAll();
-
-        // then
-
-        assertThat(beforeDeletingActual).isEqualTo(beforeDeletingExpected);
-
-        assertThat(afterFirstDeletionActual).isEqualTo(afterFirstDeletionExpected);
-        assertThat(productTypesAfterFirstDeletion).isEqualTo(productTypesExpectedInvariant);
-
-        assertThat(afterSecondDeletionActual).isEqualTo(afterSecondDeletionExpected);
-        assertThat(productTypesAfterSecondDeletion).isEqualTo(productTypesExpectedInvariant);
-
-        assertThat(afterThirdDeletionActual).isEqualTo(afterThirdDeletionExpected);
-        assertThat(productTypesAfterThirdDeletion).isEqualTo(productTypesExpectedInvariant);
     }
 }

@@ -21,8 +21,15 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
     @Override
     public Optional<UnregisteredCustomer> get(int id) {
         var entityManager = getManager();
-        var unregisteredCustomer = Optional.ofNullable(entityManager.find(UnregisteredCustomer.class, id));
-        entityManager.close();
+
+        Optional<UnregisteredCustomer> unregisteredCustomer;
+
+        try {
+            unregisteredCustomer = Optional.ofNullable(entityManager.find(UnregisteredCustomer.class, id));
+        } finally {
+            entityManager.close();
+        }
+
         return unregisteredCustomer;
     }
 
@@ -30,11 +37,18 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
     @SuppressWarnings("unchecked")
     public List<UnregisteredCustomer> getAll() {
         var entityManager = getManager();
-        List<UnregisteredCustomer> unregisteredCustomers =
-                (List<UnregisteredCustomer>) entityManager
-                        .createQuery("select uc from UnregisteredCustomer uc")
-                        .getResultList();
-        entityManager.close();
+
+        List<UnregisteredCustomer> unregisteredCustomers;
+
+        try {
+            unregisteredCustomers =
+                    (List<UnregisteredCustomer>) entityManager
+                            .createQuery("select uc from UnregisteredCustomer uc")
+                            .getResultList();
+        } finally {
+            entityManager.close();
+        }
+
         return unregisteredCustomers;
     }
 
@@ -46,30 +60,36 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
     @Override
     public Integer insert(UnregisteredCustomer unregisteredCustomer) {
         var entityManager = getManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(unregisteredCustomer);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(unregisteredCustomer);
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
+
         return unregisteredCustomer.getUnregisteredCustomerId();
     }
 
     @Override
     public Integer update(UnregisteredCustomer unregisteredCustomer) {
         var entityManager = getManager();
-        entityManager.getTransaction().begin();
-        entityManager.merge(unregisteredCustomer);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(unregisteredCustomer);
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
+
         return unregisteredCustomer.getUnregisteredCustomerId();
     }
 
     @Override
     public void delete(Integer id) {
-        var entityManager = getManager();
-        entityManager.getTransaction().begin();
-        entityManager.remove(entityManager.find(UnregisteredCustomer.class, id));
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        throw new UnsupportedOperationException();
     }
 
     private EntityManager getManager() {

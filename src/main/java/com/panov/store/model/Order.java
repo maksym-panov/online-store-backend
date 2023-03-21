@@ -35,7 +35,7 @@ public class Order {
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderProducts> orderProducts = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "deliveryTypeId")
     private DeliveryType deliveryType;
 

@@ -45,7 +45,7 @@ public class Product {
     private List<ProductType> productTypes = new ArrayList<>();
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<OrderProducts> orderProducts = new ArrayList<>();
 
     @Override

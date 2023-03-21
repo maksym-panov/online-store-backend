@@ -21,8 +21,13 @@ public class ProductRepository implements DAO<Product> {
     @Override
     public Optional<Product> get(int id) {
         var entityManager = getManager();
-        var product = Optional.ofNullable(entityManager.find(Product.class, id));
-        entityManager.close();
+
+        Optional<Product> product;
+        try {
+            product = Optional.ofNullable(entityManager.find(Product.class, id));
+        } finally {
+            entityManager.close();
+        }
         return product;
     }
 
@@ -30,81 +35,107 @@ public class ProductRepository implements DAO<Product> {
     @SuppressWarnings("unchecked")
     public List<Product> getAll() {
         var entityManager = getManager();
-        List<Product> products = (List<Product>) entityManager
-                .createQuery("select p from Product p")
-                .getResultList();
-        entityManager.close();
+
+        List<Product> products;
+        try {
+            products = (List<Product>) entityManager
+                    .createQuery("select p from Product p")
+                    .getResultList();
+        } finally {
+            entityManager.close();
+        }
         return products;
     }
 
     @Override
     public List<Product> getByColumn(Object value, boolean strict) {
         var entityManager = getManager();
-        if (value == null)
-            return null;
 
-        String probablyName = Objects.toString(value);
-        if (!strict)
-            probablyName = "%" + probablyName + "%";
+        List<Product> products;
+        try {
+            if (value == null)
+                return null;
 
-        var products = entityManager.createQuery("select p from Product p where lower(p.name) LIKE lower(:pattern)", Product.class)
-                .setParameter("pattern", probablyName)
-                .getResultList();
-        entityManager.close();
+            String probablyName = Objects.toString(value);
+            if (!strict)
+                probablyName = "%" + probablyName + "%";
+
+            products = entityManager.createQuery("select p from Product p where lower(p.name) LIKE lower(:pattern)", Product.class)
+                    .setParameter("pattern", probablyName)
+                    .getResultList();
+        } finally {
+            entityManager.close();
+        }
         return products;
     }
 
     @Override
     public Integer insert(Product product) {
         var entityManager = getManager();
-        entityManager.getTransaction().begin();
+        try {
+            entityManager.getTransaction().begin();
 
-        var types = product.getProductTypes();
-        List<ProductType> productTypes = new ArrayList<>();
-        for (var t : types) {
-            if (t == null || t.getProductTypeId() == null)
-                continue;
-            if (entityManager.find(ProductType.class, t.getProductTypeId()) == null)
-                continue;
-            productTypes.add(entityManager.find(ProductType.class, t.getProductTypeId()));
+            entityManager.persist(product);
+
+            var types = product.getProductTypes();
+            List<ProductType> productTypes = new ArrayList<>();
+            for (var t : types) {
+                var pt = entityManager.find(ProductType.class, t.getProductTypeId());
+                pt.getProducts().add(product);
+                productTypes.add(pt);
+            }
+
+            product.setProductTypes(productTypes);
+
+            entityManager.persist(product);
+
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
         }
-        product.setProductTypes(productTypes);
-        entityManager.persist(product);
-
-        entityManager.getTransaction().commit();
-        entityManager.close();
         return product.getProductId();
     }
 
     @Override
     public Integer update(Product product) {
         var entityManager = getManager();
-        entityManager.getTransaction().begin();
 
-        var types = product.getProductTypes();
-        if (types == null)
-            types = new ArrayList<>();
-        List<ProductType> productTypes = new ArrayList<>();
-        for (var t : types) {
-            try {
-                productTypes.add(entityManager.find(ProductType.class, t.getProductTypeId()));
-            } catch(Exception ignored) {}
+        try {
+            entityManager.getTransaction().begin();
+
+            var current = entityManager.find(Product.class, product.getProductId());
+
+            if (product.getProductTypes() == null)
+                product.setProductTypes(new ArrayList<>());
+
+            for (var pt : current.getProductTypes()) {
+                if (!product.getProductTypes().contains(pt)) {
+                    pt.getProducts().remove(current);
+                }
+            }
+
+            for (var pt : product.getProductTypes()) {
+                if (!current.getProductTypes().contains(pt)) {
+                    var productType = entityManager.find(ProductType.class, pt.getProductTypeId());
+                    productType.getProducts().add(product);
+                    current.getProductTypes().add(productType);
+                }
+            }
+
+            current.getProductTypes().retainAll(product.getProductTypes());
+
+            entityManager.merge(product);
+
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
         }
-        product.setProductTypes(productTypes);
-        entityManager.merge(product);
-
-        entityManager.getTransaction().commit();
-        entityManager.close();
         return product.getProductId();
     }
 
     @Override
     public void delete(Integer id) {
-        var entityManager = getManager();
-        entityManager.getTransaction().begin();
-        entityManager.remove(entityManager.find(Product.class, id));
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        throw new UnsupportedOperationException();
     }
 
     private EntityManager getManager() {

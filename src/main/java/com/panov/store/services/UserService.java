@@ -1,7 +1,6 @@
 package com.panov.store.services;
 
 import com.panov.store.exceptions.ResourceNotCreatedException;
-import com.panov.store.exceptions.ResourceNotDeletedException;
 import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,14 +87,6 @@ public class UserService {
         return id;
     }
 
-    public void deleteUser(Integer id) {
-        try {
-            repository.delete(id);
-        } catch(Exception e) {
-            e.printStackTrace();
-            throw new ResourceNotDeletedException("Could not delete this user");
-        }
-    }
 
     private Map<String, String> thisNaturalIdExists(User user) {
         Map<String, String> matches = new HashMap<>();

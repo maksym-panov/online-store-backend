@@ -7,7 +7,6 @@ import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.panov.store.exceptions.ResourceNotDeletedException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -89,15 +88,6 @@ public class ProductService {
             throw new ResourceNotUpdatedException("Could not update this product");
 
         return id;
-    }
-
-    public void deleteProduct(Integer id) {
-        try {
-            repository.delete(id);
-        } catch(Exception e) {
-            e.printStackTrace();
-            throw new ResourceNotDeletedException("Could not delete this product");
-        }
     }
 
     private Map<String, String> thisNaturalIdExists(Product product) {

@@ -22,10 +22,17 @@ public class UserRepository implements DAO<User> {
     @Override
     public Optional<User> get(int id) {
         var entityManager = getManager();
-        var user = Optional.ofNullable(entityManager.find(User.class, id));
-        if (user.isPresent() && user.get().getAddress() == null)
-            user.get().setAddress(new Address());
-        entityManager.close();
+
+        Optional<User> user;
+
+        try {
+            user = Optional.ofNullable(entityManager.find(User.class, id));
+            if (user.isPresent() && user.get().getAddress() == null)
+                user.get().setAddress(new Address());
+        } finally {
+            entityManager.close();
+        }
+
         return user;
     }
 
@@ -33,13 +40,20 @@ public class UserRepository implements DAO<User> {
     @SuppressWarnings("unchecked")
     public List<User> getAll() {
         var entityManager = getManager();
-        List<User> users = (List<User>) entityManager
-                .createQuery("select u from User u")
-                .getResultList();
-        for (var u : users)
-            if (u != null && u.getAddress() == null)
-                u.setAddress(new Address());
-        entityManager.close();
+
+        List<User> users;
+
+        try {
+            users = (List<User>) entityManager
+                    .createQuery("select u from User u")
+                    .getResultList();
+            for (var u : users)
+                if (u != null && u.getAddress() == null)
+                    u.setAddress(new Address());
+        } finally {
+            entityManager.close();
+        }
+
         return users;
     }
 
@@ -47,51 +61,65 @@ public class UserRepository implements DAO<User> {
     public List<User> getByColumn(Object value, boolean strict) {
         var entityManager = getManager();
 
-        String probable = value.toString();
-        if (!strict)
-            probable = "%" + probable + "%";
+        List<User> users;
 
-        List<User> users = entityManager.createQuery("select u from User u where u.personalInfo.phoneNumber like :pn", User.class)
-                .setParameter("pn", probable)
-                .getResultList();
-        if (users == null || users.isEmpty()) {
-            users = entityManager.createQuery("select u from User u where u.personalInfo.email like :email", User.class)
-                    .setParameter("email", probable)
+        try {
+            String probable = value.toString();
+            if (!strict)
+                probable = "%" + probable + "%";
+
+            users = entityManager
+                    .createQuery("select u from User u where u.personalInfo.phoneNumber like :pn", User.class)
+                    .setParameter("pn", probable)
                     .getResultList();
+            if (users == null || users.isEmpty()) {
+                users = entityManager
+                        .createQuery("select u from User u where u.personalInfo.email like :email", User.class)
+                        .setParameter("email", probable)
+                        .getResultList();
+            }
+            if (users != null && !users.isEmpty() && users.get(0).getAddress() == null)
+                users.get(0).setAddress(new Address());
+        } finally {
+            entityManager.close();
         }
-        if (users != null && !users.isEmpty() && users.get(0).getAddress() == null)
-            users.get(0).setAddress(new Address());
-        entityManager.close();
+
         return users;
     }
 
     @Override
     public Integer insert(User user) {
         var entityManager = getManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(user);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(user);
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
+
         return user.getUserId();
     }
 
     @Override
     public Integer update(User user) {
         var entityManager = getManager();
-        entityManager.getTransaction().begin();
-        entityManager.merge(user);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(user);
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
+
         return user.getUserId();
     }
 
     @Override
     public void delete(Integer id) {
-        var entityManager = getManager();
-        entityManager.getTransaction().begin();
-        entityManager.remove(entityManager.find(User.class, id));
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        throw new UnsupportedOperationException();
     }
 
     private EntityManager getManager() {

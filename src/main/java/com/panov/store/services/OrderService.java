@@ -2,7 +2,6 @@ package com.panov.store.services;
 
 import com.panov.store.dao.DAO;
 import com.panov.store.exceptions.ResourceNotCreatedException;
-import com.panov.store.exceptions.ResourceNotDeletedException;
 import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.Order;
@@ -88,14 +87,5 @@ public class OrderService {
             throw new ResourceNotUpdatedException("Could not change this order");
 
         return id;
-    }
-
-    public void deleteOrder(Integer id) {
-        try {
-            repository.delete(id);
-        } catch(Exception e) {
-            e.printStackTrace();
-            throw new ResourceNotDeletedException("Could not delete this order");
-        }
     }
 }

@@ -10,42 +10,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Solved persisting OrderProducts issue.&#10;Fully completed unit testing DAO layer.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/DeliveryTypeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DeliveryTypeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/DeliveryTypeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/DeliveryTypeRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/OrderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UnregisteredCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UnregisteredCustomerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DeliveryTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DeliveryTypeRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductTypeRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UnregisteredCustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UnregisteredCustomerRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/ProductTypeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/ProductTypeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/DeliveryType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/DeliveryType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/OrderProducts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/OrderProducts.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/ProductType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/ProductType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/UnregisteredCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/UnregisteredCustomer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/OrderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductTypeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/UnregisteredCustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/UnregisteredCustomerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/panov/store/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/panov/store/Utils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/OrderRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/OrderRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/ProductRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/ProductRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/ProductTypeRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/ProductTypeRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/UnregisteredCustomerRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/UnregisteredCustomerRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/UserRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/UserRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/META-INF/persistence.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,34 +100,34 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/maksym/Desktop/online-store-project/src/test/resources/META-INF",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "service.view.auto.scroll.to.source": "true",
-    "settings.editor.selected.configurable": "editor.preferences.completion",
-    "spring.configuration.checksum": "eca60a85c5426f4586497142760dc9c6",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/maksym/Desktop/online-store-project/src/test/resources/META-INF&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;service.view.auto.scroll.to.source&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.completion&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;eca60a85c5426f4586497142760dc9c6&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ],
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "HTTP Request"
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;HTTP Request&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.panov.store.dto" />
@@ -353,7 +340,8 @@
       <workItem from="1678707975938" duration="22774000" />
       <workItem from="1678854046804" duration="947000" />
       <workItem from="1679308604320" duration="1569000" />
-      <workItem from="1679310180924" duration="17248000" />
+      <workItem from="1679310180924" duration="17401000" />
+      <workItem from="1679398085306" duration="12480000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1676894430878</created>
@@ -453,7 +441,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678647525092</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Solved persisting OrderProducts issue.&#10;Fully completed unit testing DAO layer.">
+      <created>1679338090387</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1679338090387</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -509,6 +504,6 @@
     <SUITE FILE_PATH="coverage/online_store_project$ProductRepositoryTest.ic" NAME="ProductRepositoryTest Coverage Results" MODIFIED="1678627644532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.panov.store.dao.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/online_store_project$All_in_online_store_project.ic" NAME="All in online-store-project Coverage Results" MODIFIED="1679337692429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/online_store_project$All_in_online_store_project.ic" NAME="All in online-store-project Coverage Results" MODIFIED="1679419499347" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

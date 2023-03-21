@@ -22,17 +22,31 @@ public class ProductTypeRepository implements DAO<ProductType> {
     @Override
     public Optional<ProductType> get(int id) {
         var entityManager = getManager();
-        var productType = Optional.ofNullable(entityManager.find(ProductType.class, id));
-        entityManager.close();
+
+        Optional<ProductType> productType;
+
+        try {
+            productType = Optional.ofNullable(entityManager.find(ProductType.class, id));
+        } finally {
+            entityManager.close();
+        }
+
         return productType;
     }
 
     @Override
     public List<ProductType> getAll() {
         var entityManager = getManager();
-        var productTypes = entityManager.createQuery("select pt from ProductType pt", ProductType.class)
-                .getResultList();
-        entityManager.close();
+
+        List<ProductType> productTypes;
+
+        try {
+            productTypes = entityManager.createQuery("select pt from ProductType pt", ProductType.class)
+                    .getResultList();
+        } finally {
+            entityManager.close();
+        }
+
         return productTypes;
     }
 
@@ -40,45 +54,73 @@ public class ProductTypeRepository implements DAO<ProductType> {
     public List<ProductType> getByColumn(Object value, boolean strict) {
         var entityManager = getManager();
 
-        String probablyName = Objects.toString(value);
-        if (!strict)
-            probablyName = "%" + probablyName + "%";
+        List<ProductType> productTypes;
 
-        var productTypes = entityManager
-                .createQuery("select pt from ProductType pt where lower(pt.name) like lower(:pattern)", ProductType.class)
-                .setParameter("pattern", probablyName)
-                .getResultList();
-        entityManager.close();
+        try {
+            String probablyName = Objects.toString(value);
+            if (!strict)
+                probablyName = "%" + probablyName + "%";
+
+            productTypes = entityManager
+                    .createQuery("select pt from ProductType pt where lower(pt.name) like lower(:pattern)", ProductType.class)
+                    .setParameter("pattern", probablyName)
+                    .getResultList();
+        } finally {
+            entityManager.close();
+        }
         return productTypes;
     }
 
     @Override
     public Integer insert(ProductType productType) {
         var entityManager = getManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(productType);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(productType);
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
+
         return productType.getProductTypeId();
     }
 
     @Override
     public Integer update(ProductType productType) {
         var entityManager = getManager();
-        entityManager.getTransaction().begin();
-        entityManager.merge(productType);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(productType);
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
+
         return productType.getProductTypeId();
     }
 
     @Override
     public void delete(Integer id) {
         var entityManager = getManager();
-        entityManager.getTransaction().begin();
-        entityManager.remove(entityManager.find(ProductType.class, id));
-        entityManager.getTransaction().commit();
-        entityManager.close();
+
+        try {
+            entityManager.getTransaction().begin();
+
+            // Delete reference from every product object
+            var pt = entityManager.find(ProductType.class, id);
+            for (var p : pt.getProducts()) {
+                p.getProductTypes().remove(pt);
+            }
+
+            // Delete actual product type
+            entityManager.remove(pt);
+
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
     }
 
     private EntityManager getManager() {
