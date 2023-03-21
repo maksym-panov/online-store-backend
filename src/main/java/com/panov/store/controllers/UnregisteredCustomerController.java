@@ -60,11 +60,4 @@ public class UnregisteredCustomerController {
 
         return service.changeUnregisteredCustomer(unregCustDTO.toModel());
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteUnregisteredCustomer(@PathVariable("id") Integer id) {
-        service.deleteUnregisteredCustomer(id);
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
-
 }

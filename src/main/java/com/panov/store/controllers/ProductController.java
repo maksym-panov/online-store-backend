@@ -69,10 +69,4 @@ public class ProductController {
 
         return service.changeProduct(productDTO.toModel());
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") Integer id) {
-        service.deleteProduct(id);
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
 }

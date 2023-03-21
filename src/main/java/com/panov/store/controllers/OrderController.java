@@ -65,10 +65,4 @@ public class OrderController {
 
         return service.changeOrder(orderDTO.toModel());
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteOrder(@PathVariable("id") Integer id) {
-        service.deleteOrder(id);
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
 }

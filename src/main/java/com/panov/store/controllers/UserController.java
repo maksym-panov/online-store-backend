@@ -63,10 +63,4 @@ public class UserController {
 
         return service.changeUser(userDTO.toModel());
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") Integer id) {
-        service.deleteUser(id);
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
 }
