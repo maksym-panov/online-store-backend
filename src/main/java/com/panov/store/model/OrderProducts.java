@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
@@ -34,6 +35,10 @@ public class OrderProducts {
     @NotNull(message = "Quantity of ordered product cannot be null")
     @Min(value = 1, message = "Quantity must be greater than 0")
     private Integer quantity;
+
+    @NotNull(message = "Sum cannot be null")
+    @Min(value = 0, message = "Sum cannot be negative")
+    private BigDecimal sum;
 
     @Override
     public int hashCode() {

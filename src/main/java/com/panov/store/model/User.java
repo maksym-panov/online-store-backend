@@ -29,7 +29,6 @@ public class User {
     @Embedded
     private Address address;
 
-    @NotNull
     @Convert(converter = Access.AccessConverter.class)
     private Access access;
 

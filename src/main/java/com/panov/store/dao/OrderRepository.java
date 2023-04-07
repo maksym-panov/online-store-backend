@@ -1,11 +1,13 @@
 package com.panov.store.dao;
 
 import com.panov.store.model.*;
+import com.panov.store.utils.Status;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,7 +84,6 @@ public class OrderRepository implements DAO<Order> {
                 uc = entityManager.find(UnregisteredCustomer.class, uc.getUnregisteredCustomerId());
                 uc.getOrders().add(order);
             }
-
             // Attach this order to its DeliveryType
             var dt = order.getDeliveryType();
             dt = entityManager.find(DeliveryType.class, dt.getDeliveryTypeId());
@@ -113,43 +114,53 @@ public class OrderRepository implements DAO<Order> {
             var current = entityManager.find(Order.class, order.getOrderId());
 
             // Delete order products that were deleted
-            for (var op : current.getOrderProducts()) {
-                if (!order.getOrderProducts().contains(op)) {
-                    op.getProduct().getOrderProducts().remove(op);
-                    op.setOrder(null);
+            if (order.getOrderProducts() != null && !order.getOrderProducts().isEmpty()) {
+                for (var op : current.getOrderProducts()) {
+                    if (!order.getOrderProducts().contains(op)) {
+                        op.getProduct().getOrderProducts().remove(op);
+                        op.setOrder(null);
+                    }
                 }
-            }
 
-            for (var op : order.getOrderProducts()) {
-                if (current.getOrderProducts().contains(op)) {
-                    entityManager.merge(op);
-                    continue;
+                for (var op : order.getOrderProducts()) {
+                    if (current.getOrderProducts().contains(op)) {
+                        entityManager.merge(op);
+                        continue;
+                    }
+                    entityManager.persist(op);
+                    op.setOrder(current);
+                    current.getOrderProducts().add(op);
                 }
-                entityManager.persist(op);
-                op.setOrder(current);
-                current.getOrderProducts().add(op);
-            }
 
-            current.getOrderProducts().retainAll(order.getOrderProducts());
+                current.getOrderProducts().retainAll(order.getOrderProducts());
+            }
 
             // Update delivery type
-            var currentDeliveryType = current.getDeliveryType();
-            if (!currentDeliveryType.equals(order.getDeliveryType())) {
-                currentDeliveryType.getOrders().remove(current);
+            if (order.getDeliveryType() != null) {
+                var currentDeliveryType = current.getDeliveryType();
+                if (!currentDeliveryType.equals(order.getDeliveryType())) {
+                    currentDeliveryType.getOrders().remove(current);
 
-                var toSetDeliveryType = entityManager.find(
-                        DeliveryType.class,
-                        order.getDeliveryType().getDeliveryTypeId()
-                );
-                toSetDeliveryType.getOrders().add(current);
-                current.setDeliveryType(toSetDeliveryType);
+                    var toSetDeliveryType = entityManager.find(
+                            DeliveryType.class,
+                            order.getDeliveryType().getDeliveryTypeId()
+                    );
+                    toSetDeliveryType.getOrders().add(current);
+                    current.setDeliveryType(toSetDeliveryType);
+                }
             }
 
+            // Update a total sum
+            if (order.getTotal() != null)
+                current.setTotal(order.getTotal());
+
             // Update a status of the order
-            current.setStatus(order.getStatus());
+            if (order.getStatus() != null)
+                current.setStatus(order.getStatus());
 
             // Update a completion time of the order
-            current.setCompleteTime(order.getCompleteTime());
+            if (order.getStatus() == Status.COMPLETED)
+                current.setCompleteTime(new Timestamp(System.currentTimeMillis() - 10000));
 
             entityManager.getTransaction().commit();
         } finally {

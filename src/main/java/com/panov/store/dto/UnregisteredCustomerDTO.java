@@ -54,7 +54,7 @@ public class UnregisteredCustomerDTO {
     @Max(value = 32767, message = "Apartment number is too big")
     private Integer apartment;
 
-    @Min(value = 7000, message = "Invalid postal code")
+    @Min(value = 1001, message = "Invalid postal code")
     @Max(value = 99999, message = "Invalid postal code")
     private Integer postalCode;
 

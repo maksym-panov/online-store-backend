@@ -9,30 +9,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Solved persisting OrderProducts issue.&#10;Fully completed unit testing DAO layer.">
+    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Provided security, login, registration, password encoding method protection, authorities by user ID, added total sum for Order objects.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/SecurityConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/security/UserDetailsImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/security/UserDetailsServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UnregisteredCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UnregisteredCustomerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DeliveryTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DeliveryTypeRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductTypeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UnregisteredCustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UnregisteredCustomerRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/OrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/OrderDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/UnregisteredCustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/UnregisteredCustomerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Address.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/OrderProducts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/OrderProducts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/ProductType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/ProductType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/DeliveryTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/DeliveryTypeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/OrderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductTypeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/UnregisteredCustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/UnregisteredCustomerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/OrderRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/OrderRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/ProductRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/ProductRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/UnregisteredCustomerRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/UnregisteredCustomerRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/UserRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/UserRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/PasswordEncoder.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +115,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;service.view.auto.scroll.to.source&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.completion&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;eca60a85c5426f4586497142760dc9c6&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -148,13 +148,26 @@
       <recent name="com.panov.store.dao" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in online-store-project">
+  <component name="RunManager" selected="Tomcat Server.Tomcat 10">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.panov.store.dao.Main" />
       <module name="online-store-project" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.panov.store.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.panov.store.configuration.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.panov.store.configuration.Main" />
+      <module name="online-store-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.panov.store.configuration.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -180,21 +193,6 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.panov.store.dao" />
       <option name="MAIN_CLASS_NAME" value="com.panov.store.dao.OrderRepositoryTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProductRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="online-store-project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.panov.store.dao.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.panov.store.dao" />
-      <option name="MAIN_CLASS_NAME" value="com.panov.store.dao.ProductRepositoryTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -297,20 +295,20 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.com.panov.store.configuration.Main" />
       <item itemvalue="Application.Main" />
       <item itemvalue="JUnit.All in online-store-project" />
       <item itemvalue="JUnit.OrderRepositoryTest" />
-      <item itemvalue="JUnit.ProductRepositoryTest" />
       <item itemvalue="JUnit.java in online-store-project" />
       <item itemvalue="Tomcat Server.Tomcat 10" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.com.panov.store.configuration.Main" />
         <item itemvalue="JUnit.All in online-store-project" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.OrderRepositoryTest" />
         <item itemvalue="JUnit.java in online-store-project" />
-        <item itemvalue="JUnit.ProductRepositoryTest" />
       </list>
     </recent_temporary>
   </component>
@@ -341,7 +339,11 @@
       <workItem from="1678854046804" duration="947000" />
       <workItem from="1679308604320" duration="1569000" />
       <workItem from="1679310180924" duration="17401000" />
-      <workItem from="1679398085306" duration="12480000" />
+      <workItem from="1679398085306" duration="13129000" />
+      <workItem from="1680429682352" duration="765000" />
+      <workItem from="1680433959281" duration="3859000" />
+      <workItem from="1680446110286" duration="21230000" />
+      <workItem from="1680683718234" duration="38935000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1676894430878</created>
@@ -448,7 +450,21 @@
       <option name="project" value="LOCAL" />
       <updated>1679338090387</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Added code that handles useless relationships (for example relationship OrderProducts &lt;-&gt; Product. When we want to delete OrderProducts object, it anyway remains in the DB because Hibernate sees that there is one Product object that has a relation to this OrderProducts object)&#10;Removed possibility to delete User, UnregisteredCustomer, Order, Product records from the DB, because the possibility of deletion of these entities is almost useless but despite this, there will be a lot of problems with &quot;Deletion logic&quot; in the future. So just as almost everywhere we won't have an ability to delete entities. Yet...">
+      <created>1679420482012</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1679420482012</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Added code that handles useless relationships (for example relationship OrderProducts &lt;-&gt; Product. When we want to delete OrderProducts object, it anyway remains in the DB because Hibernate sees that there is one Product object that has a relation to this OrderProducts object)&#10;Removed possibility to delete User, UnregisteredCustomer, Order, Product records from the DB, because the possibility of deletion of these entities is almost useless but despite this, there will be a lot of problems with &quot;Deletion logic&quot; in the future. So just as almost everywhere we won't have an ability to delete entities. Yet...">
+      <created>1679420522579</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1679420522579</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -482,7 +498,9 @@
     <MESSAGE value="Full CRUD, Exception optimisation, Password encoder, Check the uniqueness of parameters.&#10;&#10;1. Completed implementing CRUD for each model entity.&#10;2. Added check for parameter uniqueness to the ProductService, UserService, ProductTypeService classes.&#10;3. Created DTO classes to communicate with clients. DTO classes are used only in @Controller classes and are not being used deeply (in service or dao).&#10;4. Optimized all the model exceptions into 4 classes that extend ResourceException class - ResourceNotFoundException, ResourceNotCreatedException, ResourceNotUpdatedException, ResourceNotDeletedException classes.&#10;5. NotCreated and NotUpdated have fields Map&lt;String, String&gt; and BindingResult to store exception situations causes which the application sends to the client using ControllerAdvisor class' methods (all the advisors are now concentrated in one ControllerAdvisor class because of changes described in paragraph #4).&#10;6. Added password encoder and used it in the UserController#createUser method." />
     <MESSAGE value="Unit testing DAO layer&#10;1. 100% tested ProductTypeRepository&#10;2. 100% tested ProductRepository&#10;3. 100% tested UserRepository&#10;4. 100% tested UnregisteredCustomerRepository&#10;&#10;TODO: add DeliveryTypeRepository&#10;TODO: test DeliveryTypeRepository&#10;TODO: test OrderRepository" />
     <MESSAGE value="Solved persisting OrderProducts issue.&#10;Fully completed unit testing DAO layer." />
-    <option name="LAST_COMMIT_MESSAGE" value="Solved persisting OrderProducts issue.&#10;Fully completed unit testing DAO layer." />
+    <MESSAGE value="Added code that handles useless relationships (for example relationship OrderProducts &lt;-&gt; Product. When we want to delete OrderProducts object, it anyway remains in the DB because Hibernate sees that there is one Product object that has a relation to this OrderProducts object)&#10;Removed possibility to delete User, UnregisteredCustomer, Order, Product records from the DB, because the possibility of deletion of these entities is almost useless but despite this, there will be a lot of problems with &quot;Deletion logic&quot; in the future. So just as almost everywhere we won't have an ability to delete entities. Yet..." />
+    <MESSAGE value="Provided security, login, registration, password encoding method protection, authorities by user ID, added total sum for Order objects." />
+    <option name="LAST_COMMIT_MESSAGE" value="Provided security, login, registration, password encoding method protection, authorities by user ID, added total sum for Order objects." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

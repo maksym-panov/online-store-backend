@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class OrderDTO {
     private List<OrderProductsDTO> orderProducts = new ArrayList<>();
 
     private DeliveryTypeDTO deliveryType;
+
+    private BigDecimal total;
 
     @NotNull
     @PastOrPresent
@@ -53,6 +56,7 @@ public class OrderDTO {
                         .map(OrderProductsDTO::of)
                         .toList(),
                 DeliveryTypeDTO.of(o.getDeliveryType()),
+                o.getTotal(),
                 o.getPostTime(),
                 o.getCompleteTime(),
                 o.getStatus()
@@ -72,6 +76,7 @@ public class OrderDTO {
                         .toList()
         );
         o.setDeliveryType(deliveryType == null ? null : deliveryType.toModel());
+        o.setTotal(total);
         o.setPostTime(postTime);
         o.setCompleteTime(completeTime);
         o.setStatus(status);

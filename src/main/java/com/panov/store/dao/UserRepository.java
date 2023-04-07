@@ -103,18 +103,70 @@ public class UserRepository implements DAO<User> {
     }
 
     @Override
-    public Integer update(User user) {
+    public Integer update(User patchUser) {
         var entityManager = getManager();
 
         try {
             entityManager.getTransaction().begin();
-            entityManager.merge(user);
+            User currentUser = entityManager.find(User.class, patchUser.getUserId());
+
+            var pi = patchUser.getPersonalInfo();
+            var a = patchUser.getAddress();
+
+            if (patchUser.getAccess() != null)
+                currentUser.setAccess(patchUser.getAccess());
+
+            if (pi != null) {
+                String pn = pi.getPhoneNumber();
+                String e = pi.getEmail();
+                String fn = pi.getFirstname();
+                String ln = pi.getLastname();
+
+                var currentPi = currentUser.getPersonalInfo();
+
+                if (pn != null)
+                    currentPi.setPhoneNumber(pn);
+                if (e != null)
+                    currentPi.setEmail(e);
+                if (fn != null)
+                    currentPi.setFirstname(fn);
+                if (ln != null)
+                    currentPi.setLastname(ln);
+            }
+
+            if (a != null) {
+                String r = a.getRegion();
+                String d = a.getDistrict();
+                String c = a.getCity();
+                String s = a.getStreet();
+                Integer b = a.getBuilding();
+                Integer ap = a.getApartment();
+                Integer pc = a.getPostalCode();
+
+                var currentA = currentUser.getAddress();
+
+                if (r != null)
+                    currentA.setRegion(r);
+                if (d != null)
+                    currentA.setDistrict(d);
+                if (c != null)
+                    currentA.setCity(c);
+                if (s != null)
+                    currentA.setStreet(s);
+                if (b != null)
+                    currentA.setBuilding(b);
+                if (ap != null)
+                    currentA.setApartment(ap);
+                if (pc != null)
+                    currentA.setPostalCode(pc);
+            }
+
             entityManager.getTransaction().commit();
         } finally {
             entityManager.close();
         }
 
-        return user.getUserId();
+        return patchUser.getUserId();
     }
 
     @Override

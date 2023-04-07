@@ -8,12 +8,11 @@ import com.panov.store.services.OrderService;
 import com.panov.store.utils.ListUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/orders")
@@ -26,23 +25,30 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<Order> orderRange(@RequestParam(name = "user", required = false) Integer userId,
+    public List<OrderDTO> orderRange(@RequestParam(name = "user", required = false) Integer userId,
                                   @RequestParam(name = "uc", required = false) Integer unregCustId,
                                   @RequestParam(name = "quantity", required = false) Integer quantity,
                                   @RequestParam(name = "offset", required = false) Integer offset) {
-        List<Order> result;
+        List<Order> orders;
+
         if (userId == null && unregCustId == null)
-            result = service.getAllOrdersList();
+            orders = service.getAllOrdersList();
         else if (userId == null)
-            result = service.getOrdersByUnregisteredCustomer(unregCustId);
+            orders = service.getOrdersByUnregisteredCustomer(unregCustId);
         else
-            result = service.getOrdersByUser(userId);
+            orders = service.getOrdersByUser(userId);
+
+        List<OrderDTO> result = orders.stream()
+                .filter(Objects::nonNull)
+                .map(OrderDTO::of)
+                .toList();
+
         return ListUtils.makeCut(result, quantity, offset);
     }
 
     @GetMapping("/{id}")
-    public Order specificOrder(@PathVariable("id") Integer id) {
-        return service.getById(id);
+    public OrderDTO specificOrder(@PathVariable("id") Integer id) {
+        return OrderDTO.of(service.getById(id));
     }
 
     @PostMapping

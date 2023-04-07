@@ -6,6 +6,7 @@ import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.UnregisteredCustomer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -20,6 +21,7 @@ public class UnregisteredCustomerService {
         this.repository = repository;
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
     public List<UnregisteredCustomer> getUnregCustomerList() {
         try {
             var list = repository.getAll();
@@ -32,10 +34,12 @@ public class UnregisteredCustomerService {
         }
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
     public UnregisteredCustomer getById(Integer id) {
         return repository.get(id).orElseThrow(() -> new ResourceNotFoundException("Could not find this unregistered customer"));
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
     public List<UnregisteredCustomer> getByPhoneNumber(String phoneNumber) {
         try {
             var customers = repository.getByColumn(phoneNumber, true);
@@ -48,6 +52,7 @@ public class UnregisteredCustomerService {
         }
     }
 
+    // Everybody can make an order without creating an account
     public Integer createUnregisteredCustomer(UnregisteredCustomer unregCust) {
         Integer id = null;
 
@@ -63,6 +68,7 @@ public class UnregisteredCustomerService {
         return id;
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
     public Integer changeUnregisteredCustomer(UnregisteredCustomer unregCust) {
         Integer id = null;
 

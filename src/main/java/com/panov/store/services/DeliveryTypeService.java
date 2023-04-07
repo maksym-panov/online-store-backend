@@ -7,6 +7,7 @@ import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.DeliveryType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -51,6 +52,7 @@ public class DeliveryTypeService {
         }
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
     public Integer createDeliveryType(DeliveryType deliveryType) {
         Map<String, String> matches = thisNaturalIdExists(deliveryType);
         if (matches.size() != 0)
@@ -70,6 +72,7 @@ public class DeliveryTypeService {
         return id;
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
     public Integer changeDeliveryType(DeliveryType deliveryType) {
         Map<String, String> matches = thisNaturalIdExists(deliveryType);
         if (matches.size() != 0)
@@ -89,6 +92,7 @@ public class DeliveryTypeService {
         return id;
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public void deleteDeliveryType(Integer id) {
         try {
             repository.delete(id);

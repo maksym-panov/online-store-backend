@@ -1,15 +1,12 @@
 package com.panov.store.controllers;
 
 import com.panov.store.dto.UnregisteredCustomerDTO;
-import com.panov.store.exceptions.ResourceNotCreatedException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.UnregisteredCustomer;
 import com.panov.store.services.UnregisteredCustomerService;
 import com.panov.store.utils.ListUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,15 +35,6 @@ public class UnregisteredCustomerController {
     @GetMapping("/{id}")
     public UnregisteredCustomer specificUnregisteredCustomer(@PathVariable("id") Integer id) {
         return service.getById(id);
-    }
-
-    @PostMapping
-    public Integer createUnregisteredCustomer(@RequestBody @Valid UnregisteredCustomerDTO unregCustDTO,
-                                              BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-            throw new ResourceNotCreatedException(bindingResult);
-
-        return service.createUnregisteredCustomer(unregCustDTO.toModel());
     }
 
     @PatchMapping("/{id}")

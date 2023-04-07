@@ -6,6 +6,7 @@ import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -52,6 +53,7 @@ public class ProductService {
         }
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
     public Integer createProduct(Product product) {
         Map<String, String> matches = thisNaturalIdExists(product);
         if (matches.size() != 0)
@@ -71,6 +73,7 @@ public class ProductService {
         return id;
     }
 
+    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
     public Integer changeProduct(Product product) {
         Map<String, String> matches = thisNaturalIdExists(product);
         if (matches.size() != 0)
@@ -95,7 +98,7 @@ public class ProductService {
 
         try {
             var nameMatch = getByNamePattern(product.getName(), true);
-            if (nameMatch.size() != 0)
+            if (nameMatch.size() != 0 && !product.getProductId().equals(nameMatch.get(0).getProductId()))
                 matches.put("name", "Product with this name already exists");
         } catch(Exception ignored) {}
 

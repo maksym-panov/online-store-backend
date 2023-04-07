@@ -4,6 +4,7 @@ import com.panov.store.exceptions.ResourceNotCreatedException;
 import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import com.panov.store.dao.DAO;
 
@@ -21,6 +22,10 @@ public class UserService {
         this.repository = repository;
     }
 
+    @PreAuthorize(
+            "hasAuthority('ADMINISTRATOR') or " +
+            "hasAuthority('MANAGER')"
+    )
     public List<User> getAllUserList() {
         try {
             var list = repository.getAll();
@@ -33,10 +38,16 @@ public class UserService {
         }
     }
 
+    @PreAuthorize(
+            "hasAuthority('ADMINISTRATOR') or " +
+            "hasAuthority('MANAGER') or " +
+            "hasAuthority(#id.toString)"
+    )
     public User getById(Integer id) {
         return repository.get(id).orElseThrow(() -> new ResourceNotFoundException("Could not find this user"));
     }
 
+    // This method is reachable only from UserDetailsService class
     public List<User> getByNaturalId(String naturalId, boolean strict) {
         try {
             var users = repository.getByColumn(naturalId, strict);
@@ -49,6 +60,7 @@ public class UserService {
         }
     }
 
+    // Registration is available for everyone
     public Integer createUser(User user) {
         var matches = thisNaturalIdExists(user);
         if (matches.size() != 0)
@@ -68,6 +80,11 @@ public class UserService {
         return id;
     }
 
+    @PreAuthorize(
+            "hasAuthority('ADMINISTRATOR') or " +
+            "hasAuthority('MANAGER') or " +
+            "hasAuthority(#user.getUserId().toString())"
+    )
     public Integer changeUser(User user) {
         var matches = thisNaturalIdExists(user);
         if (matches.size() != 0)
@@ -93,14 +110,14 @@ public class UserService {
 
         try {
             var phoneNumberMatch = getByNaturalId(user.getPersonalInfo().getPhoneNumber(), true);
-            if (phoneNumberMatch.size() != 0)
+            if (phoneNumberMatch.size() != 0 && !user.getUserId().equals(phoneNumberMatch.get(0).getUserId()))
                 matches.put("phoneNumber", "User with this phone number already exists");
         } catch(Exception ignored) {}
 
         try {
             var emailMatch = getByNaturalId(user.getPersonalInfo().getEmail(), true);
-            if (emailMatch.size() != 0)
-                matches.put("email", "User with this phone number already exists");
+            if (emailMatch.size() != 0 && !user.getUserId().equals(emailMatch.get(0).getUserId()))
+                matches.put("email", "User with this email already exists");
         } catch(Exception ignored) {}
 
         return matches;
