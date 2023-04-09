@@ -11,6 +11,12 @@ import lombok.ToString;
 
 import java.util.*;
 
+/**
+ * This class represents unregistered customers in the Domain.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 @Getter
 @Setter
 @ToString

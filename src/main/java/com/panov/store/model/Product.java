@@ -13,6 +13,12 @@ import lombok.ToString;
 import java.math.BigDecimal;
 import java.util.*;
 
+/**
+ * This class represents products in the Domain.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 @Getter
 @Setter
 @ToString

@@ -11,6 +11,12 @@ import lombok.ToString;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * This class represents order items in the Domain.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 @Getter
 @Setter
 @ToString

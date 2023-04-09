@@ -10,6 +10,12 @@ import lombok.ToString;
 
 import java.util.*;
 
+/**
+ * This class represents product types in the Domain.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 @Getter
 @Setter
 @ToString

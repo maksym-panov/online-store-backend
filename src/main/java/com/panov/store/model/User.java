@@ -10,6 +10,12 @@ import lombok.*;
 
 import java.util.*;
 
+/**
+ * This class represents registered users in the Domain.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 @Getter
 @Setter
 @ToString

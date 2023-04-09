@@ -1,7 +1,14 @@
 package com.panov.store.utils;
 
+import com.panov.store.model.User;
 import jakarta.persistence.AttributeConverter;
 
+/**
+ * This enumeration represents existing roles of the {@link User}.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 public enum Access {
     USER("U"),
     MANAGER("M"),
@@ -25,6 +32,12 @@ public enum Access {
         return code;
     }
 
+    /**
+     * Converts enumeration objects into strings to save in the data storage.
+     *
+     * @author Maksym Panov
+     * @version 1.0
+     */
     public static class AccessConverter implements AttributeConverter<Access, String> {
 
         @Override

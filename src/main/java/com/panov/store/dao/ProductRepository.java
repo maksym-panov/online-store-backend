@@ -1,7 +1,6 @@
 package com.panov.store.dao;
 
-import com.panov.store.model.Product;
-import com.panov.store.model.ProductType;
+import com.panov.store.model.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+/**
+ * The repository of {@link Product} objects. Implements {@link DAO} interface.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 @Repository
 public class ProductRepository implements DAO<Product> {
     private final EntityManagerFactory entityManagerFactory;
@@ -18,6 +23,12 @@ public class ProductRepository implements DAO<Product> {
         this.entityManagerFactory = entityManagerFactory;
     }
 
+    /**
+     * Retrieves an {@link Product} object from the database by its identity.
+     *
+     * @param id an identifier of the {@link Product} which user wants to retrieve
+     * @return an optional of the sought {@link Product} object.
+     */
     @Override
     public Optional<Product> get(int id) {
         var entityManager = getManager();
@@ -31,15 +42,19 @@ public class ProductRepository implements DAO<Product> {
         return product;
     }
 
+    /**
+     * Retrieves all the products from the database.
+     *
+     * @return a list of all {@link Product} that exist in the database
+     */
     @Override
-    @SuppressWarnings("unchecked")
     public List<Product> getAll() {
         var entityManager = getManager();
 
         List<Product> products;
         try {
-            products = (List<Product>) entityManager
-                    .createQuery("select p from Product p")
+            products = entityManager
+                    .createQuery("select p from Product p", Product.class)
                     .getResultList();
         } finally {
             entityManager.close();
@@ -47,6 +62,15 @@ public class ProductRepository implements DAO<Product> {
         return products;
     }
 
+    /**
+     * Retrieves all the products that match a specified name pattern.
+     *
+     * @param value a pattern for choosing objects by their names
+     * @param strict if true, method should search for exact equality and
+     *               if false, method should see {@code value} as a part of
+     *               product name
+     * @return a list of products that match the given pattern {@code value}
+     */
     @Override
     public List<Product> getByColumn(Object value, boolean strict) {
         var entityManager = getManager();
@@ -69,6 +93,12 @@ public class ProductRepository implements DAO<Product> {
         return products;
     }
 
+    /**
+     * Saves new {@link Product} to the database.
+     *
+     * @param product a {@link Product} to save
+     * @return an identity of saved {@link Product} object
+     */
     @Override
     public Integer insert(Product product) {
         var entityManager = getManager();
@@ -96,6 +126,12 @@ public class ProductRepository implements DAO<Product> {
         return product.getProductId();
     }
 
+    /**
+     * Updates information about {@link Product} object.
+     *
+     * @param product an object with update information
+     * @return an identity of changed {@link Product} object.
+     */
     @Override
     public Integer update(Product product) {
         var entityManager = getManager();
@@ -138,6 +174,11 @@ public class ProductRepository implements DAO<Product> {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Gets new instance of {@link EntityManager} from {@link EntityManagerFactory} instance.
+     *
+     * @return an {@link EntityManager} instance
+     */
     private EntityManager getManager() {
         return entityManagerFactory.createEntityManager();
     }

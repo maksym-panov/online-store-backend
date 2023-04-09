@@ -10,6 +10,13 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
+/**
+ * Data transfer abstraction class, designed for communication between <br>
+ * frontend and backend represented by this application. Wraps {@link UnregisteredCustomer} objects.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -58,6 +65,13 @@ public class UnregisteredCustomerDTO {
     @Max(value = 99999, message = "Invalid postal code")
     private Integer postalCode;
 
+    /**
+     * Static factory that converts specified {@link UnregisteredCustomer} object <br>
+     * to a new instance of {@link UnregisteredCustomerDTO}
+     *
+     * @param uc a {@link UnregisteredCustomer} object to convert
+     * @return a transfer-safe {@link UnregisteredCustomerDTO} abstraction
+     */
     public static UnregisteredCustomerDTO of(UnregisteredCustomer uc) {
         if (uc == null)
             return null;
@@ -82,6 +96,11 @@ public class UnregisteredCustomerDTO {
         );
     }
 
+    /**
+     * Converts current {@link UnregisteredCustomerDTO} object to an instance of {@link UnregisteredCustomer}.
+     *
+     * @return an {@link UnregisteredCustomer} instance
+     */
     public UnregisteredCustomer toModel() {
         var uc = new UnregisteredCustomer();
         uc.setUnregisteredCustomerId(unregisteredCustomerId);

@@ -9,6 +9,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The repository of {@link DeliveryType} objects. Implements {@link DAO} interface.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 @Repository
 public class DeliveryTypeRepository implements DAO<DeliveryType> {
     private final EntityManagerFactory entityManagerFactory;
@@ -18,6 +24,12 @@ public class DeliveryTypeRepository implements DAO<DeliveryType> {
         this.entityManagerFactory = entityManagerFactory;
     }
 
+    /**
+     * Retrieves a {@link DeliveryType} object from the database by its identity.
+     *
+     * @param id an identifier of the {@link DeliveryType} which user wants to retrieve
+     * @return an optional of sought {@link DeliveryType}
+     */
     @Override
     public Optional<DeliveryType> get(int id) {
         var entityManager = getManager();
@@ -32,6 +44,12 @@ public class DeliveryTypeRepository implements DAO<DeliveryType> {
         return deliveryType;
     }
 
+    /**
+     * Returns a list of all {@link DeliveryType} objects
+     * that are present in the database.
+     *
+     * @return a list of all {@link DeliveryType} objects
+     */
     @Override
     public List<DeliveryType> getAll() {
         var entityManager = getManager();
@@ -47,6 +65,15 @@ public class DeliveryTypeRepository implements DAO<DeliveryType> {
         return list;
     }
 
+    /**
+     * Retrieves all {@link DeliveryType} objects whose match provided pattern.
+     *
+     * @param value a pattern for choosing objects, may be string.
+     * @param strict if true, method should search for exact equality and
+     *               if false, method should see {@code value} as a part of
+     *               object field (e.g. part of name)
+     * @return a list of {@link DeliveryType} objects whose names match provided value.
+     */
     @Override
     public List<DeliveryType> getByColumn(Object value, boolean strict) {
         var entityManager = getManager();
@@ -70,6 +97,13 @@ public class DeliveryTypeRepository implements DAO<DeliveryType> {
         return deliveryTypes;
     }
 
+    /**
+     * Created new {@link DeliveryType} instance and saves it to <br>
+     * the database.
+     *
+     * @param deliveryType an {@link DeliveryType} to save
+     * @return an identity of saved {@link DeliveryType} object
+     */
     @Override
     public Integer insert(DeliveryType deliveryType) {
         var entityManager = getManager();
@@ -84,6 +118,12 @@ public class DeliveryTypeRepository implements DAO<DeliveryType> {
         return deliveryType.getDeliveryTypeId();
     }
 
+    /**
+     * Updates information about existing {@link DeliveryType}.
+     *
+     * @param deliveryType an object with update information.
+     * @return an identity of the updated {@link DeliveryType}
+     */
     @Override
     public Integer update(DeliveryType deliveryType) {
         var entityManager = getManager();
@@ -98,6 +138,11 @@ public class DeliveryTypeRepository implements DAO<DeliveryType> {
         return deliveryType.getDeliveryTypeId();
     }
 
+    /**
+     * Deletes existing {@link DeliveryType} from the database by its identity.
+     *
+     * @param id an identity of the {@link DeliveryType} to be deleted
+     */
     @Override
     public void delete(Integer id) {
         var entityManager = getManager();
@@ -120,6 +165,11 @@ public class DeliveryTypeRepository implements DAO<DeliveryType> {
         }
     }
 
+    /**
+     * Gets new instance of {@link EntityManager} from {@link EntityManagerFactory} instance.
+     *
+     * @return an {@link EntityManager} instance
+     */
     private EntityManager getManager() {
         return entityManagerFactory.createEntityManager();
     }

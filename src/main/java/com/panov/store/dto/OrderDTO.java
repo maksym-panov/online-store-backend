@@ -16,6 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Data transfer abstraction class, designed for communication between <br>
+ * frontend and backend represented by this application. Wraps {@link Order} objects.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ * @see Order
+ * @see OrderProductsDTO
+ * @see DeliveryTypeDTO
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -43,6 +53,13 @@ public class OrderDTO {
     @Convert(converter = Status.StatusConverter.class)
     private Status status;
 
+    /**
+     * Static factory that converts specified {@link Order} object <br>
+     * to a new instance of {@link OrderDTO}
+     *
+     * @param o a {@link Order} object to convert
+     * @return a transfer-safe {@link OrderDTO} abstraction
+     */
     public static OrderDTO of(Order o) {
         if (o == null)
             return null;
@@ -63,6 +80,11 @@ public class OrderDTO {
         );
     }
 
+    /**
+     * Converts current {@link OrderDTO} object to an instance of {@link Order}.
+     *
+     * @return a {@link Order} instance
+     */
     public Order toModel() {
         var o = new Order();
         o.setOrderId(orderId);

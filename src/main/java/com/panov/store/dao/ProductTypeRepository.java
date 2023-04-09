@@ -10,6 +10,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * The repository of {@link ProductType} objects. Implements {@link DAO} interface.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 @Repository
 public class ProductTypeRepository implements DAO<ProductType> {
     private final EntityManagerFactory entityManagerFactory;
@@ -19,6 +25,12 @@ public class ProductTypeRepository implements DAO<ProductType> {
         this.entityManagerFactory = entityManagerFactory;
     }
 
+    /**
+     * Retrieves an {@link ProductType} object from the database by its identity.
+     *
+     * @param id an identifier of the {@link ProductType} which user wants to retrieve
+     * @return an optional of the sought {@link ProductType} object.
+     */
     @Override
     public Optional<ProductType> get(int id) {
         var entityManager = getManager();
@@ -50,6 +62,11 @@ public class ProductTypeRepository implements DAO<ProductType> {
         return productTypes;
     }
 
+    /**
+     * Retrieves all the product types from the database.
+     *
+     * @return a list of all {@link ProductType} that exist in the database
+     */
     @Override
     public List<ProductType> getByColumn(Object value, boolean strict) {
         var entityManager = getManager();
@@ -71,6 +88,12 @@ public class ProductTypeRepository implements DAO<ProductType> {
         return productTypes;
     }
 
+    /**
+     * Saves new {@link ProductType} to the database.
+     *
+     * @param productType a {@link ProductType} to save
+     * @return an identity of saved {@link ProductType} object
+     */
     @Override
     public Integer insert(ProductType productType) {
         var entityManager = getManager();
@@ -86,6 +109,12 @@ public class ProductTypeRepository implements DAO<ProductType> {
         return productType.getProductTypeId();
     }
 
+    /**
+     * Updates information about {@link ProductType} object.
+     *
+     * @param productType an object with update information
+     * @return an identity of changed {@link ProductType} object.
+     */
     @Override
     public Integer update(ProductType productType) {
         var entityManager = getManager();
@@ -101,6 +130,11 @@ public class ProductTypeRepository implements DAO<ProductType> {
         return productType.getProductTypeId();
     }
 
+    /**
+     * Deletes existing {@link ProductType} from the database by its identity.
+     *
+     * @param id an identity of the {@link ProductType} to be deleted
+     */
     @Override
     public void delete(Integer id) {
         var entityManager = getManager();
@@ -123,6 +157,11 @@ public class ProductTypeRepository implements DAO<ProductType> {
         }
     }
 
+    /**
+     * Gets new instance of {@link EntityManager} from {@link EntityManagerFactory} instance.
+     *
+     * @return an {@link EntityManager} instance
+     */
     private EntityManager getManager() {
         return entityManagerFactory.createEntityManager();
     }

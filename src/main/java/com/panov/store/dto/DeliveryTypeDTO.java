@@ -10,6 +10,14 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
+/**
+ * Data transfer abstraction class, designed for communication between <br>
+ * frontend and backend represented by this application. Wraps {@link DeliveryType} objects.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ * @see DeliveryType
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,6 +29,13 @@ public class DeliveryTypeDTO {
     @Size(max = 50, message = "Delivery type name is too long")
     private String name;
 
+    /**
+     * Static factory that converts specified {@link DeliveryType} object <br>
+     * to a new instance of {@link DeliveryTypeDTO}
+     *
+     * @param dt a {@link DeliveryType} object to convert
+     * @return a transfer-safe {@link DeliveryTypeDTO} abstraction
+     */
     public static DeliveryTypeDTO of(DeliveryType dt) {
         if (dt == null)
             return null;
@@ -31,6 +46,11 @@ public class DeliveryTypeDTO {
         );
     }
 
+    /**
+     * Converts current {@link DeliveryTypeDTO} object to an instance of {@link DeliveryType}.
+     *
+     * @return a {@link DeliveryType} instance
+     */
     public DeliveryType toModel() {
         var dt = new DeliveryType();
         dt.setDeliveryTypeId(deliveryTypeId);

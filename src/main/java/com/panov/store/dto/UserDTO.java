@@ -9,6 +9,16 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
+/**
+ * Data transfer abstraction class, designed for communication between <br>
+ * frontend and backend represented by this application. Wraps {@link User} objects.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ * @see User
+ * @see Address
+ * @see User.PersonalInfo
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,6 +30,13 @@ public class UserDTO {
 
     private Address address;
 
+    /**
+     * Static factory that converts specified {@link User} object <br>
+     * to a new instance of {@link UserDTO}
+     *
+     * @param u a {@link User} object to convert
+     * @return a transfer-safe {@link UserDTO} abstraction
+     */
     public static UserDTO of(User u) {
         if (u == null)
             return null;
@@ -30,6 +47,11 @@ public class UserDTO {
         );
     }
 
+    /**
+     * Converts current {@link UserDTO} object to an instance of {@link User}.
+     *
+     * @return a {@link User} instance
+     */
     public User toModel() {
         var u = new User();
         u.setUserId(userId);

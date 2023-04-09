@@ -10,6 +10,14 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
+/**
+ * Data transfer abstraction class, designed for communication between <br>
+ * frontend and backend represented by this application. Wraps {@link ProductType} objects.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ * @see ProductType
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,6 +30,13 @@ public class ProductTypeDTO {
     @Size(max = 30, message = "Category name is too long")
     private String name;
 
+    /**
+     * Static factory that converts specified {@link ProductType} object <br>
+     * to a new instance of {@link ProductTypeDTO}
+     *
+     * @param pt a {@link ProductType} object to convert
+     * @return a transfer-safe {@link ProductTypeDTO} abstraction
+     */
     public static ProductTypeDTO of(ProductType pt) {
         if (pt == null)
             return null;
@@ -32,6 +47,11 @@ public class ProductTypeDTO {
         );
     }
 
+    /**
+     * Converts current {@link ProductTypeDTO} object to an instance of {@link ProductType}.
+     *
+     * @return a {@link ProductType} instance
+     */
     public ProductType toModel() {
         var pt = new ProductType();
         pt.setProductTypeId(productTypeId);

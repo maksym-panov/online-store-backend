@@ -8,6 +8,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Data transfer abstraction class, designed for communication between <br>
+ * frontend and backend represented by this application. Wraps {@link OrderProducts} objects.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ * @see OrderProducts
+ * @see ProductDTO
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,6 +31,13 @@ public class OrderProductsDTO {
     @Min(value = 1, message = "Quantity must be greater than 0")
     private Integer quantity;
 
+    /**
+     * Static factory that converts specified {@link OrderProducts} object <br>
+     * to a new instance of {@link OrderProductsDTO}
+     *
+     * @param op a {@link OrderProducts} object to convert
+     * @return a transfer-safe {@link OrderProductsDTO} abstraction
+     */
     public static OrderProductsDTO of(OrderProducts op) {
         if (op == null)
             return null;
@@ -33,6 +49,11 @@ public class OrderProductsDTO {
         );
     }
 
+    /**
+     * Converts current {@link OrderProductsDTO} object to an instance of {@link OrderProducts}.
+     *
+     * @return a {@link OrderProducts} instance
+     */
     public OrderProducts toModel() {
         var op = new OrderProducts();
         op.setOrderProductsId(orderProductsId);

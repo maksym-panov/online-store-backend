@@ -8,13 +8,19 @@ import com.panov.store.services.ProductService;
 import com.panov.store.utils.ListUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Web controller that handles requests associated with {@link Product}. <br>
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ * @see ProductDTO
+ * @see ProductService
+ */
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -25,6 +31,23 @@ public class ProductController {
         this.service = productService;
     }
 
+    /**
+     * Returns a list of all {@link Product} objects. There is <br>
+     * also a possibility of using parameters in the request link <br>
+     * to customize the output. <br><br>
+     * HTTP method: {@code GET} <br>
+     * Endpoint: {@code /products{?pattern=&category=&quantity=&offset=}} <br>
+     *
+     * @param pattern if specified, the method will search for products
+     *                with {@code pattern} in the name (case-insensitive).
+     * @param typeId if specified, the method will search for products with
+     *               {@link Product} which has {@code typeId} as identifier.
+     * @param quantity if specified, the method will return only the first
+     *                 {@code quantity} products.
+     * @param offset if specified, the method will skip first {@code offset}
+     *               products.
+     * @return a list of {@link Product} objects.
+     */
     @GetMapping
     public List<ProductDTO> productsRange(
             @RequestBody(required = false) String pattern,
@@ -44,11 +67,29 @@ public class ProductController {
         return ListUtils.makeCut(range, quantity, offset);
     }
 
+    /**
+     * Retrieves a {@link Product} with specified ID. <br><br>
+     * HTTP method: {@code GET} <br>
+     * Endpoint: {@code /products/{productId}} <br>
+     *
+     * @param id an identifier of a {@link Product}
+     * @return retrieved product instance with specified identifier
+     */
     @GetMapping("/{id}")
     public ProductDTO specificProduct(@PathVariable("id") Integer id) {
         return ProductDTO.of(service.getById(id));
     }
 
+    /**
+     * Creates and saves new {@link Product} instance. <br><br>
+     * HTTP method: {@code POST} <br>
+     * Endpoint: /products <br>
+     *
+     * @param productDTO a data transfer object for {@link Product}
+     * @param bindingResult a Hibernate Validator object which keeps all
+     *                      validation violations.
+     * @return an identifier of created {@link Product}
+     */
     @PostMapping
     public Integer createProduct(@RequestBody @Valid ProductDTO productDTO,
                                          BindingResult bindingResult) {
@@ -58,6 +99,17 @@ public class ProductController {
         return service.createProduct(productDTO.toModel());
     }
 
+    /**
+     * Changes information of {@link Product} object with specified ID. <br><br>
+     * Http method: {@code PATCH} <br>
+     * Endpoint: /products/{productId} <br>
+     *
+     * @param productDTO a data transfer object for {@link Product}.
+     * @param id an identifier of a product which user wants to change.
+     * @param bindingResult a Hibernate Validator object which keeps all
+     *                      validation violations.
+     * @return an identifier of provided {@link Product}.
+     */
     @PatchMapping("/{id}")
     public Integer changeProduct(@RequestBody @Valid ProductDTO productDTO,
                                  @PathVariable("id") Integer id,

@@ -1,7 +1,14 @@
 package com.panov.store.utils;
 
+import com.panov.store.model.Order;
 import jakarta.persistence.AttributeConverter;
 
+/**
+ * This enumeration represents statuses of the {@link Order}.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 public enum Status {
     POSTED("P"),
     ACCEPTED("A"),
@@ -31,6 +38,12 @@ public enum Status {
         return code;
     }
 
+    /**
+     * Converts enumeration objects into strings to save in the data storage.
+     *
+     * @author Maksym Panov
+     * @version 1.0
+     */
     public static class StatusConverter implements AttributeConverter<Status, String> {
 
         @Override

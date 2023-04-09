@@ -11,6 +11,12 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The repository of {@link Order} objects. Implements {@link DAO} interface.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 @Repository
 public class OrderRepository implements DAO<Order> {
     private final EntityManagerFactory entityManagerFactory;
@@ -20,6 +26,12 @@ public class OrderRepository implements DAO<Order> {
         this.entityManagerFactory = entityManagerFactory;
     }
 
+    /**
+     * Retrieves an {@link Order} object from the database by its identity.
+     *
+     * @param id an identifier of the {@link Order} which user wants to retrieve
+     * @return an optional of the sought {@link Order} object.
+     */
     @Override
     public Optional<Order> get(int id) {
         var entityManager = getManager();
@@ -37,16 +49,20 @@ public class OrderRepository implements DAO<Order> {
         return order;
     }
 
+    /**
+     * Retrieves all the orders from the database.
+     *
+     * @return a list of all {@link Order} that exist in the database
+     */
     @Override
-    @SuppressWarnings("unchecked")
     public List<Order> getAll() {
         var entityManager = getManager();
 
         List<Order> orders;
 
         try {
-            orders = (List<Order>) entityManager
-                    .createQuery("select o from Order o")
+            orders = entityManager
+                    .createQuery("select o from Order o", Order.class)
                     .getResultList();
             for (var o : orders) {
                 if (o.getUser() != null && o.getUser().getAddress() == null)
@@ -64,6 +80,12 @@ public class OrderRepository implements DAO<Order> {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Saves new {@link Order} and its {@link OrderProducts} to the database.
+     *
+     * @param order an entity to save
+     * @return an identity of saved {@link Order} object
+     */
     @Override
     public Integer insert(Order order) {
         var entityManager = getManager();
@@ -104,6 +126,13 @@ public class OrderRepository implements DAO<Order> {
         return order.getOrderId();
     }
 
+    /**
+     * Updates information about {@link Order} object. Deals with {@link OrderProducts}, <br>
+     * {@link DeliveryType}, status and completion time of the {@link Order}
+     *
+     * @param order an object with update information
+     * @return an identity of changed {@link Order} object.
+     */
     @Override
     public Integer update(Order order) {
         var entityManager = getManager();
@@ -113,7 +142,7 @@ public class OrderRepository implements DAO<Order> {
 
             var current = entityManager.find(Order.class, order.getOrderId());
 
-            // Delete order products that were deleted
+            // Remove order products that were deleted by user
             if (order.getOrderProducts() != null && !order.getOrderProducts().isEmpty()) {
                 for (var op : current.getOrderProducts()) {
                     if (!order.getOrderProducts().contains(op)) {
@@ -175,6 +204,11 @@ public class OrderRepository implements DAO<Order> {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Gets new instance of {@link EntityManager} from {@link EntityManagerFactory} instance.
+     *
+     * @return an {@link EntityManager} instance
+     */
     private EntityManager getManager() {
         return entityManagerFactory.createEntityManager();
     }

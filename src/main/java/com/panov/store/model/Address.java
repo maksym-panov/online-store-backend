@@ -8,6 +8,12 @@ import lombok.*;
 
 import java.util.Objects;
 
+/**
+ * This class represents an address of {@link User} entities.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 @Getter
 @Setter
 @ToString

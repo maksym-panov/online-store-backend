@@ -17,6 +17,15 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Data transfer abstraction class, designed for communication between <br>
+ * frontend and backend represented by this application. Wraps {@link Product} objects.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ * @see Product
+ * @see ProductTypeDTO
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -48,6 +57,13 @@ public class ProductDTO {
         return false;
     }
 
+    /**
+     * Static factory that converts specified {@link Product} object <br>
+     * to a new instance of {@link ProductDTO}
+     *
+     * @param p a {@link Product} object to convert
+     * @return a transfer-safe {@link ProductDTO} abstraction
+     */
     public static ProductDTO of(Product p) {
         if (p == null)
             return null;
@@ -66,6 +82,11 @@ public class ProductDTO {
         );
     }
 
+    /**
+     * Converts current {@link ProductDTO} object to an instance of {@link Product}.
+     *
+     * @return a {@link Product} instance
+     */
     public Product toModel() {
         var p = new Product();
         p.setProductId(productId);

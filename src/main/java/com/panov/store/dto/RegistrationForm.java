@@ -10,6 +10,12 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
+/**
+ * Data transfer class that is used to transfer data, needed to register new {@link User} entities.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,6 +28,11 @@ public class RegistrationForm {
     @Size(min = 8, message = "Your password is too short")
     private String password;
 
+    /**
+     * Converts current {@link RegistrationForm} object to an instance of {@link User}.
+     *
+     * @return a {@link User} instance
+     */
     public User toModel() {
         var u = new User();
         u.setHashPassword(password);

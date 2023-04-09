@@ -10,6 +10,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ *
+ * Spring MVC configuration class.
+ *
+ * @author Maksym Panov
+ * @version 1.0
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "com.panov.store" })
@@ -22,6 +29,11 @@ public class WebConfiguration implements WebMvcConfigurer {
         this.context = context;
     }
 
+    /**
+     * Provides an EntityManager factory
+     *
+     * @return EntityManagerFactory instance.
+     */
     @Bean
     public EntityManagerFactory entityManagerFactory() {
         return Persistence.createEntityManagerFactory(UNIT_NAME);
