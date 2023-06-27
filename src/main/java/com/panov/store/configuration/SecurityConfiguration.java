@@ -1,81 +1,63 @@
 package com.panov.store.configuration;
 
-import com.panov.store.security.UserDetailsImpl;
-import com.panov.store.security.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.panov.store.jwt.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * Application security configuration class.
  * Spring Security is enabled via @EnableWebSecurity
  *
  * @author Maksym Panov
- * @version 1.0
- * @see UserDetailsImpl
- * @see UserDetailsServiceImpl
+ * @version 2.0
+ * @see JwtAuthenticationFilter
  */
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
+@RequiredArgsConstructor
+public class SecurityConfiguration {
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthenticationProvider authenticationProvider;
+
 
     /**
+     * Configuration and build of the Spring Security's {@link SecurityFilterChain}.
+     * This implementation sets stateless session policy to allow JWT-authentication
+     * and also adds {@link JwtAuthenticationFilter} into the filter chain to check
+     * authentication tokens in the incoming HTTP requests.
      *
-     * Configures AuthenticationManager instance with
-     * custom database-based UserDetailsService and
-     * PasswordEncoder implementation instance.
-     *
-     */
-    @Autowired
-    public void configureGlobal(
-            AuthenticationManagerBuilder auth,
-            UserDetailsServiceImpl userDetailsService,
-            PasswordEncoder encoder
-    ) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(encoder);
-    }
-
-    /**
-     * Provides a configured Spring Security SecurityFilterChain.
-     *
-     * @param http an instance of HttpSecurity which provides security for http requests.
-     * @return configured SecurityFilterChain instance.
-     * @throws Exception an exception that occurred during configuration
+     * @param http - security configuration build object
+     * @return - configured instance of {@link SecurityFilterChain}
+     * @throws Exception
      */
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.httpBasic();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf()
+                    .disable()
 
-        http.logout()
-                .logoutSuccessUrl("/products")
-                .invalidateHttpSession(true);
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-        http.csrf().disable();
+                .and()
+                .authorizeHttpRequests()
+                .anyRequest()
+                .permitAll()
 
-        http.authorizeHttpRequests().anyRequest().permitAll();
-
-        http.formLogin();
+                .and()
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .authenticationProvider(authenticationProvider);
 
         return http.build();
-    }
-
-    /**
-     * Provides PasswordEncoder bean.
-     *
-     * @return an instance of {@link PasswordEncoder}
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }

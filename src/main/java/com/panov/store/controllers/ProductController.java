@@ -17,12 +17,12 @@ import java.util.List;
  * Web controller that handles requests associated with {@link Product}. <br>
  *
  * @author Maksym Panov
- * @version 1.0
+ * @version 2.0
  * @see ProductDTO
  * @see ProductService
  */
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/v2/products")
 public class ProductController {
     private final ProductService service;
 

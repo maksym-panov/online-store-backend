@@ -37,7 +37,7 @@ public class RegistrationForm {
         var u = new User();
         u.setHashPassword(password);
         u.setPersonalInfo(personalInfo);
-        u.setAddress(address);
+        u.setAddress(address == null ? new Address() : address);
         u.setOrders(new ArrayList<>());
         return u;
     }

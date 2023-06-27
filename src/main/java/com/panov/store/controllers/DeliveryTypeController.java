@@ -20,12 +20,12 @@ import java.util.Objects;
  * Web controller that handles requests associated with {@link DeliveryType}. <br>
  *
  * @author Maksym Panov
- * @version 1.0
+ * @version 2.0
  * @see DeliveryTypeDTO
  * @see DeliveryTypeService
  */
 @RestController
-@RequestMapping("/delivery_types")
+@RequestMapping("/api/v2/delivery_types")
 public class DeliveryTypeController {
     private final DeliveryTypeService service;
 
@@ -57,6 +57,8 @@ public class DeliveryTypeController {
         List<DeliveryType> types;
         if (pattern == null) types = service.getDeliveryTypeList();
         else types = service.getByNamePattern(pattern, false);
+
+        System.out.println(pattern);
 
         var deliveryTypes = types
                 .stream()

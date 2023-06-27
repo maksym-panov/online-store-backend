@@ -90,16 +90,7 @@ public class DeliveryTypeService {
         }
     }
 
-    /**
-     * Uses {@link DAO} implementation to save new {@link DeliveryType} in the data storage. <br><br>
-     * Only {@link User} with {@code Access.ADMINISTRATOR} or {@code Access.MANAGER} authority
-     * can invoke this method. <br><br>
-     * Re-throws a {@link ResourceNotCreatedException} if {@link DAO} object throws an exception.
-     *
-     * @param deliveryType an object to save
-     * @return an identity of saved {@link DeliveryType}
-     */
-    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
+
     public Integer createDeliveryType(DeliveryType deliveryType) {
         Map<String, String> matches = thisNaturalIdExists(deliveryType);
         if (matches.size() != 0)

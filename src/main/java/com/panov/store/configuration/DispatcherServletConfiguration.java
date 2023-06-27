@@ -1,5 +1,6 @@
 package com.panov.store.configuration;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -26,7 +27,7 @@ public class DispatcherServletConfiguration extends AbstractAnnotationConfigDisp
      * Specify mappings for Dispatcher Servlet
      */
     @Override
-    protected String[] getServletMappings() {
+    protected String @NotNull [] getServletMappings() {
         return new String[] { "/" };
     }
 }

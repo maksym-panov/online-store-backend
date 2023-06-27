@@ -2,31 +2,35 @@ package com.panov.store.configuration;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  *
- * Spring MVC configuration class.
+ * Spring MVC and JPA/Hibernate configuration class.
  *
  * @author Maksym Panov
- * @version 1.0
+ * @version 2.0
  */
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "com.panov.store" })
+@RequiredArgsConstructor
 public class WebConfiguration implements WebMvcConfigurer {
-    private final ApplicationContext context;
     private final String UNIT_NAME = "com.panov.store";
 
-    @Autowired
-    public WebConfiguration(ApplicationContext context) {
-        this.context = context;
+    /**
+     * Configuration of origins permissions
+     * @param registry - CORS registry
+     */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("http://localhost:3000");
     }
 
     /**

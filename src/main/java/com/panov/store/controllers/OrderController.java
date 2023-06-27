@@ -21,14 +21,14 @@ import java.util.Objects;
  * Web controller that handles requests associated with {@link Order}. <br>
  *
  * @author Maksym Panov
- * @version 1.0
+ * @version 2.0
  * @see OrderProducts
  * @see OrderDTO
  * @see OrderProductsDTO
  * @see OrderService
  */
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/v2/orders")
 public class OrderController {
     private final OrderService service;
 

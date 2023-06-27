@@ -16,12 +16,12 @@ import java.util.List;
  * Web controller that handles requests associated with {@link UnregisteredCustomer}. <br>
  *
  * @author Maksym Panov
- * @version 1.0
+ * @version 2.0
  * @see UnregisteredCustomerDTO
  * @see UnregisteredCustomerService
  */
 @RestController
-@RequestMapping("/unregistered_customers")
+@RequestMapping("/api/v2/unregistered_customers")
 public class UnregisteredCustomerController {
     private final UnregisteredCustomerService service;
 

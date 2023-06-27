@@ -1,16 +1,21 @@
 package com.panov.store.controllers;
 
+import com.panov.store.exceptions.ResourceNotCreatedException;
+import com.panov.store.jwt.JwtService;
+import com.panov.store.dto.LoginForm;
 import com.panov.store.dto.RegistrationForm;
 import com.panov.store.dto.UserDTO;
-import com.panov.store.exceptions.ResourceNotCreatedException;
+import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.User;
 import com.panov.store.services.UserService;
 import com.panov.store.utils.Access;
 import com.panov.store.utils.ListUtils;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -27,16 +32,13 @@ import java.util.List;
  * @see UserService
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v2/users")
+@RequiredArgsConstructor
 public class UserController {
-    private final UserService service;
-    private final PasswordEncoder encoder;
-
-    @Autowired
-    public UserController(UserService service, PasswordEncoder encoder) {
-        this.service = service;
-        this.encoder = encoder;
-    }
+    private final UserService userService;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Returns a list of all {@link User} objects. There is <br>
@@ -54,7 +56,8 @@ public class UserController {
     @GetMapping
     public List<UserDTO> userRange(@RequestParam(name = "quantity", required = false) Integer quantity,
                                 @RequestParam(name = "offset", required = false) Integer offset) {
-        List<UserDTO> users = service.getAllUserList()
+        System.out.println("HELLO FROM DEBUGGER");
+        List<UserDTO> users = userService.getAllUserList()
                 .stream()
                 .map(UserDTO::of)
                 .toList();
@@ -72,21 +75,21 @@ public class UserController {
      */
     @GetMapping("/{id}")
     public UserDTO specificUser(@PathVariable("id") Integer id) {
-        return UserDTO.of(service.getById(id));
+        return UserDTO.of(userService.getById(id));
     }
 
     /**
-     * Registers new {@link User}. <br><br>
+     * Registers new {@link User} and generates new JWT authentication token for him. <br><br>
      * HTTP method: {@code POST} <br>
      * Endpoint: /users/register <br>
      *
      * @param registrationForm a data transfer object for registering a {@link User}
      * @param bindingResult a Hibernate Validator object which keeps all
      *                      validation violations.
-     * @return an identifier of registered {@link User}
+     * @return JWT for registered user
      */
     @PostMapping("/register")
-    public Integer registerUser(@RequestBody @Valid RegistrationForm registrationForm,
+    public String registerUser(@RequestBody @Valid RegistrationForm registrationForm,
                               BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new ResourceNotCreatedException(bindingResult);
@@ -94,9 +97,40 @@ public class UserController {
         User userToCreate = registrationForm.toModel();
 
         userToCreate.setAccess(Access.USER);
-        userToCreate.setHashPassword(encoder.encode(registrationForm.getPassword()));
+        userToCreate.setHashPassword(passwordEncoder.encode(registrationForm.getPassword()));
 
-        return service.registerUser(userToCreate);
+        userService.registerUser(userToCreate);
+
+        return jwtService.createToken(userToCreate);
+    }
+
+    /**
+     * Receives {@link LoginForm} from client and authenticates user by provided credentials.
+     * If a user exists, generates JWT token for him.
+     *
+     * @param loginForm objects with user credentials
+     * @param bindingResult a Hibernate Validator object which keeps all validation violations
+     * @return JWT token for authenticated user
+     */
+    @PostMapping("/login")
+    public String loginUser(@RequestBody @Valid LoginForm loginForm,
+                            BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            throw new ResourceNotFoundException("There is no user with this username or password.");
+
+        User user = userService.getByNaturalId(loginForm.getPhoneNumber()).get(0);
+
+        if (user == null)
+            throw new ResourceNotFoundException("There is no user with this username or password.");
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginForm.getPhoneNumber(),
+                        loginForm.getPassword()
+                )
+        );
+
+        return jwtService.createToken(user);
     }
 
     /**
@@ -119,7 +153,7 @@ public class UserController {
 
         userDTO.setUserId(id);
 
-        return service.changeUser(userDTO.toModel());
+        return userService.changeUser(userDTO.toModel());
     }
 
     /**
@@ -145,6 +179,6 @@ public class UserController {
             throw new ResourceNotUpdatedException("Could not update access level of this user");
         }
 
-        return service.changeUser(user);
+        return userService.changeUser(user);
     }
 }
