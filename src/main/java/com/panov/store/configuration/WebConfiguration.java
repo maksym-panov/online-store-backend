@@ -3,12 +3,15 @@ package com.panov.store.configuration;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import static com.panov.store.utils.Constants.ALLOWED_CORS_URLS;
 
 /**
  *
@@ -29,8 +32,8 @@ public class WebConfiguration implements WebMvcConfigurer {
      * @param registry - CORS registry
      */
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("http://localhost:3000");
+    public void addCorsMappings(@NotNull CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins(ALLOWED_CORS_URLS);
     }
 
     /**
