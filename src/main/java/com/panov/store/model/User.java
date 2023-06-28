@@ -36,7 +36,7 @@ public class User implements UserDetails {
     private PersonalInfo personalInfo;
 
     @Embedded
-    private Address address;
+    private Address address = new Address();
 
     @Convert(converter = Access.AccessConverter.class)
     private Access access;

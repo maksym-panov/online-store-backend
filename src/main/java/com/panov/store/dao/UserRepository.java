@@ -164,14 +164,12 @@ public class UserRepository implements DAO<User> {
 
                 var currentPi = currentUser.getPersonalInfo();
 
-                if (pn != null)
-                    currentPi.setPhoneNumber(pn);
-                if (e != null)
-                    currentPi.setEmail(e);
-                if (fn != null)
-                    currentPi.setFirstname(fn);
-                if (ln != null)
-                    currentPi.setLastname(ln);
+                currentPi.setPhoneNumber(pn);
+                currentPi.setEmail(e);
+                currentPi.setFirstname(fn);
+                currentPi.setLastname(ln);
+            } else {
+                currentUser.setPersonalInfo(new User.PersonalInfo());
             }
 
             if (a != null) {
@@ -183,22 +181,20 @@ public class UserRepository implements DAO<User> {
                 Integer ap = a.getApartment();
                 Integer pc = a.getPostalCode();
 
+                if (currentUser.getAddress() == null)
+                    currentUser.setAddress(new Address());
+
                 var currentA = currentUser.getAddress();
 
-                if (r != null)
-                    currentA.setRegion(r);
-                if (d != null)
-                    currentA.setDistrict(d);
-                if (c != null)
-                    currentA.setCity(c);
-                if (s != null)
-                    currentA.setStreet(s);
-                if (b != null)
-                    currentA.setBuilding(b);
-                if (ap != null)
-                    currentA.setApartment(ap);
-                if (pc != null)
-                    currentA.setPostalCode(pc);
+                currentA.setRegion(r);
+                currentA.setDistrict(d);
+                currentA.setCity(c);
+                currentA.setStreet(s);
+                currentA.setBuilding(b);
+                currentA.setApartment(ap);
+                currentA.setPostalCode(pc);
+            } else {
+                currentUser.setAddress(new Address());
             }
 
             entityManager.getTransaction().commit();

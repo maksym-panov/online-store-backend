@@ -188,8 +188,8 @@ public class OrderRepository implements DAO<Order> {
                 current.setStatus(order.getStatus());
 
             // Update a completion time of the order
-            if (order.getStatus() == Status.COMPLETED)
-                current.setCompleteTime(new Timestamp(System.currentTimeMillis() - 10000));
+            if (order.getStatus() == Status.COMPLETED && order.getCompleteTime() == null)
+                current.setCompleteTime(new Timestamp(System.currentTimeMillis()));
 
             entityManager.getTransaction().commit();
         } finally {

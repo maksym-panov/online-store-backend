@@ -485,9 +485,7 @@ public class OrderRepositoryTest {
         inserted2.setDeliveryType(dtAdd);
 
         inserted1.setStatus(Status.ABOLISHED);
-        inserted2.setStatus(Status.DELIVERED);
-
-        inserted2.setCompleteTime(new Timestamp(System.currentTimeMillis() - 1000));
+        inserted2.setStatus(Status.COMPLETED);
 
         orderProducts1.remove(0);
         orderProducts1.remove(0);
@@ -529,11 +527,11 @@ public class OrderRepositoryTest {
         assertThat(new ArrayList<>(orderProducts1FromRepository)).isEqualTo(new ArrayList<>(orderProducts1FromDB));
         assertThat(updated1.getDeliveryType()).isEqualTo(inserted1.getDeliveryType());
         assertThat(updated1.getStatus()).isEqualTo((inserted1.getStatus()));
-        assertThat(updated1.getCompleteTime()).isEqualTo(inserted1.getCompleteTime());
+        assertThat(updated1.getCompleteTime()).isNull();
 
         assertThat(new ArrayList<>(orderProducts2FromRepository)).isEqualTo(new ArrayList<>(orderProducts2FromDB));
         assertThat(updated2.getDeliveryType()).isEqualTo(inserted2.getDeliveryType());
         assertThat(updated2.getStatus()).isEqualTo((inserted2.getStatus()));
-        assertThat(updated2.getCompleteTime()).isEqualTo(inserted2.getCompleteTime());
+        assertThat(updated2.getCompleteTime()).isNotNull();
     }
 }

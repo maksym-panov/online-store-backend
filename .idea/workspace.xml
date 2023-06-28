@@ -13,31 +13,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Provided documentation for each class of the application.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/AppContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/DelegatingFilterProxyRegistrar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/LoginForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/jwt/JwtAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/jwt/JwtService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/UserDetailsServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Constants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Replaced previous security system with new JWT based one.&#10;Added possibility of login and register (after success client&#10;receives a JWT token that he can use to access endpoints that he is allowed to visit in accordance with the account permissions).">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/DispatcherServletConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/DispatcherServletConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/WebConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/WebConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/DeliveryTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/DeliveryTypeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductTypeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UnregisteredCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UnregisteredCustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/RegistrationForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/RegistrationForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/security/UserDetailsImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/security/UserDetailsServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/DeliveryTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/DeliveryTypeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/OrderRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/panov/store/dao/OrderRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,20 +142,7 @@
       <recent name="com.panov.store.dao" />
     </key>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Tomcat 10">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.panov.store.dao.Main" />
-      <module name="online-store-project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.panov.store.dao.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.java in online-store-project">
     <configuration name="com.panov.store.configuration.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.panov.store.configuration.Main" />
       <module name="online-store-project" />
@@ -198,6 +166,14 @@
       <module name="online-store-project" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in online-store-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="online-store-project" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -292,19 +268,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.com.panov.store.configuration.Main" />
-      <item itemvalue="Application.Main" />
       <item itemvalue="HTTP Request.All in Requests" />
       <item itemvalue="HTTP Request.Requests | #1" />
+      <item itemvalue="JUnit.java in online-store-project" />
       <item itemvalue="JUnit.All in online-store-project" />
       <item itemvalue="Tomcat Server.Tomcat 10" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.java in online-store-project" />
         <item itemvalue="HTTP Request.Requests | #1" />
         <item itemvalue="HTTP Request.All in Requests" />
         <item itemvalue="Application.com.panov.store.configuration.Main" />
         <item itemvalue="JUnit.All in online-store-project" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -343,7 +319,9 @@
       <workItem from="1681298436359" duration="133000" />
       <workItem from="1685266455989" duration="413000" />
       <workItem from="1686389547751" duration="3427000" />
-      <workItem from="1687529824945" duration="66478000" />
+      <workItem from="1687529824945" duration="66963000" />
+      <workItem from="1687891250437" duration="457000" />
+      <workItem from="1687945585058" duration="1712000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1676894430878</created>
@@ -478,7 +456,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681055232763</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Replaced previous security system with new JWT based one.&#10;Added possibility of login and register (after success client&#10;receives a JWT token that he can use to access endpoints that he is allowed to visit in accordance with the account permissions).">
+      <created>1687890990833</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1687890990833</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -516,7 +501,8 @@
     <MESSAGE value="Provided security, login, registration, password encoding method protection, authorities by user ID, added total sum for Order objects." />
     <MESSAGE value="Provided security, login, registration, password encoding method protection, authorities by user ID, added the total sum for Order and OrderProducts objects and changed DB schema to correspond these changes." />
     <MESSAGE value="Provided documentation for each class of the application." />
-    <option name="LAST_COMMIT_MESSAGE" value="Provided documentation for each class of the application." />
+    <MESSAGE value="Replaced previous security system with new JWT based one.&#10;Added possibility of login and register (after success client&#10;receives a JWT token that he can use to access endpoints that he is allowed to visit in accordance with the account permissions)." />
+    <option name="LAST_COMMIT_MESSAGE" value="Replaced previous security system with new JWT based one.&#10;Added possibility of login and register (after success client&#10;receives a JWT token that he can use to access endpoints that he is allowed to visit in accordance with the account permissions)." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -539,5 +525,6 @@
       <FILTER>com.panov.store.dao.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/online_store_project$All_in_online_store_project.ic" NAME="All in online-store-project Coverage Results" MODIFIED="1679419499347" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/online_store_project$Tomcat_10.ic" NAME="Tomcat 10 Coverage Results" MODIFIED="1687945934103" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
