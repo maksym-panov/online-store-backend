@@ -21,9 +21,9 @@ public class ListUtils {
      * @return a shortened list.
      */
     public static <T> List<T> makeCut(List<T> list, Integer quantity, Integer offset) {
-        if (quantity == null)
+        if (quantity == null || quantity < 0)
             return list;
-        if (offset == null)
+        if (offset == null || offset < 0)
             offset = 0;
         if (offset > list.size())
             offset = list.size();

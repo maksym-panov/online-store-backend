@@ -43,8 +43,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf()
-                    .disable()
+                .csrf().disable()
 
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

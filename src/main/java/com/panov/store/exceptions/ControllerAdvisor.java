@@ -35,7 +35,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> resourceNotFoundAdvice(
             ResourceNotFoundException e, WebRequest request) {
         return handleExceptionInternal(e, new ExceptionBody(e.getMessage()),
-                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     /**

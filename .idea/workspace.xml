@@ -13,9 +13,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Fixed order completion bug (could not set order complete time). Fixed changing user address and personal data (algorithm ignored all requests when client wanted to delete certain piece of information, such as email, postal code etc.)">
+    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Gathered all allowed cross origin URL's into one constant array in the Constants class to simplify adding allowed origins into the cors registry.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/WebConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/WebConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ControllerAdvisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ControllerAdvisor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Constants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -319,7 +321,7 @@
       <workItem from="1686389547751" duration="3427000" />
       <workItem from="1687529824945" duration="66963000" />
       <workItem from="1687891250437" duration="457000" />
-      <workItem from="1687945585058" duration="2826000" />
+      <workItem from="1687945585058" duration="19273000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1676894430878</created>
@@ -468,7 +470,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687947653816</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Gathered all allowed cross origin URL's into one constant array in the Constants class to simplify adding allowed origins into the cors registry.">
+      <created>1687948664319</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1687948664319</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -508,7 +517,8 @@
     <MESSAGE value="Provided documentation for each class of the application." />
     <MESSAGE value="Replaced previous security system with new JWT based one.&#10;Added possibility of login and register (after success client&#10;receives a JWT token that he can use to access endpoints that he is allowed to visit in accordance with the account permissions)." />
     <MESSAGE value="Fixed order completion bug (could not set order complete time). Fixed changing user address and personal data (algorithm ignored all requests when client wanted to delete certain piece of information, such as email, postal code etc.)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed order completion bug (could not set order complete time). Fixed changing user address and personal data (algorithm ignored all requests when client wanted to delete certain piece of information, such as email, postal code etc.)" />
+    <MESSAGE value="Gathered all allowed cross origin URL's into one constant array in the Constants class to simplify adding allowed origins into the cors registry." />
+    <option name="LAST_COMMIT_MESSAGE" value="Gathered all allowed cross origin URL's into one constant array in the Constants class to simplify adding allowed origins into the cors registry." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
