@@ -1,0 +1,515 @@
+[
+  {
+    "user": {
+      "userId": 1
+    },
+    "deliveryType": {
+      "deliveryTypeId": 1
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 1
+        },
+        "quantity": 2,
+        "sum": 30
+      },
+      {
+        "product": {
+          "productId": 13
+        },
+        "quantity": 1,
+        "sum": 24.50
+      }
+    ],
+    "total": 54.50,
+    "postTime": 1688387091978,
+    "status": "COMPLETED",
+    "completeTime": 1688473491978
+  },
+  {
+    "user": {
+      "userId": 3
+    },
+    "deliveryType": {
+      "deliveryTypeId": 2
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 80
+        },
+        "quantity": 1,
+        "sum": 13.89
+      },
+      {
+        "product": {
+          "productId": 81
+        },
+        "quantity": 2,
+        "sum": 90.14
+      }
+    ],
+    "total": 104.03,
+    "postTime": 1688299134209,
+    "status": "POSTED"
+  },
+  {
+    "user": {
+      "userId": 2
+    },
+    "deliveryType": {
+      "deliveryTypeId": 4
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 34
+        },
+        "quantity": 2,
+        "sum": 29.98
+      },
+      {
+        "product": {
+          "productId": 71
+        },
+        "quantity": 1,
+        "sum": 28.23
+      },
+      {
+        "product": {
+          "productId": 59
+        },
+        "quantity": 3,
+        "sum": 532.95
+      },
+      {
+        "product": {
+          "productId": 13
+        },
+        "quantity": 1,
+        "sum": 4.94
+      }
+    ],
+    "total": 596.1,
+    "postTime": 1688539046246,
+    "status": "ACCEPTED"
+  },
+  {
+    "user": {
+      "userId": 3
+    },
+    "deliveryType": {
+      "deliveryTypeId": 3
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 1
+        },
+        "quantity": 1,
+        "sum": 15.00
+      }
+    ],
+    "total": 15.00,
+    "postTime": 1688444467556,
+    "status": "SHIPPING"
+  },
+  {
+    "unregisteredCustomer": {
+      "phoneNumber": "0663961243",
+      "firstname": "Paulo",
+      "lastname": "Stallone",
+      "address": {
+        "region": "Lviv",
+        "district": "Chervonogradskiy",
+        "city": "Rogali",
+        "street": "Centralna",
+        "building": 14,
+        "postalCode": 80411
+      }
+    },
+    "deliveryType": {
+      "deliveryTypeId": 2
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 66
+        },
+        "quantity": 3,
+        "sum": 960
+      },
+      {
+        "product": {
+          "productId": 31
+        },
+        "quantity": 1,
+        "sum": 133.88
+      }
+    ],
+    "total": 1093.88,
+    "postTime": 1688373155031,
+    "status": "COMPLETED",
+    "completeTime": 1688459555031
+  },
+  {
+    "unregisteredCustomer": {
+      "phoneNumber": "0678907634",
+      "firstname": "Oleksandr",
+      "address": {
+        "region": "Kharkiv",
+        "district": "Kupianskiy",
+        "city": "Kupiansk",
+        "street": "Peremogi",
+        "building": 1
+      }
+    },
+    "deliveryType": {
+      "deliveryTypeId": 2
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 3
+        },
+        "quantity": 1,
+        "sum": 6.54
+      },
+      {
+        "product": {
+          "productId": 8
+        },
+        "quantity": 1,
+        "sum": 2.65
+      },
+      {
+        "product": {
+          "productId": 9
+        },
+        "quantity": 1,
+        "sum": 215.71
+      }
+    ],
+    "total": 224.90,
+    "postTime": 1688055668170,
+    "status": "COMPLETED",
+    "completeTime": 1688314868170
+  },
+  {
+    "unregisteredCustomer": {
+      "phoneNumber": "0504327676",
+      "firstname": "Vladyslav",
+      "lastname": "Volokitin",
+      "address": {
+        "region": "Kharkiv",
+        "district": "Zmiev",
+        "city": "Zmiev",
+        "street": "Miru",
+        "building": 158,
+        "apartment": 51
+      }
+    },
+    "deliveryType": {
+      "deliveryTypeId": 3
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 11
+        },
+        "quantity": 1,
+        "sum": 49.48
+      },
+      {
+        "product": {
+          "productId": 13
+        },
+        "quantity": 5,
+        "sum": 122.5
+      },
+      {
+        "product": {
+          "productId": 81
+        },
+        "quantity": 1,
+        "sum": 45.07
+      },
+      {
+        "product": {
+          "productId": 44
+        },
+        "quantity": 4,
+        "sum": 55.96
+      },
+      {
+        "product": {
+          "productId": 5
+        },
+        "quantity": 1,
+        "sum": 10.99
+      }
+    ],
+    "total": 284,
+    "postTime": 1688185293507,
+    "status": "COMPLETED",
+    "completeTime": 1688358093507
+  },
+  {
+    "user": {
+      "userId": 1
+    },
+    "deliveryType": {
+      "deliveryTypeId": 1
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 41
+        },
+        "quantity": 1,
+        "sum": 10.65
+      },
+      {
+        "product": {
+          "productId": 42
+        },
+        "quantity": 1,
+        "sum": 13.99
+      },
+      {
+        "product": {
+          "productId": 43
+        },
+        "quantity": 1,
+        "sum": 16.75
+      }
+    ],
+    "total": 41.39,
+    "postTime": 1688349543239,
+    "status": "COMPLETED",
+    "completeTime": 1688435943239
+  },
+  {
+    "unregisteredCustomer": {
+      "phoneNumber": "0994825000",
+      "firstname": "Maksym",
+      "address": {
+        "region": "Kharkiv",
+        "district": "Chuguiv",
+        "city": "Kochetok",
+        "street": "Miru",
+        "building": 218,
+        "postalCode": 63540
+      }
+    },
+    "deliveryType": {
+      "deliveryTypeId": 2
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 67
+        },
+        "quantity": 1,
+        "sum": 7800.00
+      }
+    ],
+    "total": 7800.00,
+    "postTime": 1688424045677,
+    "status": "ABOLISHED"
+  },
+  {
+    "unregisteredCustomer": {
+      "phoneNumber": "0994825687",
+      "firstname": "Oleg",
+      "address": {
+        "region": "Kharkiv",
+        "district": "Merefyanskiy",
+        "city": "Merefa",
+        "street": "Underground Merefa",
+        "building": 66,
+        "apartment": 66,
+        "postalCode": 62666
+      }
+    },
+    "deliveryType": {
+      "deliveryTypeId": 2
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 68
+        },
+        "quantity": 1,
+        "sum": 6990.00
+      },
+      {
+        "product": {
+          "productId": 17
+        },
+        "quantity": 1,
+        "sum": 1400.00
+      }
+    ],
+    "total": 8390,
+    "postTime": 1688439345009,
+    "status": "ACCEPTED"
+  },
+  {
+    "user": {
+      "userId": 1
+    },
+    "deliveryType": {
+      "deliveryTypeId": 2
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 3
+        },
+        "quantity": 3,
+        "sum": 19.62
+      },
+      {
+        "product": {
+          "productId": 5
+        },
+        "quantity": 3,
+        "sum": 32.97
+      },
+      {
+        "product": {
+          "productId": 30
+        },
+        "quantity": 3,
+        "sum": 401.64
+      }
+    ],
+    "total": 454.23,
+    "postTime": 1688523380657,
+    "status": "ACCEPTED"
+  },
+  {
+    "user": {
+      "userId": 4
+    },
+    "deliveryType": {
+      "deliveryTypeId": 4
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 47
+        },
+        "quantity": 1,
+        "sum": 114.26
+      }
+    ],
+    "total": 114.26,
+    "postTime": 1688187830491,
+    "status": "COMPLETED",
+    "completeTime": 1688187890491
+  },
+  {
+    "unregisteredCustomer": {
+      "phoneNumber": "0932561420",
+      "firstname": "Valeriia",
+      "lastname": "Nekoupala",
+      "address": {
+        "region": "Kharkiv",
+        "district": "Kharkiv",
+        "city": "Kharkiv",
+        "street": "Kharkiv Heroes's",
+        "building": 299,
+        "apartment": 1,
+        "postalCode": 63000
+      }
+    },
+    "deliveryType": {
+      "deliveryTypeId": 3
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 38
+        },
+        "quantity": 1,
+        "sum": 1475.00
+      }
+    ],
+    "total": 1475.00,
+    "postTime": 1688520366015,
+    "status": "POSTED"
+  },
+  {
+    "unregisteredCustomer": {
+      "phoneNumber": "0632281919",
+      "firstname": "Serhii",
+      "address": {
+        "region": "Kyiv",
+        "district": "Kyiv",
+        "city": "Kyiv",
+        "street": "Bankova",
+        "building": 1,
+        "apartment": 1,
+        "postalCode": 1000
+      }
+    },
+    "deliveryType": {
+      "deliveryTypeId": 3
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 61
+        },
+        "quantity": 1,
+        "sum": 16.54
+      },
+      {
+        "product": {
+          "productId": 49
+        },
+        "quantity": 1,
+        "sum": 115.50
+      },
+      {
+        "product": {
+          "productId": 35
+        },
+        "quantity": 1,
+        "sum": 18.00
+      }
+    ],
+    "total": 150.04,
+    "postTime": 1688385306819,
+    "status": "ACCEPTED"
+  },
+  {
+    "unregisteredCustomer": {
+      "phoneNumber": "0661221001",
+      "firstname": "Yaroslav",
+      "address": {
+        "region": "Chernivtsi",
+        "district": "Chernivtsi",
+        "city": "Chernivtsi"
+      }
+    },
+    "deliveryType": {
+      "deliveryTypeId": 4
+    },
+    "orderProducts": [
+      {
+        "product": {
+          "productId": 54
+        },
+        "quantity": 1,
+        "sum": 238.99
+      }
+    ],
+    "total": 238.99,
+    "postTime": 1688462220276,
+    "status": "POSTED"
+  }
+]

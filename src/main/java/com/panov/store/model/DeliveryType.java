@@ -7,10 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.context.annotation.EnableLoadTimeWeaving;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * This class represents delivery types in the Domain.
@@ -49,6 +48,9 @@ public class DeliveryType {
         if (this == o) return true;
         if (o == null) return false;
         if (!(o instanceof DeliveryType other)) return false;
-        return Objects.equals(this.name, other.name);
+        return Objects.equals(this.name, other.name) ||
+                (deliveryTypeId != null && deliveryTypeId.equals(other.deliveryTypeId));
     }
+
+
 }

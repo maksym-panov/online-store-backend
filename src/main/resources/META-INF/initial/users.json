@@ -1,0 +1,64 @@
+[
+  {
+    "access": "USER",
+    "hashPassword": "$2a$10$KZp3Ie/FZMhGmA.MBtbodOQIVJzx2FSA.lkAgTxfztFiVsUFRqw4u",
+    "image": "873b347e1ae911eebe560242ac120002.png",
+    "personalInfo": {
+      "phoneNumber": "0964261301",
+      "email": "sample-email1@gmail.com",
+      "firstname": "Marcus",
+      "lastname": "Aurelius"
+    },
+    "address": {
+      "region": "Kyiv",
+      "district": "Obolonskiy",
+      "city": "Kyiv",
+      "street": "Shevchenka",
+      "building": 200,
+      "apartment": 14,
+      "postalCode": 1001
+    }
+  },
+  {
+    "access": "USER",
+    "hashPassword": "$2a$10$d4VtJSQyMfnCNNiF0YbqoOqjyVCyc0EjWPpma0y4BUSOOvTZYFixK",
+    "image": "873b37d01ae911eebe560242ac120002.png",
+    "personalInfo": {
+      "phoneNumber": "0673291411",
+      "email": "sample-email2@ukr.net",
+      "firstname": "Vesta"
+    },
+    "address": {
+      "city": "Kharkiv",
+      "street": "Nezalezhnosti",
+      "building": 13,
+      "apartment": 1
+    }
+  },
+  {
+    "access": "USER",
+    "hashPassword": "$2a$10$r6DCWO/5fbzxAWesGrjU6.jfqDufjhgHj3pHMBzS.ezqy1Z7SUWhS",
+    "personalInfo": {
+      "phoneNumber": "0505005713",
+      "email": "sample-email3@icloud.com",
+      "firstname": "Arno"
+    }
+  },
+  {
+    "access": "MANAGER",
+    "hashPassword": "$2a$10$dAFU4xl/zpRuFsSI/oW3zOiFSvyP.Ux6dMOb/ogyIB96W57ZZb4qu",
+    "image": "873b397e1ae911eebe560242ac120002.png",
+    "personalInfo": {
+      "phoneNumber": "0994824581",
+      "firstname": "Valeriia"
+    }
+  },
+  {
+    "access": "ADMINISTRATOR",
+    "hashPassword": "$2a$10$YNMWT6HDskvvb0HVndkn2OSddlX4ZAy71WXoA4U2.fMjnZLCTOKmq",
+    "personalInfo": {
+      "phoneNumber": "0505050055",
+      "firstname": "Admin"
+    }
+  }
+]

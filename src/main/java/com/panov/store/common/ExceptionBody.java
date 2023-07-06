@@ -1,4 +1,4 @@
-package com.panov.store.utils;
+package com.panov.store.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

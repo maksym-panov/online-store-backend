@@ -3,7 +3,7 @@ package com.panov.store.dao;
 import com.panov.store.Utils;
 import com.panov.store.model.Address;
 import com.panov.store.model.User;
-import com.panov.store.utils.Access;
+import com.panov.store.common.Access;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.AfterAll;

@@ -1,5 +1,6 @@
 package com.panov.store.services;
 
+import com.panov.store.common.Utils;
 import com.panov.store.dao.DAO;
 import com.panov.store.dao.ProductRepository;
 import com.panov.store.exceptions.ResourceNotCreatedException;
@@ -7,14 +8,16 @@ import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.model.Product;
 import com.panov.store.model.User;
+import org.apache.commons.io.FileUtils;
+import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.base64.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashMap;
+import java.io.*;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
+import static com.panov.store.common.Constants.STATIC_IMAGES_FOLDER;
 
 /**
  * Service-layer class that processes {@link Product} entities.
@@ -43,7 +46,8 @@ public class ProductService {
         try {
             List<Product> productRange = repository.getAll();
             if (productRange == null)
-                return Collections.emptyList();
+                productRange =  Collections.emptyList();
+            productRange.forEach(this::fetchImage);
             return productRange;
         } catch(Exception e) {
             e.printStackTrace();
@@ -60,8 +64,10 @@ public class ProductService {
      * @return a {@link Product} object with specified identity
      */
     public Product getById(Integer id) {
-        return repository.get(id)
+        Product product = repository.get(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Could not find this product"));
+        fetchImage(product);
+        return product;
     }
 
     /**
@@ -79,7 +85,8 @@ public class ProductService {
         try {
             var products = repository.getByColumn(namePattern, strict);
             if (products == null)
-                return Collections.emptyList();
+                products = Collections.emptyList();
+            products.forEach(this::fetchImage);
             return products;
         } catch(Exception e) {
             e.printStackTrace();
@@ -102,13 +109,16 @@ public class ProductService {
         if (matches.size() != 0)
             throw new ResourceNotCreatedException(matches);
 
-        Integer id = null;
-
-        try {
-            id = repository.insert(product);
-        } catch(Exception e) {
-            e.printStackTrace();
+        if (product.getImage() != null) {
+            product.setImage(
+                    Utils.saveImageToFilesystem(
+                            product.getImage(),
+                            null
+                    )
+            );
         }
+
+        Integer id = repository.insert(product);
 
         if (id == null)
             throw new ResourceNotCreatedException("Could not create this product");
@@ -135,6 +145,20 @@ public class ProductService {
         Integer id = null;
 
         try {
+            Product inDB = repository.get(product.getProductId())
+                    .orElseThrow(() -> new ResourceNotUpdatedException("There is no such product"));
+            System.out.println(product.getImage());
+            if (product.getImage() == null) {
+                product.setImage(inDB.getImage());
+            } else {
+                product.setImage(
+                        Utils.saveImageToFilesystem(
+                                product.getImage(),
+                                inDB.getImage()
+                        )
+                );
+            }
+
             id = repository.update(product);
         } catch (Exception e) {
             e.printStackTrace();
@@ -162,5 +186,19 @@ public class ProductService {
         } catch(Exception ignored) {}
 
         return matches;
+    }
+
+    private void fetchImage(Product product) {
+        if (product.getImage() == null) {
+            return;
+        }
+
+        try {
+            File imageFile = new File(STATIC_IMAGES_FOLDER + "/" + product.getImage());
+            System.out.println("LOADING - " + STATIC_IMAGES_FOLDER + "/" + product.getImage());
+            byte[] imageArr = FileUtils.readFileToByteArray(imageFile);
+            String imageEncoded = Base64.toBase64String(imageArr);
+            product.setImage(imageEncoded);
+        } catch (Exception ignored) {}
     }
 }

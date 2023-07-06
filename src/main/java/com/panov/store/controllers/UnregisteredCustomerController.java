@@ -4,7 +4,7 @@ import com.panov.store.dto.UnregisteredCustomerDTO;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.UnregisteredCustomer;
 import com.panov.store.services.UnregisteredCustomerService;
-import com.panov.store.utils.ListUtils;
+import com.panov.store.common.Utils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -47,7 +47,7 @@ public class UnregisteredCustomerController {
     public List<UnregisteredCustomer> unregisteredCustomersRange(
             @RequestParam(name = "quantity", required = false) Integer quantity,
             @RequestParam(name = "offset", required = false) Integer offset) {
-        return ListUtils.makeCut(service.getUnregCustomerList(), quantity, offset);
+        return Utils.makeCut(service.getUnregCustomerList(), quantity, offset);
     }
 
     /**

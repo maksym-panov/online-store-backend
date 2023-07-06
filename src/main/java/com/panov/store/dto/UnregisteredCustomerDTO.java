@@ -48,11 +48,9 @@ public class UnregisteredCustomerDTO {
     @Size(max = 30, message = "City name is too long")
     private String city;
 
-    @NotNull(message = "This field is required")
     @Size(max = 30, message = "Street name is too long")
     private String street;
 
-    @NotNull(message = "This field is required")
     @Min(value = 1, message = "Building number must be greater than 0")
     @Max(value = 32767, message = "Building number is too big")
     private Integer building;

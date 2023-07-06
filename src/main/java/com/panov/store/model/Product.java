@@ -36,7 +36,10 @@ public class Product {
     @Column(unique = true)
     private String name;
 
+    @Column(length = 10000)
     private String description;
+
+    private String image;
 
     @NotNull(message = "Product price must be present")
     @Min(value = 0L, message = "Price cannot be a negative number")

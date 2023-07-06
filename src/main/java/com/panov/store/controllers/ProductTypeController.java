@@ -1,12 +1,12 @@
 package com.panov.store.controllers;
 
+import com.panov.store.common.Utils;
 import com.panov.store.dto.ProductDTO;
 import com.panov.store.dto.ProductTypeDTO;
 import com.panov.store.exceptions.ResourceNotCreatedException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.services.ProductService;
 import com.panov.store.services.ProductTypeService;
-import com.panov.store.utils.ListUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -66,7 +66,7 @@ public class ProductTypeController {
                 .map(ProductTypeDTO::of)
                 .toList();
 
-        return ListUtils.makeCut(productTypes, quantity, offset);
+        return Utils.makeCut(productTypes, quantity, offset);
     }
 
     /**

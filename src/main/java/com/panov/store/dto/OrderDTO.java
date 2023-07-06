@@ -1,7 +1,7 @@
 package com.panov.store.dto;
 
 import com.panov.store.model.*;
-import com.panov.store.utils.Status;
+import com.panov.store.common.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;

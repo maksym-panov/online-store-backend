@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import java.util.function.Function;
-import static com.panov.store.utils.Constants.*;
+import static com.panov.store.common.Constants.*;
 
 /**
  * Utility class that provides methods for building, decomposing and validating JWT tokens.

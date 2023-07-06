@@ -1,6 +1,6 @@
 package com.panov.store.model;
 
-import com.panov.store.utils.Access;
+import com.panov.store.common.Access;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -31,6 +31,8 @@ public class User implements UserDetails {
     private Integer userId;
 
     private String hashPassword;
+
+    private String image;
 
     @Embedded
     private PersonalInfo personalInfo;

@@ -6,7 +6,7 @@ import com.panov.store.exceptions.ResourceNotCreatedException;
 import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.*;
-import com.panov.store.utils.Status;
+import com.panov.store.common.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -154,6 +154,8 @@ public class OrderService {
         if (order.getOrderProducts() != null) {
             calculateSumsInOrderProducts(order);
             calculateTotal(order);
+        } else {
+            throw new ResourceNotCreatedException("Could not post this order");
         }
 
         order.setPostTime(new Timestamp(System.currentTimeMillis() - 10000));

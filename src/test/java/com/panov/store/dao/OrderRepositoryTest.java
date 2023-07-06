@@ -2,8 +2,8 @@ package com.panov.store.dao;
 
 import com.panov.store.Utils;
 import com.panov.store.model.*;
-import com.panov.store.utils.Access;
-import com.panov.store.utils.Status;
+import com.panov.store.common.Access;
+import com.panov.store.common.Status;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.AfterAll;

@@ -39,6 +39,8 @@ public class ProductDTO {
 
     private String description;
 
+    private String image;
+
     @NotNull(message = "Product price must be present")
     @Min(value = 0L, message = "Price cannot be a negative number")
     @Max(value = 99999999L, message = "Price is too big")
@@ -72,6 +74,7 @@ public class ProductDTO {
                 p.getProductId(),
                 p.getName(),
                 p.getDescription(),
+                p.getImage(),
                 p.getPrice(),
                 p.getStock(),
                 p.getProductTypes()
@@ -92,6 +95,7 @@ public class ProductDTO {
         p.setProductId(productId);
         p.setName(name);
         p.setDescription(description);
+        p.setImage(image);
         p.setPrice(price);
         p.setStock(stock);
         p.setProductTypes(

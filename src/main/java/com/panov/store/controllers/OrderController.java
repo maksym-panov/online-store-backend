@@ -8,7 +8,7 @@ import com.panov.store.model.DeliveryType;
 import com.panov.store.model.Order;
 import com.panov.store.model.OrderProducts;
 import com.panov.store.services.OrderService;
-import com.panov.store.utils.ListUtils;
+import com.panov.store.common.Utils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -73,7 +73,7 @@ public class OrderController {
                 .map(OrderDTO::of)
                 .toList();
 
-        return ListUtils.makeCut(result, quantity, offset);
+        return Utils.makeCut(result, quantity, offset);
     }
 
     /**

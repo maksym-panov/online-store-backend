@@ -50,6 +50,7 @@ public class ProductType {
         if (this == o) return true;
         if (o == null) return false;
         if (!(o instanceof ProductType other)) return false;
-        return Objects.equals(name, other.name);
+        return Objects.equals(name, other.name) || (productTypeId != null &&
+                productTypeId.equals(other.getProductTypeId()));
     }
 }

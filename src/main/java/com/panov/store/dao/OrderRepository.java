@@ -1,7 +1,7 @@
 package com.panov.store.dao;
 
 import com.panov.store.model.*;
-import com.panov.store.utils.Status;
+import com.panov.store.common.Status;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

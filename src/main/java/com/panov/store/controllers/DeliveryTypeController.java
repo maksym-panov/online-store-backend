@@ -4,7 +4,7 @@ import com.panov.store.dto.DeliveryTypeDTO;
 import com.panov.store.exceptions.ResourceNotCreatedException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.services.DeliveryTypeService;
-import com.panov.store.utils.ListUtils;
+import com.panov.store.common.Utils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -66,7 +66,7 @@ public class DeliveryTypeController {
                 .map(DeliveryTypeDTO::of)
                 .toList();
 
-        return ListUtils.makeCut(deliveryTypes, quantity, offset);
+        return Utils.makeCut(deliveryTypes, quantity, offset);
     }
 
     /**

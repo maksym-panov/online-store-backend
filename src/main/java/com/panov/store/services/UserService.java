@@ -1,19 +1,21 @@
 package com.panov.store.services;
 
+import com.panov.store.common.Utils;
 import com.panov.store.dao.UserRepository;
 import com.panov.store.exceptions.ResourceNotCreatedException;
 import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.User;
+import org.apache.commons.io.FileUtils;
+import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.base64.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import com.panov.store.dao.DAO;
+import static com.panov.store.common.Constants.STATIC_IMAGES_FOLDER;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 /**
  * Service-layer class that processes {@link User} entities.
@@ -45,7 +47,8 @@ public class UserService {
         try {
             var list = repository.getAll();
             if (list == null)
-                return Collections.emptyList();
+                list = Collections.emptyList();
+            list.forEach(this::fetchProfileImage);
             return list;
         } catch(Exception e) {
             e.printStackTrace();
@@ -65,7 +68,10 @@ public class UserService {
      */
     @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER') or hasAuthority(#id.toString)")
     public User getById(Integer id) {
-        return repository.get(id).orElseThrow(() -> new ResourceNotFoundException("Could not find this user"));
+        User user = repository.get(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find this user"));
+        fetchProfileImage(user);
+        return user;
     }
 
     /**
@@ -81,7 +87,8 @@ public class UserService {
             boolean strict = true;
             var users = repository.getByColumn(naturalId, strict);
             if (users == null)
-                return Collections.emptyList();
+                users = Collections.emptyList();
+            users.forEach(this::fetchProfileImage);
             return users;
         } catch(Exception e) {
             e.printStackTrace();
@@ -94,9 +101,8 @@ public class UserService {
      * Re-throws a {@link ResourceNotCreatedException} if {@link DAO} object throws an exception.
      *
      * @param user {@link User} that should be registered
-     * @return an identity of registered {@link User}
      */
-    public Integer registerUser(User user) {
+    public void registerUser(User user) {
         var matches = thisNaturalIdExists(user);
         if (matches.size() != 0)
             throw new ResourceNotCreatedException(matches);
@@ -111,8 +117,6 @@ public class UserService {
 
         if (id == null)
             throw new ResourceNotCreatedException("Could not create this user");
-
-        return id;
     }
 
     /**
@@ -127,7 +131,6 @@ public class UserService {
      */
     @PreAuthorize(
             "hasAuthority('ADMINISTRATOR') or " +
-            "hasAuthority('MANAGER') or " +
             "hasAuthority(#user.getUserId().toString())"
     )
     public Integer changeUser(User user) {
@@ -138,6 +141,18 @@ public class UserService {
         Integer id = null;
 
         try {
+            User inDB = repository.get(user.getUserId())
+                    .orElseThrow(() -> new ResourceNotUpdatedException("Could not update this user."));
+            if (user.getImage() == null) {
+                user.setImage(inDB.getImage());
+            } else {
+                user.setImage(
+                        Utils.saveImageToFilesystem(
+                                user.getImage(),
+                                inDB.getImage()
+                        )
+                );
+            }
             id = repository.update(user);
         } catch(Exception e) {
             e.printStackTrace();
@@ -172,5 +187,22 @@ public class UserService {
         } catch(Exception ignored) {}
 
         return matches;
+    }
+
+    private void fetchProfileImage(User user) {
+        if (user.getImage() == null) {
+            return;
+        }
+        String imageName = user.getImage();
+
+        try {
+            File imageFile = new File(STATIC_IMAGES_FOLDER + "/" + imageName);
+            System.out.println("LOADING - " + STATIC_IMAGES_FOLDER + "/" + imageName);
+            byte[] imageBytes = FileUtils.readFileToByteArray(imageFile);
+            String imageEncoded = Base64.toBase64String(imageBytes);
+            user.setImage(imageEncoded);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

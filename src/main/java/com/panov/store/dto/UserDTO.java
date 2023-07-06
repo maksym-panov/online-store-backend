@@ -26,6 +26,8 @@ import java.util.ArrayList;
 public class UserDTO {
     private Integer userId;
 
+    private String image;
+
     private User.PersonalInfo personalInfo;
 
     private Address address;
@@ -42,6 +44,7 @@ public class UserDTO {
             return null;
         return new UserDTO(
             u.getUserId(),
+            u.getImage(),
             u.getPersonalInfo(),
             u.getAddress()
         );
@@ -55,6 +58,7 @@ public class UserDTO {
     public User toModel() {
         var u = new User();
         u.setUserId(userId);
+        u.setImage(image);
         u.setPersonalInfo(personalInfo);
         u.setAddress(address);
         u.setOrders(new ArrayList<>());

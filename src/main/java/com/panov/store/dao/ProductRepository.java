@@ -152,9 +152,11 @@ public class ProductRepository implements DAO<Product> {
 
             for (var pt : product.getProductTypes()) {
                 if (!current.getProductTypes().contains(pt)) {
-                    var productType = entityManager.find(ProductType.class, pt.getProductTypeId());
-                    productType.getProducts().add(product);
-                    current.getProductTypes().add(productType);
+                    try {
+                        var productType = entityManager.find(ProductType.class, pt.getProductTypeId());
+                        productType.getProducts().add(product);
+                        current.getProductTypes().add(productType);
+                    } catch (Exception ignored) {}
                 }
             }
 

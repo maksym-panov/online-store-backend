@@ -13,12 +13,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Gathered all allowed cross origin URL's into one constant array in the Constants class to simplify adding allowed origins into the cors registry.">
+    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Product and User images + DB migration + Initial DB seeding.&#10;Added possibility to add images to Users and Products and nevertheless changing and deleting them. &#10;Connected Flyway database migration tool to keep track of DB versions.&#10;In addition, it is now possible to seed the database with representative initial data by setting property 'fillDatabaseWithInitialData' in file app.properties to true.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ControllerAdvisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/exceptions/ControllerAdvisor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/utils/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/WebConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/WebConfiguration.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +29,7 @@
         <option value="Enum" />
         <option value="AnnotationType" />
         <option value="HTTP Request" />
+        <option value="com.haulmont.jpb.FlywayMigrationScript" />
         <option value="Class" />
       </list>
     </option>
@@ -67,6 +65,9 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$MAVEN_REPOSITORY$/io/jsonwebtoken/jjwt-api/0.11.5/jjwt-api-0.11.5-sources.jar!/io/jsonwebtoken/JwtParserBuilder.java" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -104,11 +105,12 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;service.view.auto.scroll.to.source&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;eca60a85c5426f4586497142760dc9c6&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -132,36 +134,22 @@
       <recent name="$PROJECT_DIR$/src/test/resources/META-INF" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/META-INF/initial" />
+      <recent name="$PROJECT_DIR$/src/main/resources/META-INF" />
+      <recent name="$PROJECT_DIR$/src/main/resources/images" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
       <recent name="$PROJECT_DIR$/src/main/resources/database" />
-      <recent name="$PROJECT_DIR$/src/main/webapp" />
-      <recent name="$PROJECT_DIR$/src/main/resources/META-INF" />
-      <recent name="$PROJECT_DIR$/src/main/resources/config" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.panov.store.dao" />
     </key>
   </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn -Dflyway.configFiles=flyway.conf" />
+    </option>
+  </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 10">
-    <configuration name="com.panov.store.configuration.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.panov.store.configuration.Main" />
-      <module name="online-store-project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.panov.store.jwt.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="All in Requests" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/Requests.http">
-      <method v="2" />
-    </configuration>
-    <configuration name="Requests | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/Requests.http" requestIdentifier="#1" runType="Run single request">
-      <method v="2" />
-    </configuration>
     <configuration name="All in online-store-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="online-store-project" />
       <option name="PACKAGE_NAME" value="" />
@@ -267,20 +255,14 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.com.panov.store.configuration.Main" />
-      <item itemvalue="HTTP Request.All in Requests" />
-      <item itemvalue="HTTP Request.Requests | #1" />
       <item itemvalue="JUnit.java in online-store-project" />
       <item itemvalue="JUnit.All in online-store-project" />
       <item itemvalue="Tomcat Server.Tomcat 10" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.java in online-store-project" />
-        <item itemvalue="HTTP Request.Requests | #1" />
-        <item itemvalue="HTTP Request.All in Requests" />
-        <item itemvalue="Application.com.panov.store.configuration.Main" />
         <item itemvalue="JUnit.All in online-store-project" />
+        <item itemvalue="JUnit.java in online-store-project" />
       </list>
     </recent_temporary>
   </component>
@@ -321,7 +303,9 @@
       <workItem from="1686389547751" duration="3427000" />
       <workItem from="1687529824945" duration="66963000" />
       <workItem from="1687891250437" duration="457000" />
-      <workItem from="1687945585058" duration="19273000" />
+      <workItem from="1687945585058" duration="21228000" />
+      <workItem from="1688375675626" duration="61612000" />
+      <workItem from="1688546557512" duration="21899000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1676894430878</created>
@@ -477,11 +461,29 @@
       <option name="project" value="LOCAL" />
       <updated>1687948664319</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Fixed vulnerabilities in utility classes">
+      <created>1688323038822</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1688323038822</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Product and User images + DB migration + Initial DB seeding.&#10;Added possibility to add images to Users and Products and nevertheless changing and deleting them. &#10;Connected Flyway database migration tool to keep track of DB versions.&#10;In addition, it is now possible to seed the database with representative initial data by setting property 'fillDatabaseWithInitialData' in file app.properties to true.">
+      <created>1688616417664</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1688616417664</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.template" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -518,7 +520,9 @@
     <MESSAGE value="Replaced previous security system with new JWT based one.&#10;Added possibility of login and register (after success client&#10;receives a JWT token that he can use to access endpoints that he is allowed to visit in accordance with the account permissions)." />
     <MESSAGE value="Fixed order completion bug (could not set order complete time). Fixed changing user address and personal data (algorithm ignored all requests when client wanted to delete certain piece of information, such as email, postal code etc.)" />
     <MESSAGE value="Gathered all allowed cross origin URL's into one constant array in the Constants class to simplify adding allowed origins into the cors registry." />
-    <option name="LAST_COMMIT_MESSAGE" value="Gathered all allowed cross origin URL's into one constant array in the Constants class to simplify adding allowed origins into the cors registry." />
+    <MESSAGE value="Fixed vulnerabilities in utility classes" />
+    <MESSAGE value="Product and User images + DB migration + Initial DB seeding.&#10;Added possibility to add images to Users and Products and nevertheless changing and deleting them. &#10;Connected Flyway database migration tool to keep track of DB versions.&#10;In addition, it is now possible to seed the database with representative initial data by setting property 'fillDatabaseWithInitialData' in file app.properties to true." />
+    <option name="LAST_COMMIT_MESSAGE" value="Product and User images + DB migration + Initial DB seeding.&#10;Added possibility to add images to Users and Products and nevertheless changing and deleting them. &#10;Connected Flyway database migration tool to keep track of DB versions.&#10;In addition, it is now possible to seed the database with representative initial data by setting property 'fillDatabaseWithInitialData' in file app.properties to true." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

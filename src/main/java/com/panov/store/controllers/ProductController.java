@@ -5,7 +5,7 @@ import com.panov.store.exceptions.ResourceNotCreatedException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.Product;
 import com.panov.store.services.ProductService;
-import com.panov.store.utils.ListUtils;
+import com.panov.store.common.Utils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -64,7 +64,7 @@ public class ProductController {
                 .filter(p -> typeId == null || p.inCategory(typeId))
                 .toList();
 
-        return ListUtils.makeCut(range, quantity, offset);
+        return Utils.makeCut(range, quantity, offset);
     }
 
     /**
@@ -95,6 +95,9 @@ public class ProductController {
                                          BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new ResourceNotCreatedException(bindingResult);
+
+        if (productDTO == null)
+            throw new ResourceNotCreatedException("Could not create this product");
 
         return service.createProduct(productDTO.toModel());
     }

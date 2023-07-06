@@ -9,8 +9,8 @@ import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.User;
 import com.panov.store.services.UserService;
-import com.panov.store.utils.Access;
-import com.panov.store.utils.ListUtils;
+import com.panov.store.common.Access;
+import com.panov.store.common.Utils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -56,13 +56,12 @@ public class UserController {
     @GetMapping
     public List<UserDTO> userRange(@RequestParam(name = "quantity", required = false) Integer quantity,
                                 @RequestParam(name = "offset", required = false) Integer offset) {
-        System.out.println("HELLO FROM DEBUGGER");
         List<UserDTO> users = userService.getAllUserList()
                 .stream()
                 .map(UserDTO::of)
                 .toList();
 
-        return ListUtils.makeCut(users, quantity, offset);
+        return Utils.makeCut(users, quantity, offset);
     }
 
     /**

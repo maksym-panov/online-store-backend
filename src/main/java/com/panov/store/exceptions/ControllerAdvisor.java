@@ -1,6 +1,6 @@
 package com.panov.store.exceptions;
 
-import com.panov.store.utils.ExceptionBody;
+import com.panov.store.common.ExceptionBody;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

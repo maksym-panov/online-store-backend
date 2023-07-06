@@ -1,4 +1,4 @@
-package com.panov.store.utils;
+package com.panov.store.common;
 
 import com.panov.store.model.User;
 import jakarta.persistence.AttributeConverter;

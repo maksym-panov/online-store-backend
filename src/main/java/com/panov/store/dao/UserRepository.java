@@ -152,6 +152,7 @@ public class UserRepository implements DAO<User> {
 
             var pi = patchUser.getPersonalInfo();
             var a = patchUser.getAddress();
+            currentUser.setImage(patchUser.getImage());
 
             if (patchUser.getAccess() != null)
                 currentUser.setAccess(patchUser.getAccess());
