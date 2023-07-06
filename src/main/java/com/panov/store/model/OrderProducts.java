@@ -59,7 +59,6 @@ public class OrderProducts {
             return false;
         if (!(o instanceof OrderProducts other))
             return false;
-        return Objects.equals(product, other.product)
-                && Objects.equals(order.getOrderId(), other.order.getOrderId());
+        return Objects.equals(this.orderProductsId, other.orderProductsId);
     }
 }

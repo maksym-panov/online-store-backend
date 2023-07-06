@@ -22,8 +22,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderProductsDTO {
-    private Integer orderProductsId;
-
     @NotNull(message = "There must be product in this order line")
     private ProductDTO product;
 
@@ -43,7 +41,6 @@ public class OrderProductsDTO {
             return null;
 
         return new OrderProductsDTO(
-            op.getOrderProductsId(),
             ProductDTO.of(op.getProduct()),
             op.getQuantity()
         );
@@ -56,7 +53,6 @@ public class OrderProductsDTO {
      */
     public OrderProducts toModel() {
         var op = new OrderProducts();
-        op.setOrderProductsId(orderProductsId);
         op.setProduct(product.toModel());
         op.setQuantity(quantity);
         return op;

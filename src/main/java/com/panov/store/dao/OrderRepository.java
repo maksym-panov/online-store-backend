@@ -1,5 +1,6 @@
 package com.panov.store.dao;
 
+import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.*;
 import com.panov.store.common.Status;
 import jakarta.persistence.EntityManager;
@@ -7,6 +8,7 @@ import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -112,8 +114,20 @@ public class OrderRepository implements DAO<Order> {
             order.setDeliveryType(dt);
 
             // Attach all the OrderProducts to this order
-            for (var op : order.getOrderProducts())
+            for (var op : order.getOrderProducts()) {
+                var productId = op.getProduct().getProductId();
+                op.setProduct(
+                        entityManager.find(
+                                Product.class, productId
+                        )
+                );
+
                 op.setOrder(order);
+            }
+
+            manageProductStocks(order);
+            calculateSumsInOrderProducts(order);
+            calculateTotal(order);
 
             // Save an actual order to the persistence
             entityManager.persist(order);
@@ -130,73 +144,92 @@ public class OrderRepository implements DAO<Order> {
      * Updates information about {@link Order} object. Deals with {@link OrderProducts}, <br>
      * {@link DeliveryType}, status and completion time of the {@link Order}
      *
-     * @param order an object with update information
+     * @param newData an object with update information
      * @return an identity of changed {@link Order} object.
      */
     @Override
-    public Integer update(Order order) {
+    public Integer update(Order newData) {
         var entityManager = getManager();
 
         try {
             entityManager.getTransaction().begin();
 
-            var current = entityManager.find(Order.class, order.getOrderId());
+            var currentOrder = entityManager.find(Order.class, newData.getOrderId());
 
-            // Remove order products that were deleted by user
-            if (order.getOrderProducts() != null && !order.getOrderProducts().isEmpty()) {
-                for (var op : current.getOrderProducts()) {
-                    if (!order.getOrderProducts().contains(op)) {
-                        op.getProduct().getOrderProducts().remove(op);
-                        op.setOrder(null);
-                    }
+            // Change product status and complete time
+            if (
+                    currentOrder.getStatus() != Status.COMPLETED &&
+                    newData.getStatus() != null
+            ) {
+                currentOrder.setStatus(newData.getStatus());
+
+                if (currentOrder.getStatus() == Status.COMPLETED) {
+                    currentOrder.setCompleteTime(new Timestamp(System.currentTimeMillis() - 10000));
                 }
-
-                for (var op : order.getOrderProducts()) {
-                    if (current.getOrderProducts().contains(op)) {
-                        entityManager.merge(op);
-                        continue;
-                    }
-                    entityManager.persist(op);
-                    op.setOrder(current);
-                    current.getOrderProducts().add(op);
-                }
-
-                current.getOrderProducts().retainAll(order.getOrderProducts());
             }
 
-            // Update delivery type
-            if (order.getDeliveryType() != null) {
-                var currentDeliveryType = current.getDeliveryType();
-                if (!currentDeliveryType.equals(order.getDeliveryType())) {
-                    currentDeliveryType.getOrders().remove(current);
+            // Change the delivery type
+            if (
+                    newData.getDeliveryType() != null &&
+                    newData.getDeliveryType().getDeliveryTypeId() != null
+            ) {
+                var newDeliveryTypeId = newData.getDeliveryType().getDeliveryTypeId();
+                var newDeliveryType = entityManager.find(DeliveryType.class, newDeliveryTypeId);
 
-                    var toSetDeliveryType = entityManager.find(
-                            DeliveryType.class,
-                            order.getDeliveryType().getDeliveryTypeId()
+                newDeliveryType.getOrders().add(currentOrder);
+                currentOrder.setDeliveryType(newDeliveryType);
+            }
+
+            // Change the list of ordered products
+            if (
+                    currentOrder.getStatus() != Status.SHIPPING &&
+                    currentOrder.getStatus() != Status.DELIVERED &&
+                    currentOrder.getStatus() != Status.COMPLETED &&
+                    currentOrder.getStatus() != Status.ABOLISHED
+            ) {
+                var newOrderProducts = newData.getOrderProducts();
+                var currentOrderProducts = currentOrder.getOrderProducts();
+
+                for (var currentOrderProduct : currentOrderProducts) {
+                    var productId = currentOrderProduct.getProduct().getProductId();
+                    var product = entityManager.find(Product.class, productId);
+                    currentOrderProduct.setProduct(product);
+                }
+
+                resetProductStocks(currentOrder);
+
+                for (var currentOrderProduct : currentOrderProducts) {
+                    currentOrderProduct.setOrder(null);
+                    currentOrderProduct.setProduct(null);
+
+                }
+
+                currentOrderProducts.clear();
+
+                currentOrderProducts.addAll(newOrderProducts);
+
+                for (var currentOrderProduct : currentOrderProducts) {
+                    var productId = currentOrderProduct.getProduct().getProductId();
+                    currentOrderProduct.setProduct(
+                            entityManager.find(
+                                    Product.class, productId
+                            )
                     );
-                    toSetDeliveryType.getOrders().add(current);
-                    current.setDeliveryType(toSetDeliveryType);
+
+                    currentOrderProduct.setOrder(currentOrder);
                 }
+
+                manageProductStocks(currentOrder);
+                calculateSumsInOrderProducts(currentOrder);
+                calculateTotal(currentOrder);
             }
-
-            // Update a total sum
-            if (order.getTotal() != null)
-                current.setTotal(order.getTotal());
-
-            // Update a status of the order
-            if (order.getStatus() != null)
-                current.setStatus(order.getStatus());
-
-            // Update a completion time of the order
-            if (order.getStatus() == Status.COMPLETED && order.getCompleteTime() == null)
-                current.setCompleteTime(new Timestamp(System.currentTimeMillis()));
 
             entityManager.getTransaction().commit();
         } finally {
             entityManager.close();
         }
 
-        return order.getOrderId();
+        return newData.getOrderId();
     }
 
     @Override
@@ -213,4 +246,74 @@ public class OrderRepository implements DAO<Order> {
         return entityManagerFactory.createEntityManager();
     }
 
+    /**
+     * Gets an order {@link Order} and for each {@link OrderProducts} object inside
+     * evaluates new stock of product and saves changes in the database.
+     *
+     * @param order an order to process
+     */
+    private void manageProductStocks(Order order) {
+        var orderProducts = order.getOrderProducts();
+
+        for (var op : orderProducts) {
+            var currentProductStock = op.getProduct().getStock();
+            var quantityToSell = op.getQuantity();
+
+            if (currentProductStock < quantityToSell) {
+                throw new ResourceNotUpdatedException("Could not update this order.");
+            }
+
+            var newProductStock = currentProductStock - quantityToSell;
+
+            op.getProduct().setStock(newProductStock);
+        }
+    }
+
+    /**
+     * Gets an {@link Order} object and 'returns' all ordered product quantities back to the product stock.
+     *
+     * @param order an order to process
+     */
+    private void resetProductStocks(Order order) {
+        for (var op : order.getOrderProducts()) {
+            var currentProductStock = op.getProduct().getStock();
+            var quantityFromOrderProduct = op.getQuantity();
+
+            var newProductStock = currentProductStock + quantityFromOrderProduct;
+            op.getProduct().setStock(newProductStock);
+        }
+    }
+
+    /**
+     * Calculates prices of different {@link Product}s of the specified {@link Order}. <br><br>
+     * {@code sum_i = product_i_price * product_i_quantity} <br><br>
+     *
+     * @param order an {@link Order} whose {@link OrderProducts} should be processed
+     */
+    private void calculateSumsInOrderProducts(Order order) {
+        for (var op : order.getOrderProducts()) {
+            var productPrice = op.getProduct().getPrice();
+            var quantity =  BigDecimal.valueOf(op.getQuantity());
+
+            var sum = productPrice.multiply(quantity);
+
+            op.setSum(sum);
+        }
+    }
+
+    /**
+     * Calculates total price of the {@link Order} depending on values of {@code sum}
+     * field of the {@link OrderProducts} in the specified {@link Order} object.
+     *
+     * @param order an {@link Order} whose total price should be calculated
+     */
+    private void calculateTotal(Order order) {
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (var op : order.getOrderProducts()) {
+            total = total.add(op.getSum());
+        }
+
+        order.setTotal(total);
+    }
 }

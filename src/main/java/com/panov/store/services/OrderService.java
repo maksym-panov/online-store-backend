@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
@@ -151,12 +150,7 @@ public class OrderService {
 
         Integer id = null;
 
-        if (order.getOrderProducts() != null) {
-            calculateSumsInOrderProducts(order);
-            calculateTotal(order);
-        } else {
-            throw new ResourceNotCreatedException("Could not post this order");
-        }
+        validateData(order, Operation.CREATION);
 
         order.setPostTime(new Timestamp(System.currentTimeMillis() - 10000));
         order.setStatus(Status.POSTED);
@@ -189,11 +183,7 @@ public class OrderService {
     public Integer changeOrder(Order order) {
         Integer id = null;
 
-        if (order.getOrderProducts() != null) {
-            if (order.getStatus() != Status.COMPLETED)
-                calculateSumsInOrderProducts(order);
-            calculateTotal(order);
-        }
+        validateData(order, Operation.UPDATE);
 
         try {
             id = repository.update(order);
@@ -207,36 +197,46 @@ public class OrderService {
         return id;
     }
 
-    /**
-     * Calculates prices of different {@link Product}s of the specified {@link Order}. <br><br>
-     * {@code sum_i = product_i_price * product_i_quantity} <br><br>
-     *
-     * @param order an {@link Order} whose {@link OrderProducts} should be processed
-     */
-    private void calculateSumsInOrderProducts(Order order) {
-        for (var op : order.getOrderProducts()) {
-            var productPrice = op.getProduct().getPrice();
-            var quantity =  BigDecimal.valueOf(op.getQuantity());
+    private void validateData(Order order, Operation operation) {
+        if (order.getOrderProducts() == null || order.getOrderProducts().isEmpty()) {
+            choseErrorMessage(operation);
+        }
 
-            var sum = productPrice.multiply(quantity);
+        var orderProducts = order
+                .getOrderProducts()
+                .stream()
+                .filter(op -> op.getProduct() != null &&
+                        op.getProduct().getProductId() != null &&
+                        op.getQuantity() != null &&
+                        op.getQuantity() > 0
+                )
+                .toList();
 
-            op.setSum(sum);
+        if (orderProducts.isEmpty()) {
+            choseErrorMessage(operation);
+        }
+
+        var distinctTestSize = orderProducts.stream()
+                .map(op -> op.getProduct().getProductId())
+                .distinct()
+                .count();
+
+        if (orderProducts.size() != distinctTestSize) {
+            choseErrorMessage(operation);
+        }
+
+        order.setOrderProducts(orderProducts);
+    }
+
+    private void choseErrorMessage(Operation operation) {
+        switch (operation) {
+            case UPDATE -> throw new ResourceNotUpdatedException("Could not change this order.");
+            case CREATION -> throw new ResourceNotCreatedException("Could not post this order.");
         }
     }
 
-    /**
-     * Calculates total price of the {@link Order} depending on values of {@code sum}
-     * field of the {@link OrderProducts} in the specified {@link Order} object.
-     *
-     * @param order an {@link Order} whose total price should be calculated
-     */
-    private void calculateTotal(Order order) {
-        BigDecimal total = BigDecimal.ZERO;
-
-        for (var op : order.getOrderProducts()) {
-            total = total.add(op.getSum());
-        }
-
-        order.setTotal(total);
+    private enum Operation {
+        CREATION,
+        UPDATE
     }
 }

@@ -3,7 +3,6 @@ package com.panov.store.dto;
 import com.panov.store.model.*;
 import com.panov.store.common.Status;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,13 +42,11 @@ public class OrderDTO {
 
     private BigDecimal total;
 
-    @NotNull
     @PastOrPresent
     private Timestamp postTime;
     @PastOrPresent
     private Timestamp completeTime;
 
-    @NotNull
     @Convert(converter = Status.StatusConverter.class)
     private Status status;
 

@@ -15,7 +15,11 @@
   <component name="ChangeListManager">
     <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Product and User images + DB migration + Initial DB seeding.&#10;Added possibility to add images to Users and Products and nevertheless changing and deleting them. &#10;Connected Flyway database migration tool to keep track of DB versions.&#10;In addition, it is now possible to seed the database with representative initial data by setting property 'fillDatabaseWithInitialData' in file app.properties to true.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/WebConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/WebConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/OrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/OrderDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/OrderProductsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/OrderProductsDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/OrderProducts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/OrderProducts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/OrderService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,7 +309,7 @@
       <workItem from="1687891250437" duration="457000" />
       <workItem from="1687945585058" duration="21228000" />
       <workItem from="1688375675626" duration="61612000" />
-      <workItem from="1688546557512" duration="21899000" />
+      <workItem from="1688546557512" duration="36623000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1676894430878</created>
@@ -475,7 +479,21 @@
       <option name="project" value="LOCAL" />
       <updated>1688616417664</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Product and User images + DB migration + Initial DB seeding.&#10;Added possibility to add images to Users and Products and nevertheless changing and deleting them. &#10;Connected Flyway database migration tool to keep track of DB versions.&#10;In addition, it is now possible to seed the database with representative initial data by setting property 'fillDatabaseWithInitialData' in file app.properties to true.">
+      <created>1688617890573</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1688617890573</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Product and User images + DB migration + Initial DB seeding.&#10;Added possibility to add images to Users and Products and nevertheless changing and deleting them. &#10;Connected Flyway database migration tool to keep track of DB versions.&#10;In addition, it is now possible to seed the database with representative initial data by setting property 'fillDatabaseWithInitialData' in file app.properties to true.">
+      <created>1688618017805</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1688618017805</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
