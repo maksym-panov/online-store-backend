@@ -36,13 +36,15 @@ public class SecurityConfiguration {
      * and also adds {@link JwtAuthenticationFilter} into the filter chain to check
      * authentication tokens in the incoming HTTP requests.
      *
-     * @param http - security configuration build object
-     * @return - configured instance of {@link SecurityFilterChain}
-     * @throws Exception
+     * @param http security configuration build object
+     * @return configured instance of {@link SecurityFilterChain}
+     * @throws Exception errors during authentication
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors()
+                .and()
                 .csrf().disable()
 
                 .sessionManagement()

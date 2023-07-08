@@ -2,7 +2,6 @@ package com.panov.store.dto;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 
@@ -14,12 +13,11 @@ import lombok.Getter;
  */
 @Getter
 public class LoginForm {
-    @NotNull(message = "Phone number must be present")
+    @NotEmpty(message = "Phone number must be present")
     @Pattern(regexp = "0\\d{9}", message = "Phone number must match the format '0XXXXXXXXX'")
     @Column(unique = true)
     private String phoneNumber;
 
-    @NotNull(message = "Password field should not be null")
     @NotEmpty(message = "Password field should not be empty")
     private String password;
 }

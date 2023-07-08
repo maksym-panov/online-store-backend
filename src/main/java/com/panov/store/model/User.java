@@ -111,7 +111,7 @@ public class User implements UserDetails {
         @Column(unique = true)
         private String phoneNumber;
 
-        @Email
+        @Email(message = "Email was not provided")
         @Size(max = 80, message = "Email is too long")
         @Column(unique = true)
         private String email;

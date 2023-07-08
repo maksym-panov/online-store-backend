@@ -1,5 +1,6 @@
 package com.panov.store.controllers;
 
+import com.panov.store.dto.AuthEntity;
 import com.panov.store.exceptions.ResourceNotCreatedException;
 import com.panov.store.jwt.JwtService;
 import com.panov.store.dto.LoginForm;
@@ -88,7 +89,7 @@ public class UserController {
      * @return JWT for registered user
      */
     @PostMapping("/register")
-    public String registerUser(@RequestBody @Valid RegistrationForm registrationForm,
+    public AuthEntity registerUser(@Valid @RequestBody RegistrationForm registrationForm,
                               BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new ResourceNotCreatedException(bindingResult);
@@ -100,7 +101,7 @@ public class UserController {
 
         userService.registerUser(userToCreate);
 
-        return jwtService.createToken(userToCreate);
+        return new AuthEntity(jwtService.createToken(userToCreate), userToCreate.getUserId());
     }
 
     /**
@@ -112,8 +113,8 @@ public class UserController {
      * @return JWT token for authenticated user
      */
     @PostMapping("/login")
-    public String loginUser(@RequestBody @Valid LoginForm loginForm,
-                            BindingResult bindingResult) {
+    public AuthEntity loginUser(@Valid @RequestBody LoginForm loginForm,
+                                BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new ResourceNotFoundException("There is no user with this username or password.");
 
@@ -129,7 +130,7 @@ public class UserController {
                 )
         );
 
-        return jwtService.createToken(user);
+        return new AuthEntity(jwtService.createToken(user), user.getUserId());
     }
 
     /**
@@ -144,15 +145,15 @@ public class UserController {
      * @return an identifier of provided {@link User}.
      */
     @PatchMapping("/{id}")
-    public Integer changeUser(@RequestBody @Valid UserDTO userDTO,
-                              @PathVariable("id") Integer id,
-                              BindingResult bindingResult) {
+    public AuthEntity changeUser(@Valid @RequestBody UserDTO userDTO,
+                                 BindingResult bindingResult,
+                                 @PathVariable("id") Integer id) {
         if (bindingResult.hasErrors())
             throw new ResourceNotUpdatedException(bindingResult);
 
         userDTO.setUserId(id);
 
-        return userService.changeUser(userDTO.toModel());
+        return userService.changeUserWithPhoneNumber(userDTO.toModel());
     }
 
     /**

@@ -40,6 +40,7 @@ public class DBInitializer {
             imageDirectory.mkdir();
         }
 
+        EntityManager em = emf.createEntityManager();
         try {
             ClassPathResource cpr = new ClassPathResource("META-INF/app.properties");
             File file = cpr.getFile();
@@ -52,8 +53,6 @@ public class DBInitializer {
             fis.close();
             if (!seed)
                 return;
-
-            EntityManager em = emf.createEntityManager();
 
             em.getTransaction().begin();
             seedProductTypes(em);

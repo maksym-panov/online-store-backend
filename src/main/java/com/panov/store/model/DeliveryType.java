@@ -1,13 +1,10 @@
 package com.panov.store.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.context.annotation.EnableLoadTimeWeaving;
 
 import java.util.*;
 
@@ -28,9 +25,6 @@ public class DeliveryType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer deliveryTypeId;
 
-    @NotNull(message = "Delivery type name cannot be null")
-    @Size(min = 2, message = "Delivery type name must be meaningful")
-    @Size(max = 50, message = "Delivery type name is too long")
     @Column(unique = true)
     private String name;
 

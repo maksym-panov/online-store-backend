@@ -1,14 +1,12 @@
 package com.panov.store.dto;
 
-import com.panov.store.model.Address;
 import com.panov.store.model.User;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.ArrayList;
 
 /**
  * Data transfer class that is used to transfer data, needed to register new {@link User} entities.
@@ -21,11 +19,26 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegistrationForm {
-    private User.PersonalInfo personalInfo;
+    @NotNull(message = "FirstName must be present")
+    @Size(min = 1, message = "Firstname cannot be empty")
+    @Size(max = 30, message = "Firstname is too long")
+    private String firstname;
 
-    private Address address;
+    @Size(max = 30, message = "Firstname is too long")
+    private String lastname;
 
-    @Size(min = 8, message = "Your password is too short")
+    @NotNull(message = "Phone number must be present")
+    @Pattern(regexp = "0\\d{9}", message = "Phone number must match the format '0XXXXXXXXX'")
+    @Column(unique = true)
+    private String phoneNumber;
+
+    @Email(message = "Email was not provided")
+    @Size(max = 80, message = "Email is too long")
+    @Column(unique = true)
+    private String email;
+
+    @NotEmpty(message = "Password cannot be empty")
+    @Min(value = 8, message = "Password is too short")
     private String password;
 
     /**
@@ -35,10 +48,14 @@ public class RegistrationForm {
      */
     public User toModel() {
         var u = new User();
+        var pi = new User.PersonalInfo();
+        pi.setFirstname(firstname);
+        pi.setLastname(lastname);
+        pi.setPhoneNumber(phoneNumber);
+        pi.setEmail(email);
+
+        u.setPersonalInfo(pi);
         u.setHashPassword(password);
-        u.setPersonalInfo(personalInfo);
-        u.setAddress(address == null ? new Address() : address);
-        u.setOrders(new ArrayList<>());
         return u;
     }
 }

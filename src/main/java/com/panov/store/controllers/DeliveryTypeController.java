@@ -55,7 +55,7 @@ public class DeliveryTypeController {
             @RequestParam(name = "quantity", required = false) Integer quantity,
             @RequestParam(name = "offset", required = false) Integer offset) {
         List<DeliveryType> types;
-        if (pattern == null) types = service.getDeliveryTypeList();
+        if (pattern == null || pattern.isBlank()) types = service.getDeliveryTypeList();
         else types = service.getByNamePattern(pattern, false);
 
         System.out.println(pattern);
@@ -93,7 +93,7 @@ public class DeliveryTypeController {
      * @return an identifier of created {@link DeliveryType}
      */
     @PostMapping
-    public Integer createDeliveryType(@RequestBody @Valid DeliveryTypeDTO deliveryTypeDTO,
+    public Integer createDeliveryType(@Valid @RequestBody DeliveryTypeDTO deliveryTypeDTO,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new ResourceNotCreatedException(bindingResult);
@@ -113,7 +113,7 @@ public class DeliveryTypeController {
      * @return an identifier of provided {@link DeliveryType}.
      */
     @PatchMapping("/{id}")
-    public Integer changeDeliveryType(@RequestBody @Valid DeliveryTypeDTO deliveryTypeDTO,
+    public Integer changeDeliveryType(@Valid @RequestBody DeliveryTypeDTO deliveryTypeDTO,
                                      @PathVariable("id") Integer id,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors())

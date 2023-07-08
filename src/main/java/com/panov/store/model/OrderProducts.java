@@ -1,8 +1,6 @@
 package com.panov.store.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,7 +26,6 @@ public class OrderProducts {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderProductsId;
 
-    @NotNull(message = "There must be product in the order line")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productId")
     private Product product;
@@ -38,12 +35,7 @@ public class OrderProducts {
     @JoinColumn(name = "orderId")
     private Order order;
 
-    @NotNull(message = "Quantity of ordered product cannot be null")
-    @Min(value = 1, message = "Quantity must be greater than 0")
     private Integer quantity;
-
-    @NotNull(message = "Sum cannot be null")
-    @Min(value = 0, message = "Sum cannot be negative")
     private BigDecimal sum;
 
     @Override

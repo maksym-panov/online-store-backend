@@ -57,7 +57,7 @@ public class ProductTypeController {
             @RequestParam(name = "quantity", required = false) Integer quantity,
             @RequestParam(name = "offset", required = false) Integer offset) {
         List<ProductType> types;
-        if (pattern == null) types = service.getProductTypeList();
+        if (pattern == null || pattern.isBlank()) types = service.getProductTypeList();
         else types = service.getByNamePattern(pattern, false);
 
         var productTypes = types
@@ -93,7 +93,7 @@ public class ProductTypeController {
      * @return an identifier of created {@link ProductType}
      */
     @PostMapping
-    public Integer createProductType(@RequestBody @Valid ProductTypeDTO productTypeDTO,
+    public Integer createProductType(@Valid @RequestBody ProductTypeDTO productTypeDTO,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new ResourceNotCreatedException(bindingResult);
@@ -113,7 +113,7 @@ public class ProductTypeController {
      * @return an identifier of provided {@link ProductType}.
      */
     @PatchMapping("/{id}")
-    public Integer changeProductType(@RequestBody @Valid ProductTypeDTO productTypeDTO,
+    public Integer changeProductType(@Valid @RequestBody ProductTypeDTO productTypeDTO,
                                      @PathVariable("id") Integer id,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors())

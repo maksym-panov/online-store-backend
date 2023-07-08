@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -69,6 +70,10 @@ public class ProductTypeRepository implements DAO<ProductType> {
      */
     @Override
     public List<ProductType> getByColumn(Object value, boolean strict) {
+        if (value == null || value.toString().isBlank()) {
+            return Collections.emptyList();
+        }
+
         var entityManager = getManager();
 
         List<ProductType> productTypes;

@@ -1,10 +1,6 @@
 package com.panov.store.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,9 +26,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer productId;
 
-    @NotNull(message = "Product name must be present")
-    @Size(min = 2, message = "Product name must be meaningful")
-    @Size(max = 128, message = "Product name is too long")
     @Column(unique = true)
     private String name;
 
@@ -41,13 +34,8 @@ public class Product {
 
     private String image;
 
-    @NotNull(message = "Product price must be present")
-    @Min(value = 0L, message = "Price cannot be a negative number")
-    @Max(value = 99999999L, message = "Price is too big")
     private BigDecimal price;
 
-    @NotNull(message = "Stock of product must be present")
-    @Min(value = 0, message = "Stock must be greater than 0")
     private Integer stock;
 
     @ManyToMany(fetch = FetchType.EAGER)

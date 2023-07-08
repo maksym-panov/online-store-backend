@@ -2,6 +2,7 @@ package com.panov.store.dto;
 
 import com.panov.store.model.Address;
 import com.panov.store.model.User;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,10 @@ public class UserDTO {
 
     private String image;
 
+    @Valid
     private User.PersonalInfo personalInfo;
 
+    @Valid
     private Address address;
 
     /**

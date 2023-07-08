@@ -2,9 +2,6 @@ package com.panov.store.model;
 
 import com.panov.store.common.Status;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,22 +39,13 @@ public class Order {
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderProducts> orderProducts = new ArrayList<>();
-
-    @NotNull
-    @Min(value = 0, message = "Total sum cannot be negative")
     private BigDecimal total;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "deliveryTypeId")
     private DeliveryType deliveryType;
 
-    @NotNull
-    @PastOrPresent
     private Timestamp postTime;
-    @PastOrPresent
     private Timestamp completeTime;
-
-    @NotNull
-    @Convert(converter = Status.StatusConverter.class)
     private Status status;
 }

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class DeliveryTypeDTO {
     private Integer deliveryTypeId;
+
     @NotNull(message = "Delivery type name cannot be null")
     @Size(min = 2, message = "Delivery type name must be meaningful")
     @Size(max = 50, message = "Delivery type name is too long")

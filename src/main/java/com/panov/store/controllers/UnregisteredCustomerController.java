@@ -75,7 +75,7 @@ public class UnregisteredCustomerController {
      * @return an identifier of provided {@link UnregisteredCustomer}.
      */
     @PatchMapping("/{id}")
-    public Integer changeUnregisteredCustomer(@RequestBody @Valid UnregisteredCustomerDTO unregCustDTO,
+    public Integer changeUnregisteredCustomer(@Valid @RequestBody UnregisteredCustomerDTO unregCustDTO,
                                               @PathVariable("id") Integer id,
                                               BindingResult bindingResult) {
         if (bindingResult.hasErrors())

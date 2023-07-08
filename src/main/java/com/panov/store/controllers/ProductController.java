@@ -55,7 +55,7 @@ public class ProductController {
             @RequestParam(name = "quantity", required = false) Integer quantity,
             @RequestParam(name = "offset", required = false) Integer offset) {
         List<Product> products;
-        if (pattern == null) products = service.getRangeOfProducts();
+        if (pattern == null || pattern.isBlank()) products = service.getRangeOfProducts();
         else products = service.getByNamePattern(pattern, false);
 
         var range = products
@@ -91,7 +91,7 @@ public class ProductController {
      * @return an identifier of created {@link Product}
      */
     @PostMapping
-    public Integer createProduct(@RequestBody @Valid ProductDTO productDTO,
+    public Integer createProduct(@Valid @RequestBody ProductDTO productDTO,
                                          BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new ResourceNotCreatedException(bindingResult);
@@ -114,7 +114,7 @@ public class ProductController {
      * @return an identifier of provided {@link Product}.
      */
     @PatchMapping("/{id}")
-    public Integer changeProduct(@RequestBody @Valid ProductDTO productDTO,
+    public Integer changeProduct(@Valid @RequestBody ProductDTO productDTO,
                                  @PathVariable("id") Integer id,
                                  BindingResult bindingResult) {
         if (bindingResult.hasErrors())

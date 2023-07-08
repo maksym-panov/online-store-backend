@@ -100,7 +100,7 @@ public class OrderController {
      * @return an identifier of created {@link Order}
      */
     @PostMapping
-    public Integer postOrder(@RequestBody @Valid OrderDTO orderDTO,
+    public Integer postOrder(@Valid @RequestBody OrderDTO orderDTO,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new ResourceNotCreatedException(bindingResult);
@@ -120,7 +120,7 @@ public class OrderController {
      * @return an identifier of provided {@link Order}.
      */
     @PatchMapping("/{id}")
-    public Integer changeOrder(@RequestBody @Valid OrderDTO orderDTO,
+    public Integer changeOrder(@Valid @RequestBody OrderDTO orderDTO,
                                @PathVariable("id") Integer id,
                                BindingResult bindingResult) {
         if (bindingResult.hasErrors())

@@ -1,8 +1,6 @@
 package com.panov.store.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,9 +24,7 @@ public class ProductType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer productTypeId;
-    @NotNull(message = "Category name must be present")
-    @Size(min = 2, message = "Category name must be meaningful")
-    @Size(max = 30, message = "Category name is too long")
+
     @Column(unique = true)
     private String name;
 

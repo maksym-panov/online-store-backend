@@ -3,7 +3,7 @@ package com.panov.store.dto;
 import com.panov.store.model.*;
 import com.panov.store.common.Status;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,19 +32,20 @@ import java.util.Objects;
 public class OrderDTO {
     private Integer orderId;
 
+    @Valid
     private UserDTO user;
 
+    @Valid
     private UnregisteredCustomerDTO unregCust;
 
+    @Valid
     private List<OrderProductsDTO> orderProducts = new ArrayList<>();
 
+    @Valid
     private DeliveryTypeDTO deliveryType;
 
     private BigDecimal total;
-
-    @PastOrPresent
     private Timestamp postTime;
-    @PastOrPresent
     private Timestamp completeTime;
 
     @Convert(converter = Status.StatusConverter.class)

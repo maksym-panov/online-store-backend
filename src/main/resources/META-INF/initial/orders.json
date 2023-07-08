@@ -11,7 +11,7 @@
         "product": {
           "productId": 1
         },
-        "quantity": 2,
+        "quantity": 1,
         "sum": 30
       },
       {
@@ -41,13 +41,6 @@
         },
         "quantity": 1,
         "sum": 13.89
-      },
-      {
-        "product": {
-          "productId": 81
-        },
-        "quantity": 2,
-        "sum": 90.14
       }
     ],
     "total": 104.03,
@@ -66,12 +59,12 @@
         "product": {
           "productId": 34
         },
-        "quantity": 2,
+        "quantity": 1,
         "sum": 29.98
       },
       {
         "product": {
-          "productId": 71
+          "productId": 70
         },
         "quantity": 1,
         "sum": 28.23
@@ -80,7 +73,7 @@
         "product": {
           "productId": 59
         },
-        "quantity": 3,
+        "quantity": 1,
         "sum": 532.95
       },
       {
@@ -137,7 +130,7 @@
         "product": {
           "productId": 66
         },
-        "quantity": 3,
+        "quantity": 1,
         "sum": 960
       },
       {
@@ -225,12 +218,12 @@
         "product": {
           "productId": 13
         },
-        "quantity": 5,
+        "quantity": 1,
         "sum": 122.5
       },
       {
         "product": {
-          "productId": 81
+          "productId": 65
         },
         "quantity": 1,
         "sum": 45.07
@@ -239,7 +232,7 @@
         "product": {
           "productId": 44
         },
-        "quantity": 4,
+        "quantity": 1,
         "sum": 55.96
       },
       {
@@ -368,21 +361,21 @@
         "product": {
           "productId": 3
         },
-        "quantity": 3,
+        "quantity": 1,
         "sum": 19.62
       },
       {
         "product": {
           "productId": 5
         },
-        "quantity": 3,
+        "quantity": 1,
         "sum": 32.97
       },
       {
         "product": {
           "productId": 30
         },
-        "quantity": 3,
+        "quantity": 1,
         "sum": 401.64
       }
     ],

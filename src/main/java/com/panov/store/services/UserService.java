@@ -2,13 +2,15 @@ package com.panov.store.services;
 
 import com.panov.store.common.Utils;
 import com.panov.store.dao.UserRepository;
+import com.panov.store.dto.AuthEntity;
 import com.panov.store.exceptions.ResourceNotCreatedException;
 import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
+import com.panov.store.jwt.JwtService;
 import com.panov.store.model.User;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.base64.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import com.panov.store.dao.DAO;
@@ -26,13 +28,10 @@ import java.util.*;
  * @see UserRepository
  */
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final DAO<User> repository;
-
-    @Autowired
-    public UserService(DAO<User> repository) {
-        this.repository = repository;
-    }
+    private final JwtService jwtService;
 
     /**
      * Uses {@link DAO} implementation to retrieve list of all existing {@link User} entities. <br><br>
@@ -154,7 +153,7 @@ public class UserService {
                 );
             }
             id = repository.update(user);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -162,6 +161,24 @@ public class UserService {
             throw new ResourceNotCreatedException("Could not change this user");
 
         return id;
+    }
+
+    @PreAuthorize(
+            "hasAuthority('ADMINISTRATOR') or " +
+            "hasAuthority(#user.getUserId().toString())"
+    )
+    public AuthEntity changeUserWithPhoneNumber(User user) {
+        var inDB = repository.get(user.getUserId())
+                .orElseThrow(() -> new ResourceNotUpdatedException("Could not update this user."));
+        String current = inDB.getPersonalInfo().getPhoneNumber();
+        String requested = user.getPersonalInfo().getPhoneNumber();
+
+        Integer id = changeUser(user);
+
+        if (current.equals(requested)) {
+            return new AuthEntity("", id);
+        }
+        return new AuthEntity(jwtService.createToken(user), id);
     }
 
     /**
@@ -176,12 +193,23 @@ public class UserService {
 
         try {
             var phoneNumberMatch = getByNaturalId(user.getPersonalInfo().getPhoneNumber());
+            phoneNumberMatch = phoneNumberMatch
+                    .stream()
+                    .filter(u -> u.getPersonalInfo().getPhoneNumber() != null)
+                    .toList();
             if (phoneNumberMatch.size() != 0 && !user.getUserId().equals(phoneNumberMatch.get(0).getUserId()))
                 matches.put("phoneNumber", "User with this phone number already exists");
         } catch(Exception ignored) {}
 
         try {
             var emailMatch = getByNaturalId(user.getPersonalInfo().getEmail());
+            emailMatch = emailMatch
+                    .stream()
+                    .filter(
+                            u -> u.getPersonalInfo().getEmail() != null &&
+                                !u.getPersonalInfo().getEmail().isBlank()
+                    )
+                    .toList();
             if (emailMatch.size() != 0 && !user.getUserId().equals(emailMatch.get(0).getUserId()))
                 matches.put("email", "User with this email already exists");
         } catch(Exception ignored) {}

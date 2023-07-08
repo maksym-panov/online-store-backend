@@ -73,13 +73,14 @@ public class ProductRepository implements DAO<Product> {
      */
     @Override
     public List<Product> getByColumn(Object value, boolean strict) {
+        if (value == null || value.toString().isBlank()) {
+            return Collections.emptyList();
+        }
+
         var entityManager = getManager();
 
         List<Product> products;
         try {
-            if (value == null)
-                return null;
-
             String probablyName = Objects.toString(value);
             if (!strict)
                 probablyName = "%" + probablyName + "%";

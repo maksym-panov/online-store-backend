@@ -104,8 +104,12 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
      */
     private Map<String, String> fetchErrors(BindingResult bindingResult) {
         Map<String, String> errors = new HashMap<>();
-        for (var e : bindingResult.getFieldErrors())
-            errors.put(e.getField(), e.getDefaultMessage());
+        for (var e : bindingResult.getFieldErrors()) {
+            String field = e.getField();
+            int removeIndex = field.lastIndexOf(".");
+            field = field.substring(removeIndex + 1);
+            errors.put(field, e.getDefaultMessage());
+        }
         return errors;
     }
 }
