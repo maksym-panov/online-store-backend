@@ -49,7 +49,7 @@ public class DeliveryTypeRepositoryTest {
         repoTest.insert(deliveryType3);
 
         var expected = List.of(deliveryType1, deliveryType2, deliveryType3);
-        var actual = new ArrayList<>(repoTest.getAll());
+        var actual = new ArrayList<>(repoTest.getPackage(null, null));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -158,13 +158,13 @@ public class DeliveryTypeRepositoryTest {
         var id3 = repoTest.insert(deliveryType3);
 
         var expected1 = List.of(deliveryType1, deliveryType2, deliveryType3);
-        var actual1 = new ArrayList<>(repoTest.getAll());
+        var actual1 = new ArrayList<>(repoTest.getPackage(null, null));
 
         repoTest.delete(id1);
         repoTest.delete(id3);
 
         var expected2 = List.of(deliveryType2);
-        var actual2 = new ArrayList<>(repoTest.getAll());
+        var actual2 = new ArrayList<>(repoTest.getPackage(null, null));
 
         assertThat(actual1).isEqualTo(expected1);
         assertThat(actual2).isEqualTo(expected2);

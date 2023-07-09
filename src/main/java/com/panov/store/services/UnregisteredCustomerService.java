@@ -40,9 +40,9 @@ public class UnregisteredCustomerService {
      * @return a {@link List} of {@link UnregisteredCustomer} objects
      */
     @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
-    public List<UnregisteredCustomer> getUnregCustomerList() {
+    public List<UnregisteredCustomer> getUnregCustomerList(Integer offset, Integer quantity) {
         try {
-            var list = repository.getAll();
+            var list = repository.getPackage(offset, quantity);
             if (list == null)
                 return Collections.emptyList();
             return list;

@@ -5,7 +5,6 @@ import com.panov.store.exceptions.ResourceNotCreatedException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.Product;
 import com.panov.store.services.ProductService;
-import com.panov.store.common.Utils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -55,16 +54,16 @@ public class ProductController {
             @RequestParam(name = "quantity", required = false) Integer quantity,
             @RequestParam(name = "offset", required = false) Integer offset) {
         List<Product> products;
-        if (pattern == null || pattern.isBlank()) products = service.getRangeOfProducts();
-        else products = service.getByNamePattern(pattern, false);
+        if (pattern == null || pattern.isBlank())
+            products = service.getRangeOfProducts(offset, quantity);
+        else
+            products = service.getByNamePattern(pattern, false);
 
-        var range = products
+        return products
                 .stream()
                 .map(ProductDTO::of)
                 .filter(p -> typeId == null || p.inCategory(typeId))
                 .toList();
-
-        return Utils.makeCut(range, quantity, offset);
     }
 
     /**

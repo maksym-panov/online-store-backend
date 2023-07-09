@@ -57,14 +57,21 @@ public class OrderRepository implements DAO<Order> {
      * @return a list of all {@link Order} that exist in the database
      */
     @Override
-    public List<Order> getAll() {
+    public List<Order> getPackage(Integer offset, Integer quantity) {
         var entityManager = getManager();
 
         List<Order> orders;
 
+        if (offset == null || offset < 0)
+            offset = 0;
+        if (quantity == null || quantity < 0)
+            quantity = 500;
+
         try {
             orders = entityManager
                     .createQuery("select o from Order o", Order.class)
+                    .setFirstResult(offset)
+                    .setMaxResults(quantity)
                     .getResultList();
             for (var o : orders) {
                 if (o.getUser() != null && o.getUser().getAddress() == null)

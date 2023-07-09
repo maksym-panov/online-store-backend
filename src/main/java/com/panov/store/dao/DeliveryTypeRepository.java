@@ -52,13 +52,21 @@ public class DeliveryTypeRepository implements DAO<DeliveryType> {
      * @return a list of all {@link DeliveryType} objects
      */
     @Override
-    public List<DeliveryType> getAll() {
+    public List<DeliveryType> getPackage(Integer offset, Integer quantity) {
         var entityManager = getManager();
 
         List<DeliveryType> list;
 
+        if (offset == null || offset < 0)
+            offset = 0;
+        if (quantity == null || quantity < 0)
+            quantity = 500;
+
         try {
-            list = entityManager.createQuery("select dt from DeliveryType dt", DeliveryType.class)
+            list = entityManager
+                    .createQuery("select dt from DeliveryType dt", DeliveryType.class)
+                    .setFirstResult(offset)
+                    .setMaxResults(quantity)
                     .getResultList();
         } finally {
             entityManager.close();

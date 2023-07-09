@@ -1,6 +1,5 @@
 package com.panov.store.controllers;
 
-import com.panov.store.common.Utils;
 import com.panov.store.dto.ProductDTO;
 import com.panov.store.dto.ProductTypeDTO;
 import com.panov.store.exceptions.ResourceNotCreatedException;
@@ -57,16 +56,16 @@ public class ProductTypeController {
             @RequestParam(name = "quantity", required = false) Integer quantity,
             @RequestParam(name = "offset", required = false) Integer offset) {
         List<ProductType> types;
-        if (pattern == null || pattern.isBlank()) types = service.getProductTypeList();
-        else types = service.getByNamePattern(pattern, false);
+        if (pattern == null || pattern.isBlank())
+            types = service.getProductTypeList(offset, quantity);
+        else
+            types = service.getByNamePattern(pattern, false);
 
-        var productTypes = types
+        return types
                 .stream()
                 .filter(Objects::nonNull)
                 .map(ProductTypeDTO::of)
                 .toList();
-
-        return Utils.makeCut(productTypes, quantity, offset);
     }
 
     /**

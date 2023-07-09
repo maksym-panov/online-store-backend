@@ -48,13 +48,20 @@ public class ProductRepository implements DAO<Product> {
      * @return a list of all {@link Product} that exist in the database
      */
     @Override
-    public List<Product> getAll() {
+    public List<Product> getPackage(Integer offset, Integer quantity) {
         var entityManager = getManager();
+
+        if (offset == null || offset < 0)
+            offset = 0;
+        if (quantity == null || quantity < 0)
+            quantity = 500;
 
         List<Product> products;
         try {
             products = entityManager
                     .createQuery("select p from Product p", Product.class)
+                    .setFirstResult(offset)
+                    .setMaxResults(quantity)
                     .getResultList();
         } finally {
             entityManager.close();

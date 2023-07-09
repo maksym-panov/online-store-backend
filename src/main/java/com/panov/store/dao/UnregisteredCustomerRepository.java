@@ -52,10 +52,15 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
      * @return a list of all {@link UnregisteredCustomer} objects
      */
     @Override
-    public List<UnregisteredCustomer> getAll() {
+    public List<UnregisteredCustomer> getPackage(Integer offset, Integer quantity) {
         var entityManager = getManager();
 
         List<UnregisteredCustomer> unregisteredCustomers;
+
+        if (offset == null || offset < 0)
+            offset = 0;
+        if (quantity == null || quantity < 0)
+            quantity = 500;
 
         try {
             unregisteredCustomers = entityManager
@@ -63,6 +68,8 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
                                     "select uc from UnregisteredCustomer uc",
                                     UnregisteredCustomer.class
                             )
+                            .setFirstResult(offset)
+                            .setMaxResults(quantity)
                             .getResultList();
         } finally {
             entityManager.close();

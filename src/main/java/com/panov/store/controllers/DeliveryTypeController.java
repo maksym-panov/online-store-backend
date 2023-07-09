@@ -4,7 +4,6 @@ import com.panov.store.dto.DeliveryTypeDTO;
 import com.panov.store.exceptions.ResourceNotCreatedException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.services.DeliveryTypeService;
-import com.panov.store.common.Utils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,18 +54,15 @@ public class DeliveryTypeController {
             @RequestParam(name = "quantity", required = false) Integer quantity,
             @RequestParam(name = "offset", required = false) Integer offset) {
         List<DeliveryType> types;
-        if (pattern == null || pattern.isBlank()) types = service.getDeliveryTypeList();
+        if (pattern == null || pattern.isBlank())
+            types = service.getDeliveryTypeList(offset, quantity);
         else types = service.getByNamePattern(pattern, false);
 
-        System.out.println(pattern);
-
-        var deliveryTypes = types
+        return types
                 .stream()
                 .filter(Objects::nonNull)
                 .map(DeliveryTypeDTO::of)
                 .toList();
-
-        return Utils.makeCut(deliveryTypes, quantity, offset);
     }
 
     /**

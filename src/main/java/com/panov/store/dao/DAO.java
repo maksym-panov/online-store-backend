@@ -25,7 +25,7 @@ public interface DAO<E> {
      *
      * @return a list of all entities
      */
-    List<E> getAll();
+    List<E> getPackage(Integer offset, Integer quantity);
 
     /**
      * Retrieves a list of entities whose match the provided pattern.

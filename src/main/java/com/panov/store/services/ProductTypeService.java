@@ -40,9 +40,9 @@ public class ProductTypeService {
      *
      * @return a {@link List} of {@link ProductType} objects
      */
-    public List<ProductType> getProductTypeList() {
+    public List<ProductType> getProductTypeList(Integer offset, Integer quantity) {
         try {
-            var list = repository.getAll();
+            var list = repository.getPackage(offset, quantity);
             if (list == null)
                 return Collections.emptyList();
             return list;

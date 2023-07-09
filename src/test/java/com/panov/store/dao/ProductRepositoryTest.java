@@ -86,7 +86,7 @@ public class ProductRepositoryTest {
         repositoryUnderTest.insert(product3);
 
         var expected = List.of(product1, product2, product3);
-        var actual = repositoryUnderTest.getAll();
+        var actual = repositoryUnderTest.getPackage(null, null);
 
         // then
 
@@ -339,7 +339,7 @@ public class ProductRepositoryTest {
         assertThat(actualBy_O).isEqualTo(expectedBy_O);
         assertThat(actualBy_aaaaaaaaa).isEqualTo(expectedBy_aaaaaaaaa);
         assertThat(actualBy_Ea).isEqualTo(expectedBy_Ea);
-        assertThat(actualBy_null).isNull();
+        assertThat(actualBy_null).isEqualTo(Collections.emptyList());
     }
 
     @Test

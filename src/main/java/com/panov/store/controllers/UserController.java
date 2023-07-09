@@ -11,7 +11,6 @@ import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.User;
 import com.panov.store.services.UserService;
 import com.panov.store.common.Access;
-import com.panov.store.common.Utils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -57,12 +56,10 @@ public class UserController {
     @GetMapping
     public List<UserDTO> userRange(@RequestParam(name = "quantity", required = false) Integer quantity,
                                 @RequestParam(name = "offset", required = false) Integer offset) {
-        List<UserDTO> users = userService.getAllUserList()
+        return userService.getUserList(offset, quantity)
                 .stream()
                 .map(UserDTO::of)
                 .toList();
-
-        return Utils.makeCut(users, quantity, offset);
     }
 
     /**
@@ -116,12 +113,13 @@ public class UserController {
     public AuthEntity loginUser(@Valid @RequestBody LoginForm loginForm,
                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            throw new ResourceNotFoundException("There is no user with this username or password.");
+            throw new ResourceNotFoundException("There is no such user");
 
         User user = userService.getByNaturalId(loginForm.getPhoneNumber()).get(0);
 
+
         if (user == null)
-            throw new ResourceNotFoundException("There is no user with this username or password.");
+            throw new ResourceNotFoundException("There is no such user");
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

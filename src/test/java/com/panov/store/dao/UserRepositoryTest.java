@@ -150,7 +150,7 @@ public class UserRepositoryTest {
         repoTest.insert(u3);
 
         var expected = List.of(u1, u2, u3);
-        var actual = repoTest.getAll();
+        var actual = repoTest.getPackage(null, null);
 
         // then
         assertThat(actual).isEqualTo(expected);

@@ -48,9 +48,9 @@ public class OrderService {
      * @return a {@link List} of {@link Order} objects
      */
     @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
-    public List<Order> getAllOrdersList() {
+    public List<Order> getOrdersList(Integer offset, Integer quantity) {
         try {
-            var list = repository.getAll();
+            var list = repository.getPackage(offset, quantity);
             if (list == null)
                 return Collections.emptyList();
 

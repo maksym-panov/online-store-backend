@@ -80,8 +80,6 @@ public class DBInitializer {
         List<ProductType> productTypes = getList("product_types.json", ProductType.class);
 
         productTypes.forEach(em::persist);
-
-        productTypes.forEach(System.out::println);
     }
 
     private void seedProducts(EntityManager em) throws IOException {
@@ -92,8 +90,6 @@ public class DBInitializer {
         products.stream()
                 .map(Product::getImage)
                 .forEach(this::transferInitialImageToFilesystem);
-
-        products.forEach(System.out::println);
     }
 
     private void seedUsers(EntityManager em) throws IOException {
@@ -104,16 +100,12 @@ public class DBInitializer {
         users.stream()
                 .map(User::getImage)
                 .forEach(this::transferInitialImageToFilesystem);
-
-        users.forEach(System.out::println);
     }
 
     private void seedDeliveryTypes(EntityManager em) throws IOException {
         List<DeliveryType> deliveryTypes = getList("delivery_types.json", DeliveryType.class);
 
         deliveryTypes.forEach(em::persist);
-
-        deliveryTypes.forEach(System.out::println);
     }
 
     private void seedOrders() throws IOException {
@@ -127,8 +119,6 @@ public class DBInitializer {
             }
             orderRepository.insert(o);
         });
-
-        orders.forEach(System.out::println);
     }
 
     private void transferInitialImageToFilesystem(String imageName) {
@@ -149,7 +139,6 @@ public class DBInitializer {
             if (is == null) {
                 return;
             }
-            System.out.println("TRANSFERRING - META-INF/initial/"  + imageName + " TO THE " + STATIC_IMAGES_FOLDER + "/" + imageName);
             os.write(is.readAllBytes());
         } catch(Exception ignored) {}
     }

@@ -42,9 +42,9 @@ public class UserService {
      * @return a {@link List} of {@link User} objects
      */
     @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
-    public List<User> getAllUserList() {
+    public List<User> getUserList(Integer offset, Integer quantity) {
         try {
-            var list = repository.getAll();
+            var list = repository.getPackage(offset, quantity);
             if (list == null)
                 list = Collections.emptyList();
             list.forEach(this::fetchProfileImage);
@@ -85,13 +85,13 @@ public class UserService {
         try {
             boolean strict = true;
             var users = repository.getByColumn(naturalId, strict);
-            if (users == null)
-                users = Collections.emptyList();
+            if (users == null || users.size() == 0)
+                throw new ResourceNotFoundException("There is no such user");
             users.forEach(this::fetchProfileImage);
             return users;
         } catch(Exception e) {
             e.printStackTrace();
-            throw new ResourceNotFoundException("Could not find users");
+            throw new ResourceNotFoundException("Could not find user");
         }
     }
 
@@ -225,7 +225,6 @@ public class UserService {
 
         try {
             File imageFile = new File(STATIC_IMAGES_FOLDER + "/" + imageName);
-            System.out.println("LOADING - " + STATIC_IMAGES_FOLDER + "/" + imageName);
             byte[] imageBytes = FileUtils.readFileToByteArray(imageFile);
             String imageEncoded = Base64.toBase64String(imageBytes);
             user.setImage(imageEncoded);

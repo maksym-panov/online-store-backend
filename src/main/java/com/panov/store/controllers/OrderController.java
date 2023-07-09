@@ -8,7 +8,6 @@ import com.panov.store.model.DeliveryType;
 import com.panov.store.model.Order;
 import com.panov.store.model.OrderProducts;
 import com.panov.store.services.OrderService;
-import com.panov.store.common.Utils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -62,18 +61,16 @@ public class OrderController {
         List<Order> orders;
 
         if (userId == null && unregCustId == null)
-            orders = service.getAllOrdersList();
+            orders = service.getOrdersList(offset, quantity);
         else if (userId == null)
             orders = service.getOrdersByUnregisteredCustomer(unregCustId);
         else
             orders = service.getOrdersByUser(userId);
 
-        List<OrderDTO> result = orders.stream()
+        return orders.stream()
                 .filter(Objects::nonNull)
                 .map(OrderDTO::of)
                 .toList();
-
-        return Utils.makeCut(result, quantity, offset);
     }
 
     /**

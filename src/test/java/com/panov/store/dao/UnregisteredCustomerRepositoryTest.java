@@ -74,7 +74,7 @@ public class UnregisteredCustomerRepositoryTest {
         var actual2 = repoTest.get(id2);
 
         var expectedList = List.of(uc1, uc2);
-        var actualList = repoTest.getAll();
+        var actualList = repoTest.getPackage(null, null);
 
         // then
         assertThat(id1).isNotNull();

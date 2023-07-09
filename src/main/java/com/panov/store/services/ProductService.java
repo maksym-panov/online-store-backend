@@ -42,9 +42,9 @@ public class ProductService {
      *
      * @return a {@link List} of {@link Product} objects
      */
-    public List<Product> getRangeOfProducts() {
+    public List<Product> getRangeOfProducts(Integer offset, Integer quantity) {
         try {
-            List<Product> productRange = repository.getAll();
+            List<Product> productRange = repository.getPackage(offset, quantity);
             if (productRange == null)
                 productRange =  Collections.emptyList();
             productRange.forEach(this::fetchImage);
@@ -147,7 +147,6 @@ public class ProductService {
         try {
             Product inDB = repository.get(product.getProductId())
                     .orElseThrow(() -> new ResourceNotUpdatedException("There is no such product"));
-            System.out.println(product.getImage());
             if (product.getImage() == null) {
                 product.setImage(inDB.getImage());
             } else {
@@ -195,7 +194,6 @@ public class ProductService {
 
         try {
             File imageFile = new File(STATIC_IMAGES_FOLDER + "/" + product.getImage());
-            System.out.println("LOADING - " + STATIC_IMAGES_FOLDER + "/" + product.getImage());
             byte[] imageArr = FileUtils.readFileToByteArray(imageFile);
             String imageEncoded = Base64.toBase64String(imageArr);
             product.setImage(imageEncoded);

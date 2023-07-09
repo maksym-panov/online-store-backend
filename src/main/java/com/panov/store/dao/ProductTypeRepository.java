@@ -48,13 +48,21 @@ public class ProductTypeRepository implements DAO<ProductType> {
     }
 
     @Override
-    public List<ProductType> getAll() {
+    public List<ProductType> getPackage(Integer offset, Integer quantity) {
         var entityManager = getManager();
 
         List<ProductType> productTypes;
 
+        if (offset == null || offset < 0)
+            offset = 0;
+        if (quantity == null || quantity < 0)
+            quantity = 500;
+
         try {
-            productTypes = entityManager.createQuery("select pt from ProductType pt", ProductType.class)
+            productTypes = entityManager
+                    .createQuery("select pt from ProductType pt", ProductType.class)
+                    .setFirstResult(offset)
+                    .setMaxResults(quantity)
                     .getResultList();
         } finally {
             entityManager.close();

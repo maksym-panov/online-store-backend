@@ -56,14 +56,21 @@ public class UserRepository implements DAO<User> {
      * @return a list of all {@link User} objects
      */
     @Override
-    public List<User> getAll() {
+    public List<User> getPackage(Integer offset, Integer quantity) {
         var entityManager = getManager();
 
         List<User> users;
 
+        if (offset == null || offset < 0)
+            offset = 0;
+        if (quantity == null || quantity < 0)
+            quantity = 500;
+
         try {
             users = entityManager
                     .createQuery("select u from User u", User.class)
+                    .setFirstResult(offset)
+                    .setMaxResults(quantity)
                     .getResultList();
             for (var u : users)
                 if (u != null && u.getAddress() == null)

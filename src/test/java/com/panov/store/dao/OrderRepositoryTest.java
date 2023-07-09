@@ -304,10 +304,10 @@ public class OrderRepositoryTest {
         repoTest.insert(o1);
         repoTest.insert(o2);
 
-        var actual1 = repoTest.getAll().get(0);
-        var actual2 = repoTest.getAll().get(1);
+        var actual1 = repoTest.getPackage(null, null).get(0);
+        var actual2 = repoTest.getPackage(null, null).get(1);
 
-        assertThat(repoTest.getAll().size()).isEqualTo(2);
+        assertThat(repoTest.getPackage(null, null).size()).isEqualTo(2);
 
         var opActual1 = actual1.getOrderProducts();
         assertThat(opActual1.size()).isEqualTo(o1.getOrderProducts().size());

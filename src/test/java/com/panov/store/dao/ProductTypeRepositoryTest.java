@@ -52,7 +52,7 @@ public class ProductTypeRepositoryTest {
         repositoryUnderTest.insert(type3);
 
         var expected = List.of(type1, type2, type3);
-        var actual = repositoryUnderTest.getAll();
+        var actual = repositoryUnderTest.getPackage(null, null);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -87,7 +87,7 @@ public class ProductTypeRepositoryTest {
 
         var unexpected = List.of(typeUnexpected1, typeUnexpected2, typeUnexpected3);
         var expected = List.of(type1, type2, type3);
-        var actual = repositoryUnderTest.getAll();
+        var actual = repositoryUnderTest.getPackage(null, null);
 
         // then
 
@@ -283,15 +283,15 @@ public class ProductTypeRepositoryTest {
 
         repositoryUnderTest.delete(id1);
         var expectedAfterFirstDeletion = List.of(type2, type3);
-        var actualAfterFirstDeletion = repositoryUnderTest.getAll();
+        var actualAfterFirstDeletion = repositoryUnderTest.getPackage(null, null);
 
         repositoryUnderTest.delete(id3);
         var expectedAfterSecondDeletion = List.of(type2);
-        var actualAfterSecondDeletion = repositoryUnderTest.getAll();
+        var actualAfterSecondDeletion = repositoryUnderTest.getPackage(null, null);
 
         repositoryUnderTest.delete(id2);
         var expectedAfterThirdDeletion = Collections.emptyList();
-        var actualAfterThirdDeletion = repositoryUnderTest.getAll();
+        var actualAfterThirdDeletion = repositoryUnderTest.getPackage(null, null);
 
         // then
 
