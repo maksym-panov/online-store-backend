@@ -53,9 +53,12 @@ public class ProductDTO {
     private Set<ProductTypeDTO> productTypes = new HashSet<>();
 
     public boolean inCategory(Integer productTypeId) {
-        for (var pt : productTypes)
+        System.out.println(productTypeId);
+        for (var pt : productTypes) {
+            System.out.println(pt.getName());
             if (Objects.equals(productTypeId, pt.getProductTypeId()))
                 return true;
+        }
         return false;
     }
 

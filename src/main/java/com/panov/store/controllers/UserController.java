@@ -1,11 +1,8 @@
 package com.panov.store.controllers;
 
-import com.panov.store.dto.AuthEntity;
+import com.panov.store.dto.*;
 import com.panov.store.exceptions.ResourceNotCreatedException;
 import com.panov.store.jwt.JwtService;
-import com.panov.store.dto.LoginForm;
-import com.panov.store.dto.RegistrationForm;
-import com.panov.store.dto.UserDTO;
 import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.User;
@@ -20,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -75,6 +73,31 @@ public class UserController {
         return UserDTO.of(userService.getById(id));
     }
 
+    @GetMapping("/{id}/orders")
+    public List<OrderDTO> ordersOfUser(@PathVariable("id") Integer id) {
+        User user = userService.getById(id);
+        if (user == null)
+            throw new ResourceNotFoundException("There is no such user");
+
+        List<OrderDTO> orders = new ArrayList<>();
+        user.getOrders().forEach(o -> {
+            o.setUser(null);
+            o.getOrderProducts().forEach(op -> {
+                var p = op.getProduct();
+                p.setDescription(null);
+                p.setImage(null);
+                p.setPrice(null);
+                p.setStock(null);
+                p.setProductTypes(new ArrayList<>());
+            });
+            orders.add(
+                    OrderDTO.of(o)
+            );
+        });
+
+        return orders;
+    }
+
     /**
      * Registers new {@link User} and generates new JWT authentication token for him. <br><br>
      * HTTP method: {@code POST} <br>
@@ -115,7 +138,7 @@ public class UserController {
         if (bindingResult.hasErrors())
             throw new ResourceNotFoundException("There is no such user");
 
-        User user = userService.getByNaturalId(loginForm.getPhoneNumber()).get(0);
+        User user = userService.getByNaturalId(loginForm.getPhoneNumber(), null, null).get(0);
 
 
         if (user == null)

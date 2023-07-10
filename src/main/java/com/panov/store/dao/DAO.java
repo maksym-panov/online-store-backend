@@ -23,6 +23,9 @@ public interface DAO<E> {
     /**
      * Retrieves a list of all entities from the data storage.
      *
+     * @param offset sets the first entity from which method will fetch
+     *               products that match the value
+     * @param quantity the maximal number of entities that will be fetched
      * @return a list of all entities
      */
     List<E> getPackage(Integer offset, Integer quantity);
@@ -34,9 +37,12 @@ public interface DAO<E> {
      * @param strict if true, method should search for exact equality and
      *               if false, method should see {@code value} as a part of
      *               object field (e.g. part of name)
+     * @param offset sets the first entity from which method will fetch
+     *               products that match the value
+     * @param quantity the maximal number of entities that will be fetched
      * @return a list of entities that match the pattern
      */
-    List<E> getByColumn(Object value, boolean strict);
+    List<E> getByColumn(Object value, Integer offset, Integer quantity, boolean strict);
 
     /**
      * Adds new entity and saves it.

@@ -8,9 +8,9 @@ import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.model.Product;
 import com.panov.store.model.User;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.base64.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +28,9 @@ import static com.panov.store.common.Constants.STATIC_IMAGES_FOLDER;
  * @see ProductRepository
  */
 @Service
+@RequiredArgsConstructor
 public class ProductService {
-    private final DAO<Product> repository;
-
-    @Autowired
-    public ProductService(DAO<Product> productRepository) {
-        this.repository = productRepository;
-    }
+    private final ProductRepository repository;
 
     /**
      * Uses {@link DAO} implementation to retrieve list of all existing {@link Product} entities. <br><br>
@@ -42,9 +38,15 @@ public class ProductService {
      *
      * @return a {@link List} of {@link Product} objects
      */
-    public List<Product> getRangeOfProducts(Integer offset, Integer quantity) {
+    public List<Product> getRangeOfProducts(Integer offset, Integer quantity, Integer typeId) {
         try {
-            List<Product> productRange = repository.getPackage(offset, quantity);
+            List<Product> productRange;
+            if (typeId != null) {
+                productRange = repository.getPackageByProductType(offset, quantity, typeId);
+            } else {
+                productRange = repository.getPackage(offset, quantity);
+            }
+
             if (productRange == null)
                 productRange =  Collections.emptyList();
             productRange.forEach(this::fetchImage);
@@ -76,14 +78,17 @@ public class ProductService {
      * Re-throws a {@link ResourceNotFoundException} if {@link DAO} object throws an exception.
      *
      * @param namePattern a name pattern you want to search by
+     * @param offset sets the first entity from which method will fetch
+     *               products that match the value
+     * @param quantity the maximal number of entities that will be fetched
      * @param strict if {@code true} returns exact matches and if {@code false}
      *               returns a list of {@link Product} objects whose names contain
      *               {@code namePattern} as their part (case-insensitive)
      * @return a list of {@link Product} objects that match specified pattern
      */
-    public List<Product> getByNamePattern(String namePattern, boolean strict) {
+    public List<Product> getByNamePattern(String namePattern, Integer offset, Integer quantity, boolean strict) {
         try {
-            var products = repository.getByColumn(namePattern, strict);
+            var products = repository.getByColumn(namePattern, offset, quantity, strict);
             if (products == null)
                 products = Collections.emptyList();
             products.forEach(this::fetchImage);
@@ -179,7 +184,7 @@ public class ProductService {
         Map<String, String> matches = new HashMap<>();
 
         try {
-            var nameMatch = getByNamePattern(product.getName(), true);
+            var nameMatch = getByNamePattern(product.getName(), null, null, true);
             if (nameMatch.size() != 0 && !product.getProductId().equals(nameMatch.get(0).getProductId()))
                 matches.put("name", "Product with this name already exists");
         } catch(Exception ignored) {}

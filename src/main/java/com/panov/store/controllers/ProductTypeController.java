@@ -52,14 +52,14 @@ public class ProductTypeController {
      */
     @GetMapping
     public List<ProductTypeDTO> productTypesRange(
-            @RequestBody(required = false) String pattern,
+            @RequestParam(name = "name", required = false) String pattern,
             @RequestParam(name = "quantity", required = false) Integer quantity,
             @RequestParam(name = "offset", required = false) Integer offset) {
         List<ProductType> types;
         if (pattern == null || pattern.isBlank())
             types = service.getProductTypeList(offset, quantity);
         else
-            types = service.getByNamePattern(pattern, false);
+            types = service.getByNamePattern(pattern, offset, quantity, false);
 
         return types
                 .stream()

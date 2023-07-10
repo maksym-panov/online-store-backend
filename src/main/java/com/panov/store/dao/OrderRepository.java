@@ -52,7 +52,7 @@ public class OrderRepository implements DAO<Order> {
     }
 
     /**
-     * Retrieves all the orders from the database.
+     * Retrieves orders from the database regarding offset and quantity.
      *
      * @return a list of all {@link Order} that exist in the database
      */
@@ -69,7 +69,7 @@ public class OrderRepository implements DAO<Order> {
 
         try {
             orders = entityManager
-                    .createQuery("select o from Order o", Order.class)
+                    .createQuery("select o from Order o order by postTime desc", Order.class)
                     .setFirstResult(offset)
                     .setMaxResults(quantity)
                     .getResultList();
@@ -85,7 +85,7 @@ public class OrderRepository implements DAO<Order> {
     }
 
     @Override
-    public List<Order> getByColumn(Object value, boolean strict) {
+    public List<Order> getByColumn(Object value, Integer offset, Integer quantity, boolean strict) {
         throw new UnsupportedOperationException();
     }
 

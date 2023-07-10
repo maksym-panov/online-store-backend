@@ -72,12 +72,12 @@ public class ProductTypeRepository implements DAO<ProductType> {
     }
 
     /**
-     * Retrieves all the product types from the database.
+     * Retrieves product types from the database regarding offset and quantity.
      *
      * @return a list of all {@link ProductType} that exist in the database
      */
     @Override
-    public List<ProductType> getByColumn(Object value, boolean strict) {
+    public List<ProductType> getByColumn(Object value, Integer offset, Integer quantity, boolean strict) {
         if (value == null || value.toString().isBlank()) {
             return Collections.emptyList();
         }
@@ -85,6 +85,13 @@ public class ProductTypeRepository implements DAO<ProductType> {
         var entityManager = getManager();
 
         List<ProductType> productTypes;
+
+        if (offset == null || offset < 0) {
+            offset = 0;
+        }
+        if (quantity == null || quantity < 0) {
+            quantity = 500;
+        }
 
         try {
             String probablyName = Objects.toString(value);
@@ -94,6 +101,8 @@ public class ProductTypeRepository implements DAO<ProductType> {
             productTypes = entityManager
                     .createQuery("select pt from ProductType pt where lower(pt.name) like lower(:pattern)", ProductType.class)
                     .setParameter("pattern", probablyName)
+                    .setFirstResult(offset)
+                    .setMaxResults(quantity)
                     .getResultList();
         } finally {
             entityManager.close();

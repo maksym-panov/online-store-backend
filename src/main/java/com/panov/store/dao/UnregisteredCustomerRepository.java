@@ -46,8 +46,8 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
     }
 
     /**
-     * Returns a list of all {@link UnregisteredCustomer} objects
-     * that are present in the database.
+     * Returns a list of {@link UnregisteredCustomer} objects
+     * that are present in the database regarding offset and quantity.
      *
      * @return a list of all {@link UnregisteredCustomer} objects
      */
@@ -79,7 +79,7 @@ public class UnregisteredCustomerRepository implements DAO<UnregisteredCustomer>
     }
 
     @Override
-    public List<UnregisteredCustomer> getByColumn(Object value, boolean strict) {
+    public List<UnregisteredCustomer> getByColumn(Object value, Integer offset, Integer quantity, boolean strict) {
         throw new UnsupportedOperationException();
     }
 

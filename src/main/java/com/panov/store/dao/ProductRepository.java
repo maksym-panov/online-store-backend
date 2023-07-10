@@ -69,17 +69,35 @@ public class ProductRepository implements DAO<Product> {
         return products;
     }
 
+    public List<Product> getPackageByProductType(Integer offset, Integer quantity, Integer typeId) {
+        var entityManager = getManager();
+
+        if (offset == null || offset < 0)
+            offset = 0;
+        if (quantity == null || quantity < 0)
+            quantity = 500;
+
+        List<Product> products;
+        try {
+            products = entityManager
+                    .createQuery("select p from Product p inner join p.productTypes pt where pt.productTypeId = :id", Product.class)
+                    .setParameter("id", typeId)
+                    .setFirstResult(offset)
+                    .setMaxResults(quantity)
+                    .getResultList();
+        } finally {
+            entityManager.close();
+        }
+        return products;
+    }
+
     /**
-     * Retrieves all the products that match a specified name pattern.
+     * Retrieves the products that match a specified name pattern regarding offset and quantity.
      *
-     * @param value a pattern for choosing objects by their names
-     * @param strict if true, method should search for exact equality and
-     *               if false, method should see {@code value} as a part of
-     *               product name
      * @return a list of products that match the given pattern {@code value}
      */
     @Override
-    public List<Product> getByColumn(Object value, boolean strict) {
+    public List<Product> getByColumn(Object value, Integer offset, Integer quantity, boolean strict) {
         if (value == null || value.toString().isBlank()) {
             return Collections.emptyList();
         }
@@ -92,8 +110,19 @@ public class ProductRepository implements DAO<Product> {
             if (!strict)
                 probablyName = "%" + probablyName + "%";
 
-            products = entityManager.createQuery("select p from Product p where lower(p.name) LIKE lower(:pattern)", Product.class)
+            if (offset == null || offset < 0)
+                offset = 0;
+            if (quantity == null || quantity < 0)
+                quantity = 500;
+
+            products = entityManager
+                    .createQuery(
+                            "select p from Product p where lower(p.name) LIKE lower(:pattern)",
+                            Product.class
+                    )
                     .setParameter("pattern", probablyName)
+                    .setFirstResult(offset)
+                    .setMaxResults(quantity)
                     .getResultList();
         } finally {
             entityManager.close();

@@ -79,12 +79,15 @@ public class UserService {
      * Re-throws a {@link ResourceNotFoundException} if {@link DAO} object throws an exception.
      *
      * @param naturalId a phone number or email of the sought user
+     * @param offset sets the first entity from which method will fetch
+     *               products that match the value
+     * @param quantity the maximal number of entities that will be fetched
      * @return a list of {@link User} objects whose have specified {@code naturalId}
      */
-    public List<User> getByNaturalId(String naturalId) {
+    public List<User> getByNaturalId(String naturalId, Integer offset, Integer quantity) {
         try {
             boolean strict = true;
-            var users = repository.getByColumn(naturalId, strict);
+            var users = repository.getByColumn(naturalId, offset, quantity, strict);
             if (users == null || users.size() == 0)
                 throw new ResourceNotFoundException("There is no such user");
             users.forEach(this::fetchProfileImage);
@@ -192,7 +195,7 @@ public class UserService {
         Map<String, String> matches = new HashMap<>();
 
         try {
-            var phoneNumberMatch = getByNaturalId(user.getPersonalInfo().getPhoneNumber());
+            var phoneNumberMatch = getByNaturalId(user.getPersonalInfo().getPhoneNumber(), null, null);
             phoneNumberMatch = phoneNumberMatch
                     .stream()
                     .filter(u -> u.getPersonalInfo().getPhoneNumber() != null)
@@ -202,7 +205,7 @@ public class UserService {
         } catch(Exception ignored) {}
 
         try {
-            var emailMatch = getByNaturalId(user.getPersonalInfo().getEmail());
+            var emailMatch = getByNaturalId(user.getPersonalInfo().getEmail(), null, null);
             emailMatch = emailMatch
                     .stream()
                     .filter(

@@ -321,18 +321,18 @@ public class ProductRepositoryTest {
         repositoryUnderTest.insert(product5);
 
         var expectedBy_o = List.of(product3, product4, product5);
-        var actualBy_o = repositoryUnderTest.getByColumn("o", false);
+        var actualBy_o = repositoryUnderTest.getByColumn("o", null, null, false);
 
         var expectedBy_O = List.of(product3, product4, product5);
-        var actualBy_O = repositoryUnderTest.getByColumn("O", false);
+        var actualBy_O = repositoryUnderTest.getByColumn("O", null, null, false);
 
         var expectedBy_aaaaaaaaa = Collections.emptyList();
-        var actualBy_aaaaaaaaa = repositoryUnderTest.getByColumn("aaaaaaaaa", false);
+        var actualBy_aaaaaaaaa = repositoryUnderTest.getByColumn("aaaaaaaaa", null, null, false);
 
         var expectedBy_Ea = List.of(product1, product2);
-        var actualBy_Ea = repositoryUnderTest.getByColumn("Ea", false);
+        var actualBy_Ea = repositoryUnderTest.getByColumn("Ea", null, null, false);
 
-        var actualBy_null = repositoryUnderTest.getByColumn(null, false);
+        var actualBy_null = repositoryUnderTest.getByColumn(null, null, null, false);
 
         // then
         assertThat(actualBy_o).isEqualTo(expectedBy_o);

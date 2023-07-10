@@ -75,16 +75,12 @@ public class DeliveryTypeRepository implements DAO<DeliveryType> {
     }
 
     /**
-     * Retrieves all {@link DeliveryType} objects whose match provided pattern.
+     * Retrieves {@link DeliveryType} objects whose match provided pattern regarding offset and quantity.
      *
-     * @param value a pattern for choosing objects, may be string.
-     * @param strict if true, method should search for exact equality and
-     *               if false, method should see {@code value} as a part of
-     *               object field (e.g. part of name)
      * @return a list of {@link DeliveryType} objects whose names match provided value.
      */
     @Override
-    public List<DeliveryType> getByColumn(Object value, boolean strict) {
+    public List<DeliveryType> getByColumn(Object value, Integer offset, Integer quantity, boolean strict) {
         if (value == null || value.toString().isBlank()) {
             return Collections.emptyList();
         }

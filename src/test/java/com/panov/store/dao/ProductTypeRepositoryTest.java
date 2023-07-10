@@ -156,22 +156,22 @@ public class ProductTypeRepositoryTest {
         repositoryUnderTest.insert(type3);
 
         var expectedByLetter_E = List.of(type1, type2, type3);
-        var actualByLetter_E = repositoryUnderTest.getByColumn("E", false);
+        var actualByLetter_E = repositoryUnderTest.getByColumn("E", null, null,false);
 
         var expectedByLetter_e = List.of(type1, type2, type3);
-        var actualByLetter_e = repositoryUnderTest.getByColumn("e", false);
+        var actualByLetter_e = repositoryUnderTest.getByColumn("e", null, null, false);
 
         var expectedBy_EA = List.of(type1, type2);
-        var actualBy_EA = repositoryUnderTest.getByColumn("EA", false);
+        var actualBy_EA = repositoryUnderTest.getByColumn("EA", null, null, false);
 
         var expectedBy_ea = List.of(type1, type2);
-        var actualBy_ea = repositoryUnderTest.getByColumn("ea", false);
+        var actualBy_ea = repositoryUnderTest.getByColumn("ea", null, null, false);
 
         var expectedBy_aldsfjkj = Collections.emptyList();
-        var actualBy_aldsfjkj = repositoryUnderTest.getByColumn("aldsfjkj", false);
+        var actualBy_aldsfjkj = repositoryUnderTest.getByColumn("aldsfjkj", null, null, false);
 
         var expectedBy_BREAD = List.of(type1);
-        var actualBy_BREAD = repositoryUnderTest.getByColumn("BREAD", false);
+        var actualBy_BREAD = repositoryUnderTest.getByColumn("BREAD", null, null, false);
 
         // then
         assertThat(actualByLetter_E).isEqualTo(expectedByLetter_E);

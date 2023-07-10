@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
-        var users = userService.getByNaturalId(phoneNumber);
+        var users = userService.getByNaturalId(phoneNumber, null, null);
         if (users.size() == 0)
             throw new UsernameNotFoundException(String.format("There is no user with phone number %s", phoneNumber));
         return users.get(0);

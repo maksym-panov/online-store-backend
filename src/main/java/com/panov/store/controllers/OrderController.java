@@ -41,12 +41,8 @@ public class OrderController {
      * also a possibility of using parameters in the request link <br>
      * to customize the output. <br><br>
      * HTTP method: {@code GET} <br>
-     * Endpoint: {@code /orders{?user=&uc=&quantity=&offset=}} <br>
+     * Endpoint: {@code /orders{?quantity=&offset=}} <br>
      *
-     * @param userId if specified, the method will return only orders of a user
-     *               with this identifier.
-     * @param unregCustId if specified, the method will return only orders of an
-     *                    unregistered customer with this identifier.
      * @param quantity if specified, the method will return only the first
      *                 {@code quantity} orders.
      * @param offset if specified, the method will skip first {@code offset}
@@ -54,19 +50,9 @@ public class OrderController {
      * @return a list of {@link DeliveryType} objects.
      */
     @GetMapping
-    public List<OrderDTO> orderRange(@RequestParam(name = "user", required = false) Integer userId,
-                                  @RequestParam(name = "uc", required = false) Integer unregCustId,
-                                  @RequestParam(name = "quantity", required = false) Integer quantity,
+    public List<OrderDTO> orderRange(@RequestParam(name = "quantity", required = false) Integer quantity,
                                   @RequestParam(name = "offset", required = false) Integer offset) {
-        List<Order> orders;
-
-        if (userId == null && unregCustId == null)
-            orders = service.getOrdersList(offset, quantity);
-        else if (userId == null)
-            orders = service.getOrdersByUnregisteredCustomer(unregCustId);
-        else
-            orders = service.getOrdersByUser(userId);
-
+        List<Order> orders = service.getOrdersList(offset, quantity);
         return orders.stream()
                 .filter(Objects::nonNull)
                 .map(OrderDTO::of)

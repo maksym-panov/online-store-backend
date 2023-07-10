@@ -326,7 +326,7 @@ public class OrderRepositoryTest {
 
         // then
         assertThatExceptionOfType(UnsupportedOperationException.class)
-                .isThrownBy(() -> repoTest.getByColumn(new Object(), false));
+                .isThrownBy(() -> repoTest.getByColumn(new Object(), null, null, false));
     }
 
     @Test

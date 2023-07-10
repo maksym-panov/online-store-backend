@@ -49,15 +49,15 @@ public class ProductController {
      */
     @GetMapping
     public List<ProductDTO> productsRange(
-            @RequestBody(required = false) String pattern,
+            @RequestParam(name = "name", required = false) String pattern,
             @RequestParam(name = "category", required = false) Integer typeId,
             @RequestParam(name = "quantity", required = false) Integer quantity,
             @RequestParam(name = "offset", required = false) Integer offset) {
         List<Product> products;
         if (pattern == null || pattern.isBlank())
-            products = service.getRangeOfProducts(offset, quantity);
+            products = service.getRangeOfProducts(offset, quantity, typeId);
         else
-            products = service.getByNamePattern(pattern, false);
+            products = service.getByNamePattern(pattern, offset, quantity, false);
 
         return products
                 .stream()

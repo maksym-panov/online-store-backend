@@ -80,7 +80,7 @@ public class DeliveryTypeService {
      */
     public List<DeliveryType> getByNamePattern(String namePattern, boolean strict) {
         try {
-            var list = repository.getByColumn(namePattern, strict);
+            var list = repository.getByColumn(namePattern, null, null, strict);
             if (list == null)
                 return Collections.emptyList();
             return list;

@@ -95,9 +95,9 @@ public class DeliveryTypeRepositoryTest {
         repoTest.insert(deliveryType2);
         repoTest.insert(deliveryType3);
 
-        var actual1 = repoTest.getByColumn("1", false);
-        var actual2 = repoTest.getByColumn("2", false);
-        var actual3 = repoTest.getByColumn("3", false);
+        var actual1 = repoTest.getByColumn("1", null, null, false);
+        var actual2 = repoTest.getByColumn("2", null, null, false);
+        var actual3 = repoTest.getByColumn("3", null, null, false);
 
         assertThat(actual1.get(0)).isEqualTo(deliveryType1);
         assertThat(actual2.get(0)).isEqualTo(deliveryType2);

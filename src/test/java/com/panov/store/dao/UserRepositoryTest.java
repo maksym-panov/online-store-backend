@@ -216,13 +216,13 @@ public class UserRepositoryTest {
         repoTest.insert(u3);
 
         var expected1 = List.of(u2);
-        var actual1 = repoTest.getByColumn("1pan.maxim.52@gmail.com", true);
+        var actual1 = repoTest.getByColumn("1pan.maxim.52@gmail.com", null, null, true);
 
         var expected2 = List.of(u1);
-        var actual2 = repoTest.getByColumn("dmytro@ukr.net", true);
+        var actual2 = repoTest.getByColumn("dmytro@ukr.net", null, null, true);
 
         var expected3 = Collections.emptyList();
-        var actual3 = repoTest.getByColumn("unknown_email@unknown.unknown", true);
+        var actual3 = repoTest.getByColumn("unknown_email@unknown.unknown", null, null, true);
 
         // then
         assertThat(actual1).isEqualTo(expected1);
@@ -289,16 +289,16 @@ public class UserRepositoryTest {
         repoTest.insert(u3);
 
         var expected1 = List.of(u1);
-        var actual1 = repoTest.getByColumn("0994824689", true);
+        var actual1 = repoTest.getByColumn("0994824689", null, null, true);
 
         var expected2 = List.of(u2);
-        var actual2 = repoTest.getByColumn("0964269257", true);
+        var actual2 = repoTest.getByColumn("0964269257", null, null, true);
 
         var expected3 = List.of(u3);
-        var actual3 = repoTest.getByColumn("0964269111", true);
+        var actual3 = repoTest.getByColumn("0964269111", null, null, true);
 
         var expected4 = Collections.emptyList();
-        var actual4 = repoTest.getByColumn("0000000000", true);
+        var actual4 = repoTest.getByColumn("0000000000", null, null, true);
 
         // then
         assertThat(actual1).isEqualTo(expected1);

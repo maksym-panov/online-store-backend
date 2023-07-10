@@ -41,7 +41,6 @@ public class OrderDTO {
     @Valid
     private List<OrderProductsDTO> orderProducts = new ArrayList<>();
 
-    @Valid
     private DeliveryTypeDTO deliveryType;
 
     private BigDecimal total;

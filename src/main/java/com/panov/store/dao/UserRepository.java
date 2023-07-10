@@ -50,8 +50,8 @@ public class UserRepository implements DAO<User> {
     }
 
     /**
-     * Returns a list of all {@link User} objects
-     * that are present in the database.
+     * Returns a list of {@link User} objects
+     * that are present in the database regarding offset and quantity.
      *
      * @return a list of all {@link User} objects
      */
@@ -86,14 +86,10 @@ public class UserRepository implements DAO<User> {
     /**
      * Retrieves all {@link User} objects whose phone numbers or emails match provided pattern.
      *
-     * @param value a pattern for choosing objects, may be string.
-     * @param strict if true, method should search for exact equality and
-     *               if false, method should see {@code value} as a part of
-     *               phone number or email
      * @return a list of {@link User} objects whose phone numbers or emails match provided value.
      */
     @Override
-    public List<User> getByColumn(Object value, boolean strict) {
+    public List<User> getByColumn(Object value, Integer offset, Integer quantity, boolean strict) {
         if (value == null || value.toString().isBlank()) {
             return Collections.emptyList();
         }

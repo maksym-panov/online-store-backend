@@ -70,14 +70,17 @@ public class ProductTypeService {
      * Re-throws a {@link ResourceNotFoundException} if {@link DAO} object throws an exception.
      *
      * @param namePattern a name pattern you want to search by
+     * @param offset sets the first entity from which method will fetch
+     *               products that match the value
+     * @param quantity the maximal number of entities that will be fetched
      * @param strict if {@code true} returns exact matches and if {@code false}
      *               returns a list of {@link ProductType} objects whose names contain
      *               {@code value} as their part (case-insensitive)
      * @return a list of {@link ProductType} objects that match specified pattern
      */
-    public List<ProductType> getByNamePattern(String namePattern, boolean strict) {
+    public List<ProductType> getByNamePattern(String namePattern, Integer offset, Integer quantity, boolean strict) {
         try {
-            var list = repository.getByColumn(namePattern, strict);
+            var list = repository.getByColumn(namePattern, offset, quantity, strict);
             if (list == null)
                 return Collections.emptyList();
             return list;
@@ -173,7 +176,7 @@ public class ProductTypeService {
         Map<String, String> matches = new HashMap<>();
 
         try {
-            var nameMatch = getByNamePattern(type.getName(), true);
+            var nameMatch = getByNamePattern(type.getName(), null, null, true);
             if (nameMatch.size() != 0)
                 matches.put("name", "Product type with this name already exists");
         } catch(Exception ignored) {}
