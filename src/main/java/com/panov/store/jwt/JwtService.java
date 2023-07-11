@@ -121,7 +121,7 @@ public class JwtService {
      * @return {@code true} if token is not valid anymore and {@code false} - otherwise
      */
     public boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+        return extractExpiration(token).before(new Date(System.currentTimeMillis()));
     }
 
     /**

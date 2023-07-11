@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -94,6 +95,11 @@ public class UserController {
                     OrderDTO.of(o)
             );
         });
+
+        orders.sort(
+                Comparator.comparing(OrderDTO::getStatus)
+                        .thenComparing((o1, o2) -> o2.getPostTime().compareTo(o1.getPostTime()))
+        );
 
         return orders;
     }

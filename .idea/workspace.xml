@@ -13,26 +13,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Optimized DAO layer&#10;Replaced old queries that fetched all the entities from DB even if client provided offset and limit with new that pay attention to these parameters.">
-      <changelist_data name="Maksym Panov" email="1pan.maxim.52@gmail.com" />
+    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Optimized fetching entities from DB by using offset and limit">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/PingController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/common/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/common/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DeliveryTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/DeliveryTypeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/ProductTypeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UnregisteredCustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UnregisteredCustomerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/OrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/OrderDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/DeliveryTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/DeliveryTypeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/ProductTypeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/RegistrationForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/RegistrationForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/jwt/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/jwt/JwtService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -534,7 +521,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688818281107</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Optimized fetching entities from DB by using offset and limit">
+      <created>1689020388470</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1689020388470</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -583,7 +577,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added core dependencies to the pom.xml file" />
     <MESSAGE value="Created a model of an application database&#10;and wrote the table-creating script" />
     <MESSAGE value="1. Created initial package structure.&#10;2. Added entity classes to the &#10;com.panov.store.model package.&#10;3. Created the DAO interface." />
     <MESSAGE value="1. Fully replaced previous database structure with much more normalized one.&#10;2. Added Lombok to the project.&#10;3. Added new SQL script.&#10;4. Basically filled entities with fields.&#10;&#10;-- Next step is to use Hibernate to connect all the entities" />
@@ -608,7 +601,8 @@
     <MESSAGE value="Fixed vulnerabilities in utility classes" />
     <MESSAGE value="Product and User images + DB migration + Initial DB seeding.&#10;Added possibility to add images to Users and Products and nevertheless changing and deleting them. &#10;Connected Flyway database migration tool to keep track of DB versions.&#10;In addition, it is now possible to seed the database with representative initial data by setting property 'fillDatabaseWithInitialData' in file app.properties to true." />
     <MESSAGE value="Added handling of changing user data requests where backend should change phone number (login) so now it also sends back new JWT-token, based on new phone number coupled with user id." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added handling of changing user data requests where backend should change phone number (login) so now it also sends back new JWT-token, based on new phone number coupled with user id." />
+    <MESSAGE value="Optimized fetching entities from DB by using offset and limit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Optimized fetching entities from DB by using offset and limit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

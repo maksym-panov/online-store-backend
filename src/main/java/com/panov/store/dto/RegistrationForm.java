@@ -38,7 +38,7 @@ public class RegistrationForm {
     private String email;
 
     @NotEmpty(message = "Password cannot be empty")
-    @Min(value = 8, message = "Password is too short")
+    @Size(min = 8, message = "Password is too short")
     private String password;
 
     /**
