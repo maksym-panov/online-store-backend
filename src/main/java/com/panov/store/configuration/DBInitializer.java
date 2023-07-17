@@ -62,6 +62,7 @@ public class DBInitializer {
             em.getTransaction().commit();
 
             seedOrders();
+            System.out.println("DATABASE HAS BEEN SUCCESSFULLY SEEDED");
 
         } catch (Exception e) {
             System.out.println("COULD NOT SEED THE DATABASE");

@@ -29,11 +29,7 @@ public class ProductType {
     private String name;
 
     @ToString.Exclude
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            joinColumns = { @JoinColumn(name = "productId") },
-            inverseJoinColumns = { @JoinColumn(name = "productTypeId") }
-    )
+    @ManyToMany(mappedBy = "productTypes", fetch = FetchType.EAGER)
     private List<Product> products = new ArrayList<>();
 
     @Override

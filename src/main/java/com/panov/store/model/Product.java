@@ -39,6 +39,11 @@ public class Product {
     private Integer stock;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "Product_ProductType",
+            joinColumns = { @JoinColumn(name = "product_productId") },
+            inverseJoinColumns = { @JoinColumn(name = "producttypes_productTypeId") }
+    )
     private List<ProductType> productTypes = new ArrayList<>();
 
     @ToString.Exclude

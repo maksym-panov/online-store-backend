@@ -54,7 +54,16 @@ public class UserController {
      */
     @GetMapping
     public List<UserDTO> userRange(@RequestParam(name = "quantity", required = false) Integer quantity,
-                                @RequestParam(name = "offset", required = false) Integer offset) {
+                                    @RequestParam(name = "offset", required = false) Integer offset,
+                                   @RequestParam(name = "phone", required = false) String phone) {
+        if (phone != null) {
+            return userService
+                    .getByNaturalId(phone, offset, quantity)
+                    .stream()
+                    .map(UserDTO::of)
+                    .toList();
+        }
+
         return userService.getUserList(offset, quantity)
                 .stream()
                 .map(UserDTO::of)

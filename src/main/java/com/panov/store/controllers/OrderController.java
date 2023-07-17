@@ -1,5 +1,6 @@
 package com.panov.store.controllers;
 
+import com.panov.store.common.Status;
 import com.panov.store.dto.OrderDTO;
 import com.panov.store.dto.OrderProductsDTO;
 import com.panov.store.exceptions.ResourceNotCreatedException;
@@ -51,8 +52,15 @@ public class OrderController {
      */
     @GetMapping
     public List<OrderDTO> orderRange(@RequestParam(name = "quantity", required = false) Integer quantity,
-                                  @RequestParam(name = "offset", required = false) Integer offset) {
-        List<Order> orders = service.getOrdersList(offset, quantity);
+                                  @RequestParam(name = "offset", required = false) Integer offset,
+                                  @RequestParam(name = "order", required = false) String order,
+                                  @RequestParam(name = "status", required = false) String status) {
+        Status s = null;
+        try {
+            s = Status.valueOf(status);
+        } catch (Exception ignored) {}
+
+        List<Order> orders = service.getOrdersList(offset, quantity, order, s);
         return orders.stream()
                 .filter(Objects::nonNull)
                 .map(OrderDTO::of)
@@ -104,8 +112,8 @@ public class OrderController {
      */
     @PatchMapping("/{id}")
     public Integer changeOrder(@Valid @RequestBody OrderDTO orderDTO,
-                               @PathVariable("id") Integer id,
-                               BindingResult bindingResult) {
+                               BindingResult bindingResult,
+                               @PathVariable("id") Integer id) {
         if (bindingResult.hasErrors())
             throw new ResourceNotUpdatedException(bindingResult);
 

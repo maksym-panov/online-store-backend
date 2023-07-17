@@ -29,16 +29,12 @@ public final class Utils {
             return null;
         }
 
-        System.out.println(newImage);
-
         String imageType = switch (newImage.substring(0, 5).toUpperCase()) {
             case ("/9J/4") -> ".jpg";
             case ("PHN2Z") -> ".svg";
             case ("UKLGR") -> ".webp";
             default -> ".png";
         };
-
-        System.out.println(imageType);
 
         String newImageName = UUID.randomUUID()
                 .toString()

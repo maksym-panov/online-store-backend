@@ -13,13 +13,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Optimized fetching entities from DB by using offset and limit">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/PingController.java" afterDir="false" />
+    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Added ping controller, fixed constraints in registration form.">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/common/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/common/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/common/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/common/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/DBInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/configuration/DBInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/DeliveryTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/DeliveryTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/PingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/PingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/ProductTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UnregisteredCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UnregisteredCustomerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/RegistrationForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/RegistrationForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/jwt/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/jwt/JwtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/OrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/OrderDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/UnregisteredCustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dto/UnregisteredCustomerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/jwt/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/jwt/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/model/ProductType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/model/ProductType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/services/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/services/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/initial/products.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/initial/products.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V1__Initial_database_migration.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V1__Initial_database_migration.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -331,6 +346,11 @@
       <workItem from="1687945585058" duration="21228000" />
       <workItem from="1688375675626" duration="61612000" />
       <workItem from="1688546557512" duration="36623000" />
+      <workItem from="1689150091280" duration="679000" />
+      <workItem from="1689177957914" duration="1206000" />
+      <workItem from="1689243965062" duration="5101000" />
+      <workItem from="1689271198804" duration="16913000" />
+      <workItem from="1689396995447" duration="22921000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1676894430878</created>
@@ -528,7 +548,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689020388470</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Added ping controller, fixed constraints in registration form.">
+      <created>1689100599290</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1689100599290</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -577,7 +604,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Created a model of an application database&#10;and wrote the table-creating script" />
     <MESSAGE value="1. Created initial package structure.&#10;2. Added entity classes to the &#10;com.panov.store.model package.&#10;3. Created the DAO interface." />
     <MESSAGE value="1. Fully replaced previous database structure with much more normalized one.&#10;2. Added Lombok to the project.&#10;3. Added new SQL script.&#10;4. Basically filled entities with fields.&#10;&#10;-- Next step is to use Hibernate to connect all the entities" />
     <MESSAGE value="1. Started integration of Hibernate to the domain model classes such as User and Product.&#10;2. Upgraded enumerations Access and Status so they are now have AttributeConverters that convert enum values to database values 'U', 'M' etc. and back." />
@@ -602,7 +628,8 @@
     <MESSAGE value="Product and User images + DB migration + Initial DB seeding.&#10;Added possibility to add images to Users and Products and nevertheless changing and deleting them. &#10;Connected Flyway database migration tool to keep track of DB versions.&#10;In addition, it is now possible to seed the database with representative initial data by setting property 'fillDatabaseWithInitialData' in file app.properties to true." />
     <MESSAGE value="Added handling of changing user data requests where backend should change phone number (login) so now it also sends back new JWT-token, based on new phone number coupled with user id." />
     <MESSAGE value="Optimized fetching entities from DB by using offset and limit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Optimized fetching entities from DB by using offset and limit" />
+    <MESSAGE value="Added ping controller, fixed constraints in registration form." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added ping controller, fixed constraints in registration form." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

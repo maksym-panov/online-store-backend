@@ -5,6 +5,7 @@ import com.panov.store.model.*;
 import com.panov.store.common.Status;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -82,6 +83,58 @@ public class OrderRepository implements DAO<Order> {
         }
 
         return orders;
+    }
+
+    public List<Order> getPackageOrderedWithParam(Integer offset, Integer quantity, String order, Status status) {
+        var entityManager = getManager();
+
+        if (offset == null || offset < 0)
+            offset = 0;
+        if (quantity == null || quantity < 0)
+            quantity = 500;
+
+        try {
+
+            String query;
+            int params;
+            if (status != null) {
+                params = 1;
+                if (order != null) {
+                   if (order.equals("asc")) {
+                       query = "select o from Order o where o.status = ?1 order by postTime asc";
+                   } else {
+                        query = "select o from Order o where o.status = ?1 order by postTime desc";
+                   }
+                } else {
+                    query = "select o from Order o where o.status = ?1 order by postTime desc";
+                }
+            } else {
+                params = 0;
+                if (order != null) {
+                    if (order.equals("asc")) {
+                        query = "select o from Order o order by postTime asc";
+                    } else {
+                        query = "select o from Order o order by postTime desc";
+                    }
+                } else {
+                    query = "select o from Order o order by postTime desc";
+                }
+            }
+
+            TypedQuery<Order> q = entityManager
+                    .createQuery(query, Order.class);
+
+            if (params == 1) {
+                q.setParameter(1, status);
+            }
+
+            return q.setFirstResult(offset)
+                    .setMaxResults(quantity)
+                    .getResultList();
+
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
@@ -166,6 +219,7 @@ public class OrderRepository implements DAO<Order> {
             // Change product status and complete time
             if (
                     currentOrder.getStatus() != Status.COMPLETED &&
+                    currentOrder.getStatus() != Status.ABOLISHED &&
                     newData.getStatus() != null
             ) {
                 currentOrder.setStatus(newData.getStatus());

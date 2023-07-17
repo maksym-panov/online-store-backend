@@ -113,8 +113,8 @@ public class ProductTypeController {
      */
     @PatchMapping("/{id}")
     public Integer changeProductType(@Valid @RequestBody ProductTypeDTO productTypeDTO,
-                                     @PathVariable("id") Integer id,
-                                     BindingResult bindingResult) {
+                                     BindingResult bindingResult,
+                                     @PathVariable("id") Integer id) {
         if (bindingResult.hasErrors())
             throw new ResourceNotUpdatedException(bindingResult);
 

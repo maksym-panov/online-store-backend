@@ -110,8 +110,8 @@ public class DeliveryTypeController {
      */
     @PatchMapping("/{id}")
     public Integer changeDeliveryType(@Valid @RequestBody DeliveryTypeDTO deliveryTypeDTO,
-                                     @PathVariable("id") Integer id,
-                                     BindingResult bindingResult) {
+                                     BindingResult bindingResult,
+                                     @PathVariable("id") Integer id) {
         if (bindingResult.hasErrors())
             throw new ResourceNotUpdatedException(bindingResult);
 

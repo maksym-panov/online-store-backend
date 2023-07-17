@@ -32,10 +32,8 @@ import java.util.Objects;
 public class OrderDTO {
     private Integer orderId;
 
-    @Valid
     private UserDTO user;
 
-    @Valid
     private UnregisteredCustomerDTO unregCust;
 
     @Valid

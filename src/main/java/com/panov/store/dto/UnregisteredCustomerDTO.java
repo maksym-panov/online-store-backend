@@ -24,27 +24,26 @@ import java.util.ArrayList;
 public class UnregisteredCustomerDTO {
     private Integer unregisteredCustomerId;
 
-    @NotNull(message = "Phone number must be present")
+    @NotEmpty(message = "Phone number must be present")
     @Pattern(regexp = "0\\d{9}", message = "Phone number must match the format '0XXXXXXXXX'")
     private String phoneNumber;
 
     @NotNull(message = "This field is required")
-    @Size(min = 1, message = "Firstname cannot be empty")
-    @Size(max = 30, message = "Firstname is too long")
+    @Size(min = 1, max = 30, message = "Firstname length must be between 1 and 30")
     private String firstname;
 
     @Size(max = 30, message = "Lastname is too long")
     private String lastname;
 
-    @NotNull(message = "This field is required")
+    @NotEmpty(message = "This field is required")
     @Size(max = 30, message = "Region name is too long")
     private String region;
 
-    @NotNull(message = "This field is required")
+    @NotEmpty(message = "This field is required")
     @Size(max = 30, message = "District name is too long")
     private String district;
 
-    @NotNull(message = "This field is required")
+    @NotEmpty(message = "This field is required")
     @Size(max = 30, message = "City name is too long")
     private String city;
 

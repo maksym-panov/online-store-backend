@@ -47,5 +47,7 @@ public class Order {
 
     private Timestamp postTime;
     private Timestamp completeTime;
+
+    @Convert(converter = Status.StatusConverter.class)
     private Status status;
 }

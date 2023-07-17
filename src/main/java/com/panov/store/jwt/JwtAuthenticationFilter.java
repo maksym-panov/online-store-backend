@@ -49,7 +49,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwt = authorizationHeader.substring(7);
         String phoneNumber = jwtService.extractPhoneNumber(jwt);
 
-        if (phoneNumber != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (
+                !jwtService.isTokenExpired(jwt) &&
+                phoneNumber != null &&
+                SecurityContextHolder.getContext().getAuthentication() == null
+        ) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(phoneNumber);
 
             if (jwtService.isTokenValid(jwt, userDetails)) {

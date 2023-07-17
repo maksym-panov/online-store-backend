@@ -114,8 +114,8 @@ public class ProductController {
      */
     @PatchMapping("/{id}")
     public Integer changeProduct(@Valid @RequestBody ProductDTO productDTO,
-                                 @PathVariable("id") Integer id,
-                                 BindingResult bindingResult) {
+                                 BindingResult bindingResult,
+                                 @PathVariable("id") Integer id) {
         if (bindingResult.hasErrors())
             throw new ResourceNotUpdatedException(bindingResult);
 

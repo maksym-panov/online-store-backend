@@ -104,15 +104,6 @@ CREATE TABLE product_producttype
     producttypes_producttypeid INTEGER NOT NULL
 );
 
-CREATE TABLE producttype_product
-(
-    producttype_producttypeid INTEGER NOT NULL,
-    products_productid        INTEGER NOT NULL,
-    productid                 INTEGER NOT NULL,
-    producttypeid             INTEGER NOT NULL,
-    CONSTRAINT producttype_product_pkey PRIMARY KEY (producttype_producttypeid, products_productid)
-);
-
 CREATE TABLE typeunit
 (
     productid     INTEGER  NOT NULL,
@@ -129,20 +120,8 @@ ALTER TABLE "Order"
 ALTER TABLE "Order"
     ADD CONSTRAINT Order_userid_fkey FOREIGN KEY (userid) REFERENCES "User" (userid) ON UPDATE NO ACTION ON DELETE SET NULL;
 
-ALTER TABLE producttype_product
-    ADD CONSTRAINT fk1lbelyl0dcehq53k7k9l2da1a FOREIGN KEY (producttype_producttypeid) REFERENCES producttype (producttypeid) ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE producttype_product
-    ADD CONSTRAINT fk9t53hwrurldpnbuwcuciv8yl6 FOREIGN KEY (productid) REFERENCES producttype (producttypeid) ON UPDATE NO ACTION ON DELETE NO ACTION;
-
 ALTER TABLE product_producttype
     ADD CONSTRAINT fkajl671ltewg4fsadmyjad9pn7 FOREIGN KEY (product_productid) REFERENCES product (productid) ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE producttype_product
-    ADD CONSTRAINT fkd1p3led5eoncqnc9vtjlp4lh6 FOREIGN KEY (products_productid) REFERENCES product (productid) ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE producttype_product
-    ADD CONSTRAINT fkg635y7gdpshrucyd1iga1uekk FOREIGN KEY (producttypeid) REFERENCES product (productid) ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 ALTER TABLE product_producttype
     ADD CONSTRAINT fkj25io6fkj85xx4h0433dc3m4t FOREIGN KEY (producttypes_producttypeid) REFERENCES producttype (producttypeid) ON UPDATE NO ACTION ON DELETE NO ACTION;

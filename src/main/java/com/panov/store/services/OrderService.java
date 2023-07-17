@@ -7,7 +7,7 @@ import com.panov.store.exceptions.ResourceNotFoundException;
 import com.panov.store.exceptions.ResourceNotUpdatedException;
 import com.panov.store.model.*;
 import com.panov.store.common.Status;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -26,18 +26,10 @@ import java.util.List;
  * @see UnregisteredCustomerService
  */
 @Service
+@RequiredArgsConstructor
 public class OrderService {
-    private final DAO<Order> repository;
-    private final UserService userService;
+    private final OrderRepository repository;
     private final UnregisteredCustomerService unregCustService;
-
-    @Autowired
-    public OrderService(DAO<Order> repository, UserService userService,
-                        UnregisteredCustomerService unregCustService) {
-        this.repository = repository;
-        this.userService = userService;
-        this.unregCustService = unregCustService;
-    }
 
     /**
      * Uses {@link DAO} implementation to retrieve list of all existing {@link Order} entities. <br><br>
@@ -48,9 +40,15 @@ public class OrderService {
      * @return a {@link List} of {@link Order} objects
      */
     @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
-    public List<Order> getOrdersList(Integer offset, Integer quantity) {
+    public List<Order> getOrdersList(Integer offset, Integer quantity, String order, Status status) {
         try {
-            var list = repository.getPackage(offset, quantity);
+            List<Order> list;
+            if (order != null || status != null) {
+                list = repository.getPackageOrderedWithParam(offset, quantity, order, status);
+            } else {
+                list = repository.getPackage(offset, quantity);
+            }
+
             if (list == null)
                 return Collections.emptyList();
 
@@ -76,51 +74,6 @@ public class OrderService {
         return repository.get(id).orElseThrow(() ->
                 new ResourceNotFoundException("Could not find this order")
         );
-    }
-
-    /**
-     * Uses {@link UserService} to find {@link Order}s of {@link User} with specified identity. <br><br>
-     * Only {@link User} with {@code Access.ADMINISTRATOR} or {@code Access.MANAGER} authority or the
-     * {@link User} that is the owner of provided identity, can invoke this method. <br><br>
-     * Re-throws a {@link ResourceNotFoundException} if {@link DAO} object throws an exception or there is
-     * no such {@link Order} object.
-     *
-     * @param userId an identity of the {@link User} whose {@link Order}s are being searched
-     * @return a {@link List} of {@link Order}s of the {@link User} with specified identity
-     */
-    @PreAuthorize(
-            "hasAuthority('ADMINISTRATOR') or " +
-            "hasAuthority('MANAGER') or " +
-            "hasAuthority(#userId.toString())"
-    )
-    public List<Order> getOrdersByUser(Integer userId) {
-        User user = userService.getById(userId);
-        var list = user.getOrders();
-        if (list == null)
-            return Collections.emptyList();
-
-        return list;
-    }
-
-    /**
-     * Uses {@link UnregisteredCustomerService} to find {@link Order}s of {@link UnregisteredCustomer}
-     * with specified identity. <br><br>
-     * Only {@link User} with {@code Access.ADMINISTRATOR} or {@code Access.MANAGER} authority
-     * can invoke this method. <br><br>
-     * Re-throws a {@link ResourceNotFoundException} if {@link DAO} object throws an exception or there is
-     * no such {@link Order} object.
-     *
-     * @param unregCustId an identity of the {@link UnregisteredCustomer} whose {@link Order}s are being searched
-     * @return a {@link List} of {@link Order}s of the {@link UnregisteredCustomer} with specified identity
-     */
-    @PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('MANAGER')")
-    public List<Order> getOrdersByUnregisteredCustomer(Integer unregCustId) {
-        UnregisteredCustomer customer = unregCustService.getById(unregCustId);
-        var list = customer.getOrders();
-        if (list == null)
-            return Collections.emptyList();
-
-        return list;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.panov.store.controllers;
 
+import com.panov.store.common.Access;
 import com.panov.store.jwt.JwtService;
 import com.panov.store.model.User;
 import com.panov.store.services.UserService;
@@ -22,11 +23,37 @@ public class PingController {
     private final UserService userService;
 
     @PostMapping("/{id}")
-    public ResponseEntity<Boolean> checkAccess(
+    public ResponseEntity<Boolean> checkToken(
             @PathVariable("id") Integer id,
             @RequestBody String jwt
     ) {
+        if (jwtService.isTokenExpired(jwt)) {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+
         User user = userService.getById(id);
-        return new ResponseEntity<>(jwtService.isTokenValid(jwt, user), HttpStatus.OK);
+        return new ResponseEntity<>(
+                jwtService.isTokenValid(jwt, user),
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping("/manager/{id}")
+    public ResponseEntity<Boolean> checkForManagerAuthority(
+            @PathVariable("id") Integer id,
+            @RequestBody String jwt
+    ) {
+        if (jwtService.isTokenExpired(jwt)) {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+
+        User user = userService.getById(id);
+        Access a = user.getAccess();
+
+        return new ResponseEntity<>(
+                jwtService.isTokenValid(jwt, user) &&
+                        (a == Access.MANAGER || a == Access.ADMINISTRATOR),
+                HttpStatus.OK
+        );
     }
 }
