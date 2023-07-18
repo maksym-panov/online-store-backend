@@ -192,6 +192,14 @@ public class UserController {
         return userService.changeUserWithPhoneNumber(userDTO.toModel());
     }
 
+    @GetMapping("/access/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    public Access getUserAccessLevel(@PathVariable("id") Integer id) {
+        return userService
+                .getById(id)
+                .getAccess();
+    }
+
     /**
      * Changes access level of {@link User} object with specified ID. <br><br>
      * Http method: {@code PUT} <br>
@@ -206,8 +214,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public Integer changeUserAccess(@PathVariable("id") Integer id,
                                     @RequestBody String access) {
-        User user = new User();
-        user.setUserId(id);
+        User user = userService.getById(id);
 
         try {
             user.setAccess(Access.valueOf(access));

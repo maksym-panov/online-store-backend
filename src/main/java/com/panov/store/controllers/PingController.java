@@ -56,4 +56,23 @@ public class PingController {
                 HttpStatus.OK
         );
     }
+
+    @PostMapping("/admin/{id}")
+    public ResponseEntity<Boolean> checkForAdminAuthority(
+            @PathVariable("id") Integer id,
+            @RequestBody String jwt
+    ) {
+        if (jwtService.isTokenExpired(jwt)) {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+
+        User user = userService.getById(id);
+        Access a = user.getAccess();
+
+        return new ResponseEntity<>(
+                jwtService.isTokenValid(jwt, user) &&
+                        a == Access.ADMINISTRATOR,
+                HttpStatus.OK
+        );
+    }
 }
