@@ -13,10 +13,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Added admin authority ping and fixed user access change">
+    <list default="true" id="81478867-94a0-4732-909c-41a806607478" name="Changes" comment="Fixed DB initialization in tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/panov/store/dao/OrderRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/app.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/app.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/panov/store/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/panov/store/Utils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -332,7 +332,7 @@
       <workItem from="1689177957914" duration="1206000" />
       <workItem from="1689243965062" duration="5101000" />
       <workItem from="1689271198804" duration="16913000" />
-      <workItem from="1689396995447" duration="35807000" />
+      <workItem from="1689396995447" duration="39818000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1676894430878</created>
@@ -551,7 +551,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689669796710</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Fixed DB initialization in tests">
+      <created>1689771241876</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1689771241876</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -600,7 +607,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="This time I have done:&#10;1. Switched from hibernate.properties and SessionFactory to persistence.xml and EntityManager because JPA is more compatible than Hibernate.&#10;2. Refactored database, deleted Region table, deleted typeUnitId from TypeUnit table, worked with constraints.&#10;3. Completed implementing Domain Model classes, overrided essential methods from Object class and added JPA/Hibernate annotations.&#10;4. Have tested if everything works fine." />
     <MESSAGE value="Web and DI configuration + DAO implementation&#10;&#10;1. Spring context configuration (initial) is done.&#10;2. Spring WebMvc configuration (initial) is done.&#10;3. Created bean for EntityManagerFactory.&#10;4. Implemented UserDAO.&#10;5. Implemented OrderDAO.&#10;6. Implemented ProductDAO.&#10;7. Implemented UnregisteredCustomerDAO." />
     <MESSAGE value="Basic controllers, services and exception handlers.&#10;1. Created a skeleton of the service layer (UserService, ProductService etc.)&#10;2. Created a skeleton of the controller layer (UserController etc.)&#10;3. Created &quot;NotFound&quot; exception classes for all entities (maybe in future I will make only one &quot;NotFoundException&quot; class).&#10;4. Basically implemented advisor classes for all the entities.&#10;5. Created REST API endpoints for all the entities, such as &quot;/users&quot;, &quot;/users/{id}&quot;, &quot;product&quot; etc and tested them working.&#10;6. Used @JsonIgnoreProperties to control Hibernate relations view in ResponseEntities" />
     <MESSAGE value="Basic controllers, services and exception handlers.&#10;1. Created a skeleton of the service layer (UserService, ProductService etc.)&#10;2. Created a skeleton of the controller layer (UserController etc.)&#10;3. Created &quot;NotFound&quot; exception classes for all entities (maybe in future I will make only one &quot;NotFoundException&quot; class).&#10;4. Basically implemented advisor classes for all the entities.&#10;5. Created REST API endpoints for all the entities, such as &quot;/users&quot;, &quot;/users/{id}&quot;, &quot;product&quot; etc and tested them working.&#10;6. Used @JsonIgnoreProperties to control Hibernate relations view in ResponseEntities&#10;7. Removed @AllArgsConstructor annotations from model classes." />
@@ -625,7 +631,8 @@
     <MESSAGE value="Persistence bug fixes. API modification.&#10;- Fixed issue with connecting Product and ProductType tables in the DB.&#10;- For user and order controllers added more parameters to make output more flexible for client." />
     <MESSAGE value="Persistence bug fixes. API modification.&#10;- Fixed issue with connecting Product and ProductType tables in the DB.&#10;- For user and order controllers added more parameters to make output more flexible for client.&#10;- Fixed error #500 that appeared because of wrong BindingResult parameter position in controllers' signatures.&#10;- Removed some methods in the service layer (OrderService, UnregisteredCustomerService) that are not being used." />
     <MESSAGE value="Added admin authority ping and fixed user access change" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added admin authority ping and fixed user access change" />
+    <MESSAGE value="Fixed DB initialization in tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed DB initialization in tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

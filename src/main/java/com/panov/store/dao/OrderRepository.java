@@ -241,6 +241,12 @@ public class OrderRepository implements DAO<Order> {
                 currentOrder.setDeliveryType(newDeliveryType);
             }
 
+            // If customer abolishes the order, all the products from this order
+            // should be returned to the warehouse
+            if (currentOrder.getStatus() == Status.ABOLISHED) {
+                resetProductStocks(currentOrder);
+            }
+
             // Change the list of ordered products
             if (
                     currentOrder.getStatus() != Status.SHIPPING &&
