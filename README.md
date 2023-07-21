@@ -47,8 +47,11 @@ Apache Maven and Apache Tomcat.
   to your Maven directory (for example `C:\Program Files\apache-maven-3.9.x`) and press OK.
   
   - In *Environment variables* page find system variable *Path*, select it and click edit button,
-  click *New* and write `%MAVEN_HOME\bin%` in the prompt. Click OK on *Environment variables* page.
+  click *New* and write `%MAVEN_HOME%\bin` in the prompt. Click OK on *Environment variables* page.
 
+> Just like you added MAVEN_HOME, you should also add the CATALINA_HOME variable for Apache Tomcat installed earlier.
+> Variable value should be the path to your Tomcat directory (for example `C:\Program Files\apache-tomcat-10.x.x`).
+> After creating CATALINA_HOME, add it to the Path variable as you did with MAVEN_HOME, but this time write only `%CATALINA_HOME%` without `\bin` part.
 
   #### On MacOS
 
