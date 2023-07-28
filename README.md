@@ -4,6 +4,39 @@ Java Spring Core, MVC, Security, JPA/Hibernate, Flyway, PostgreSQL, REST-API Onl
 Before starting you should already have installed JDK 19+ ([Download](https://www.oracle.com/java/technologies/javase/jdk19-archive-downloads.html)), 
 Apache Maven and Apache Tomcat.
 
+## Start with Docker
+
+Use following commands in this exact order to start database, backend and frontend of the application.
+
+1. Pull database image from registry.
+```
+docker pull maksympanov/store-persistence:alpine
+```
+2. Run database container.
+```
+docker run -d -p 5332:5432 --name Persistence maksympanov/store-persistence:alpine
+```
+
+3. Pull backend image from registry.
+```
+docker pull maksympanov/store-backend:latest
+```
+
+4. Run backend container.
+```
+docker run -d -p 8080:8080 --name Backend maksympanov/store-backend:latest
+```
+
+5. Pull frontend image from registry.
+```
+docker pull maksympanov/store-frontend:alpine
+```
+
+6. Run frontend container.
+```
+docker run -d -p 3000:3000 --name Frontend maksympanov/store-frontend:alpine
+```
+
 ## Apache Tomcat installation
 
 1. Download binary zip archive with Tomcat 10 from official website for your machine ([Download](https://tomcat.apache.org/download-10.cgi))
@@ -14,7 +47,7 @@ Apache Maven and Apache Tomcat.
    ```
    cd apache-tomcat-10.x.x\conf
    ```
-   - Open `context.xml` file in your favourite redactor.
+   - Open `context.xml` file in your favourite editor.
    
    #### On Unix
    
