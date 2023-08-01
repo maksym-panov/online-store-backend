@@ -34,6 +34,7 @@ public class OrderDTO {
 
     private UserDTO user;
 
+    @Valid
     private UnregisteredCustomerDTO unregCust;
 
     @Valid
